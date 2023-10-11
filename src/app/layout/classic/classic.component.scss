@@ -1,0 +1,80 @@
+.navbar {
+  height: 100px;
+  .nav-link {
+    color: #fff !important;
+    position: relative;
+    text-transform: uppercase;
+
+    &:hover::before {
+      width: calc(100% - (var(--bs-navbar-nav-link-padding-x) * 2));
+    }
+    &::before {
+      display: block;
+      content: '';
+      width: 0%;
+      height: 2px;
+      background-color: white;
+      position: absolute;
+      bottom: var(--bs-nav-link-padding-y);
+      transition: all ease-in-out 0.3s;
+      left: var(--bs-navbar-nav-link-padding-x);
+    }
+  }
+
+  .input-search {
+    display: none;
+    width: 0;
+    background: none;
+    outline: none;
+    border: none;
+    border-radius: 0;
+    color: white;
+    border-bottom: 1px solid white;
+    box-shadow: none;
+    font-size: 16px;
+    padding: 4px;
+    animation: slideIn ease-in-out 0.3s forwards;
+    height: 28px;
+  }
+
+  .nav-btn {
+    background-color: white;
+    width: 32px;
+    height: 32px;
+
+    margin: 0 0.5rem;
+    &:hover {
+      transform: scale(1.1);
+      box-shadow: 0 5px 35px #a1a1a1;
+    }
+
+    &--big {
+      width: 44px;
+      height: 44px;
+    }
+  }
+}
+
+@keyframes slideIn {
+  from {
+  }
+  to {
+    width: 200px;
+  }
+}
+
+footer {
+  padding: 55px 0;
+  color: white;
+  width: 100%;
+  background: #191919;
+
+  .footer__about-img {
+    max-width: 155px;
+  }
+
+  li a {
+    color: #fff !important;
+    opacity: 0.7;
+  }
+}

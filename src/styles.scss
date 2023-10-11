@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~bootstrap-icons/font/bootstrap-icons.css';
+
+ul {
+  list-style-type: none !important;
+  li {
+    margin: 0;
+  }
+}
+
+a {
+  text-decoration: none !important;
+  color: #000 !important;
+}
+
+p {
+  margin: 0 !important;
+}

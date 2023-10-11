@@ -1,0 +1,115 @@
+<!-- <header></header> -->
+<div class="navbar navbar-expand-lg bg-black position-sticky">
+  <div class="container">
+    <a class="navbar-brand text-white" href="#"
+      ><img src="assets/images/logo/a-logo-3K.svg" alt="logo 3K"
+    /></a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Sản phẩm</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Thương hiệu</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Tin tức</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Khuyến mãi</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Liên hệ</a>
+        </li>
+      </ul>
+      <div class="d-flex align-items-center">
+        <form class="d-flex align-items-center" role="search">
+          <input
+            class="form-control me-2 input-search"
+            type="search"
+            [ngStyle]="{ display: isShow ? 'block' : '' }"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <button
+            class="btn btn-search nav-btn rounded-circle d-flex align-items-center d-flex justify-content-center"
+            type="button"
+            (click)="showInput()"
+          >
+            <i class="bi bi-search" style="font-size: 14px"></i>
+          </button>
+        </form>
+        <button
+          class="btn btn-user nav-btn rounded-circle d-flex align-items-center d-flex justify-content-center"
+          type="submit"
+        >
+          <i class="bi bi-person" style="font-size: 14px"></i>
+        </button>
+        <button
+          class="btn btn-cart nav-btn nav-btn--big rounded-circle d-flex align-items-center d-flex justify-content-center"
+          type="submit"
+        >
+          <i class="bi bi-cart" style="font-size: 20px"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>
+<footer>
+  <div class="container">
+    <div class="footer__container row">
+      <div class="footer__logo col">
+        <img src="assets/images/logo/a-logo-3K.svg" alt="logo 3K" />
+      </div>
+      <div class="footer__content col-9 row">
+        <ul class="col footer__about">
+          <h4 class="footer__title title">Giới thiệu</h4>
+          <li><a href="">Giới thiệu về 3K Shop</a></li>
+          <li><a href="">Thương hiệu</a></li>
+          <li><a href="">Sản Phẩm</a></li>
+        </ul>
+        <ul class="col footer__policy">
+          <h4 class="footer__title title">Các chính sách</h4>
+          <li><a href="">Bảo mật thông tin cá nhân</a></li>
+          <li><a href="">Cam kết hàng hóa</a></li>
+          <li><a href="">Chính sách vận chuyển</a></li>
+          <li><a href="">Hình thức thanh toán</a></li>
+          <li><a href="">Hướng dẫn mua trả góp</a></li>
+        </ul>
+        <ul class="col footer__address">
+          <h4 class="footer__title title">Hồ Chí Minh</h4>
+          <li>
+            <a href="">14 Nguyễn Văn Giai, P. Đa Kao, Q.1</a>
+            <p class="footer__text">(028)38 202 909-0914345357</p>
+          </li>
+          <li>
+            <a href="">6B Đinh Bộ Lĩnh, P. 24, Q.Bình Thạnh</a>
+            <p class="footer__text">(028)38 202 909-0914345357</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__license row">
+      <a href="" class="footer__about-img"
+        ><img
+          max-
+          src="./assets/images/logo/dathongbao.png"
+          alt=""
+          class="footer__about-img mw"
+      /></a>
+    </div>
+  </div>
+</footer>
+<!-- footer -->

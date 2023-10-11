@@ -1,0 +1,58 @@
+<div id="carouselHomeBannerIndicators" class="carousel slide">
+  <div class="carousel-inner">
+    <ng-container *ngFor="let item of banner; first as isFirst; index as i">
+      <div class="carousel-item" [ngClass]="isFirst ? 'active' : ''">
+        <img [src]="item" class="d-block w-100" alt="..." />
+      </div>
+    </ng-container>
+  </div>
+  <button
+    class="carousel-control-prev"
+    type="button"
+    data-bs-target="#carouselHomeBannerIndicators"
+    data-bs-slide="prev"
+  >
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button
+    class="carousel-control-next"
+    type="button"
+    data-bs-target="#carouselHomeBannerIndicators"
+    data-bs-slide="next"
+  >
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div class="d-flex my-5 justify-content-between main-title">
+        <p class="title pe-3">Tin tức sản phẩm</p>
+        <div class="title-btn py-1 ps-3">
+          <button type="button" class="btn btn-all btn-outline-dark">
+            Xem tất cả
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">abc</div>
+    <ng-container *ngFor="let item of product">
+      <div class="col-2">
+        <div class="card">
+          <img [src]="item.img" class="card-img-top" alt="..." />
+          <div class="card-body">
+            <p class="card-subtitle mb-2 text-body-secondary">
+              {{ item.name }}
+            </p>
+            <p class="card-sale">{{ item.cost + ' ' }}<span>₫</span></p>
+            <p class="card-old-price">{{ item.cost + ' ' }}<span>₫</span></p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
