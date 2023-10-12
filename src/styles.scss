@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~bootstrap-icons/font/bootstrap-icons.css';
+@import 'bootstrap/scss/bootstrap';
 
 ul {
   list-style-type: none !important;
@@ -15,4 +16,11 @@ a {
 
 p {
   margin: 0 !important;
+}
+
+img {
+  width: 100%;
+  height: auto;
+  vertical-align: middle;
+  border-style: none;
 }

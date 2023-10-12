@@ -1,0 +1,11 @@
+<div class="row mt-4">
+  <ng-container *ngFor="let item of listAds">
+    <div class="col-lg-6">
+      <div class="banner-ads">
+        <a [href]="item.url">
+          <img [src]="item.img" alt="" />
+        </a>
+      </div>
+    </div>
+  </ng-container>
+</div>
