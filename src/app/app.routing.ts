@@ -10,9 +10,16 @@ export const appRoutes: Routes = [
     },
     children: [
       {
-        path: 'home',
+        path: '',
         loadChildren: () =>
           import('./modules/home/home.module').then((m) => m.HomeModule),
+      },
+      {
+        path: '',
+        loadChildren: () =>
+          import('./modules/product/product.module').then(
+            (m) => m.ProductModule,
+          ),
       },
     ],
   },
