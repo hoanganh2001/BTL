@@ -3,7 +3,7 @@ import { HomeComponent } from './home.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { HomeRoutes } from './home.routing';
-import { ItemListModule } from './common/item-list/item-list.module';
+import { ItemListModule } from '../../shared/component/item-list/item-list.module';
 import { BannerAdsModule } from './common/banner-ads/banner-ads.module';
 
 @NgModule({

@@ -19,12 +19,40 @@
     </ng-container>
   </div>
   <div class="row">
-    <item-list id="headphone" [section]="headphone"></item-list>
-    <item-list id="DAC" [section]="DAC"></item-list>
-    <item-list id="DAP" [section]="DAP"></item-list>
-    <item-list id="speaker" [section]="speaker"></item-list>
-    <item-list id="homeStudio" [section]="homeStudio"></item-list>
-    <item-list id="analog" [section]="analog"></item-list>
-    <item-list id="accessory" [section]="accessory"></item-list>
+    <item-list
+      id="headphone"
+      (handelBtnAction)="redirectTo($event)"
+      [section]="headphone"
+    ></item-list>
+    <item-list
+      id="DAC"
+      (handelBtnAction)="redirectTo($event)"
+      [section]="DAC"
+    ></item-list>
+    <item-list
+      id="DAP"
+      (handelBtnAction)="redirectTo($event)"
+      [section]="DAP"
+    ></item-list>
+    <item-list
+      id="speaker"
+      (handelBtnAction)="redirectTo($event)"
+      [section]="speaker"
+    ></item-list>
+    <item-list
+      id="homeStudio"
+      (handelBtnAction)="redirectTo($event)"
+      [section]="homeStudio"
+    ></item-list>
+    <item-list
+      id="analog"
+      (handelBtnAction)="redirectTo($event)"
+      [section]="analog"
+    ></item-list>
+    <item-list
+      id="accessory"
+      (handelBtnAction)="redirectTo($event)"
+      [section]="accessory"
+    ></item-list>
   </div>
 </div>

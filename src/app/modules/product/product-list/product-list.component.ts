@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Constant } from 'src/app/shared/constant';
 
 @Component({
@@ -379,13 +380,13 @@ export class ProductListComponent implements OnInit {
   categories = [
     {
       id: 'headphone',
-      name: 'DAC/AMP',
+      name: 'headphone',
       type: Constant.TYPE_LIST.PRODUCT,
       featureProduct: true,
     },
     {
       id: 'dac',
-      name: 'headphone',
+      name: 'DAC/AMP',
       type: Constant.TYPE_LIST.PRODUCT,
       featureProduct: true,
     },
@@ -421,12 +422,16 @@ export class ProductListComponent implements OnInit {
     },
   ];
 
-  constructor(private _myElement: ElementRef) {}
+  constructor(private _myElement: ElementRef, private _router: Router) {}
 
   ngOnInit() {}
 
   scroll(id: any) {
     const el = this._myElement.nativeElement.querySelector('#' + id);
     el?.scrollIntoView(false);
+  }
+
+  redirectTo(path: any) {
+    this._router.navigateByUrl('product/' + path);
   }
 }

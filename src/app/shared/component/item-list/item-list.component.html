@@ -1,10 +1,14 @@
 <ng-container *ngIf="section">
-  <div class="row">
+  <div class="row" *ngIf="section.header">
     <div class="col">
       <div class="d-flex my-4 justify-content-between main-title">
         <p class="title pe-3">{{ section.header }}</p>
         <div class="title-btn py-1 ps-3">
-          <button type="button" class="btn btn-all btn-outline-dark">
+          <button
+            type="button"
+            class="btn btn-all btn-outline-dark"
+            (click)="clickAllBtn(section.header)"
+          >
             Xem tất cả
           </button>
         </div>
@@ -107,6 +111,114 @@
           <div class="btn-see-more-icon"><i class="bi bi-arrow-right"></i></div>
         </a>
       </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="section.type === TYPE_LIST.PRODUCT_ONLY">
+    <div class="row">
+      <ng-container *ngFor="let item of section.data; first as isFirst">
+        <div
+          class="mb-4"
+          [ngClass]="column ? 'col-' + (12 / column).toString() : 'col-2'"
+        >
+          <div class="card card-normal">
+            <div class="card-discount" *ngIf="item.discount">
+              {{ '-' + item.discount + '%' }}
+            </div>
+            <div class="card-img">
+              <img [src]="item.img" class="card-img-top" alt="..." />
+              <div class="overlay">
+                <div class="overlay-action">
+                  <button
+                    type="button"
+                    class="btn btn-light overlay-button me-2"
+                    (click)="favoriteAction(heartIcon)"
+                  >
+                    <i class="bi bi-heart" #heartIcon></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-light overlay-button"
+                    (click)="addToCart(item.name)"
+                  >
+                    <i class="bi bi-cart-fill"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <p class="card-subtitle mb-2 text-body-secondary">
+                {{ item.name }}
+              </p>
+              <p class="card-sale">
+                {{
+                  item.discount
+                    ? getDiscountPrice(item.cost, item.discount) + ' '
+                    : item.cost + ' '
+                }}<span>₫</span>
+              </p>
+              <p class="card-old-price">
+                {{ item.discount ? item.cost : ''
+                }}<span *ngIf="item.discount">₫</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="section.type === TYPE_LIST.PRODUCT_SLIDE">
+    <div class="row">
+      <ng-container *ngFor="let item of section.data; first as isFirst">
+        <div
+          class="mb-4"
+          [ngClass]="column ? 'col-' + (12 / column).toString() : 'col-2'"
+        >
+          <div class="card card-normal">
+            <div class="card-discount" *ngIf="item.discount">
+              {{ '-' + item.discount + '%' }}
+            </div>
+            <div class="card-img">
+              <img [src]="item.img" class="card-img-top" alt="..." />
+              <div class="overlay">
+                <div class="overlay-action">
+                  <button
+                    type="button"
+                    class="btn btn-light overlay-button me-2"
+                    (click)="favoriteAction(heartIcon)"
+                  >
+                    <i class="bi bi-heart" #heartIcon></i>
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-light overlay-button"
+                    (click)="addToCart(item.name)"
+                  >
+                    <i class="bi bi-cart-fill"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <p class="card-subtitle mb-2 text-body-secondary">
+                {{ item.name }}
+              </p>
+              <p class="card-sale">
+                {{
+                  item.discount
+                    ? getDiscountPrice(item.cost, item.discount) + ' '
+                    : item.cost + ' '
+                }}<span>₫</span>
+              </p>
+              <p class="card-old-price">
+                {{ item.discount ? item.cost : ''
+                }}<span *ngIf="item.discount">₫</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </ng-container>
     </div>
   </ng-container>
 

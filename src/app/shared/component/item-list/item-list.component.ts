@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Constant } from 'src/app/shared/constant';
 import { SectionData } from './item-list.type';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -10,6 +10,9 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 })
 export class ItemListComponent implements OnInit {
   @Input() section?: SectionData;
+  @Input() column?: number;
+  @Output() handelBtnAction = new EventEmitter();
+
   videoSrc?: SafeResourceUrl;
 
   TYPE_LIST = Constant.TYPE_LIST;
@@ -41,5 +44,9 @@ export class ItemListComponent implements OnInit {
 
   addToCart(id: any) {
     console.log(id);
+  }
+
+  clickAllBtn(id: string) {
+    this.handelBtnAction.emit(id);
   }
 }
