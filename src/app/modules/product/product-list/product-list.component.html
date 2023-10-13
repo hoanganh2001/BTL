@@ -1,3 +1,30 @@
-<p>
-  product-list works!
-</p>
+<div class="banner mb-5">
+  <img
+    src="https://3kshop.vn/wp-content/uploads/2019/09/akg-n5005-3kshop-scaled.jpg"
+    alt=""
+  />
+</div>
+<div class="container mb-5">
+  <div class="row justify-content-around category">
+    <ng-container *ngFor="let category of categories">
+      <div class="col-2">
+        <button
+          type="button"
+          (click)="scroll(category.id)"
+          class="btn text-uppercase btn-outline-dark"
+        >
+          {{ category.name }}
+        </button>
+      </div>
+    </ng-container>
+  </div>
+  <div class="row">
+    <item-list id="headphone" [section]="headphone"></item-list>
+    <item-list id="DAC" [section]="DAC"></item-list>
+    <item-list id="DAP" [section]="DAP"></item-list>
+    <item-list id="speaker" [section]="speaker"></item-list>
+    <item-list id="homeStudio" [section]="homeStudio"></item-list>
+    <item-list id="analog" [section]="analog"></item-list>
+    <item-list id="accessory" [section]="accessory"></item-list>
+  </div>
+</div>

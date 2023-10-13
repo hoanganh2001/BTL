@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ProductListComponent } from './product-list.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { ItemListModule } from '../../home/common/item-list/item-list.module';
 
 @NgModule({
-  imports: [
-    CommonModule
-  ],
-  declarations: [ProductListComponent]
+  imports: [SharedModule, ItemListModule],
+  declarations: [ProductListComponent],
 })
-export class ProductListModule { }
+export class ProductListModule {}

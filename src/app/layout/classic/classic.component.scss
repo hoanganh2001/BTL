@@ -1,5 +1,7 @@
 .navbar {
   height: 100px;
+  top: 0;
+  z-index: 99999;
   .nav-link {
     color: #fff !important;
     position: relative;
