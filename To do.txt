@@ -1,0 +1,36 @@
+- list category
+ + have base component for list x
+ + filter category x
+- category:
+ + only detail filter for product x
+ + make share component for vertical product list
+- product detail
+ + other product: use carousel
+ + detail: ? type scroll ? library ?? manual
+ + show image?
+- brand list: nothing
+- brand's product: nothing
+- news + detail: onlu css
+- discount: use from product list
+- contact: api map
+- my-profile:đơn hàng, update info, favorite
+
+- backend:
+ + get list product
+ + get brand
+ + get news
+ + get ads
+ + search
+ + add favorite
+ + filter and sort product (pass param)
+ + get detail product
+ + get detail new
+ + add to cart
+ + buy
+ + update info + change password
+ + favorite
+ + history
+ + log in + log out
+
+- use session/cookie for guest
+- admin page
