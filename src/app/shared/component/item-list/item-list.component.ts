@@ -14,7 +14,8 @@ export class ItemListComponent implements OnInit {
   @Output() handelBtnAction = new EventEmitter();
 
   videoSrc?: SafeResourceUrl;
-
+  currItemSlide?: number;
+  firstPrv: boolean = true;
   TYPE_LIST = Constant.TYPE_LIST;
   constructor(protected _sanitizer: DomSanitizer) {}
 
@@ -48,5 +49,24 @@ export class ItemListComponent implements OnInit {
 
   clickAllBtn(id: string) {
     this.handelBtnAction.emit(id);
+  }
+
+  scroll(a: any, i: number) {
+    if (this.currItemSlide === a.children.length - 1 && i !== -1) return;
+    if (!this.currItemSlide) {
+      if (i === -1) return;
+      this.currItemSlide = a.clientWidth / a.children[0].offsetWidth - 1 - 1;
+    }
+    if (i === -1 && this.firstPrv) {
+      this.currItemSlide = this.currItemSlide + i - 4;
+      this.firstPrv = false;
+    } else
+      this.currItemSlide =
+        i !== -1 ? this.currItemSlide + i : this.currItemSlide + i;
+    if (i === 1) this.firstPrv = true;
+    a.children[this.currItemSlide].scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
   }
 }

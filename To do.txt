@@ -3,7 +3,7 @@
  + filter category x
 - category:
  + only detail filter for product x
- + make share component for vertical product list
+ + make share component for vertical product list x
 - product detail
  + other product: use carousel
  + detail: ? type scroll ? library ?? manual
