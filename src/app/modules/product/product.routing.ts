@@ -1,6 +1,7 @@
 import { CategoryComponent } from './category/category.component';
 import { Route } from '@angular/router';
 import { ProductListComponent } from './product-list/product-list.component';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 
 export const ProductRoutes: Route[] = [
   {
@@ -18,6 +19,15 @@ export const ProductRoutes: Route[] = [
       {
         path: ':category',
         component: CategoryComponent,
+      },
+      {
+        path: ':category',
+        children: [
+          {
+            path: 'detail',
+            component: ProductDetailComponent,
+          },
+        ],
       },
     ],
   },

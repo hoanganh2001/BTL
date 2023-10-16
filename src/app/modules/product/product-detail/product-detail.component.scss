@@ -1,0 +1,145 @@
+.top-content {
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 32px;
+}
+.list-image {
+  button {
+    background-color: transparent !important;
+  }
+
+  .image {
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    cursor: pointer;
+
+    &.active {
+      border-color: #616161 !important;
+    }
+  }
+}
+
+.content-detail {
+  .bold-text {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  .brand {
+    font-size: 15px;
+    line-height: 22px;
+    text-transform: uppercase;
+
+    &-name {
+      color: #f7a333 !important;
+      font-weight: bold;
+    }
+  }
+  .guarente {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 25px;
+    color: #1a1a1a;
+    display: flex;
+    align-items: center;
+  }
+  .btn {
+    border-radius: 50px;
+    width: fit-content;
+    width: -moz-max-content;
+    padding: 0 30px;
+    height: 50px;
+    background-color: #f7a333;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    text-transform: uppercase;
+    color: #fff;
+    margin: 0 20px 0 0;
+
+    &.btn-buy {
+      .cart-icon {
+        font-size: 20px;
+        margin-right: 12px;
+      }
+    }
+
+    &.btn-installment {
+      background-color: #222 !important;
+    }
+
+    &.btn-like {
+      background: #757575;
+      width: 50px !important;
+      height: 50px !important;
+      padding: 1px 10px 0;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .bi {
+        line-height: 100%;
+        font-size: 22px;
+      }
+    }
+
+    &:hover {
+      transform: scale(1.1);
+      outline: 0;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+  }
+
+  .feature {
+    list-style-type: disc !important;
+    margin-left: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+.sub-title {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 32px;
+  color: #757575;
+  margin-bottom: 30px;
+}
+.detail-product {
+  margin-bottom: 100px;
+}
+#description {
+  max-height: 100vh;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  margin-bottom: 50px;
+}
+
+#specifications {
+  table {
+    width: 100%;
+    display: block;
+    width: 100%;
+    overflow: auto;
+    border-collapse: collapse;
+  }
+  th {
+    font-weight: 600 !important;
+  }
+
+  tr:nth-of-type(even) {
+    background-color: #f5f5f5;
+  }
+
+  td {
+    padding: 15px 20px;
+    font-style: normal;
+    font-size: 17px;
+    line-height: 25px;
+    color: #000;
+  }
+}
