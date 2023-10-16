@@ -5,9 +5,9 @@
  + only detail filter for product x
  + make share component for vertical product list x
 - product detail
- + other product: use carousel
+ + other product: use carousel x
+ + show image? x
  + detail: ? type scroll ? library ?? manual
- + show image?
 - brand list: nothing
 - brand's product: nothing
 - news + detail: onlu css
