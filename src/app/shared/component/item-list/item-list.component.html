@@ -53,7 +53,20 @@
             <div class="card-overlay">
               <div class="card-content">
                 <h5 class="card-title">{{ item.name }}</h5>
-                <p class="card-text">{{ item.cost + ' ' }}<span>₫</span></p>
+                <div class="card-currency">
+                  <p class="card-price">
+                    {{
+                      (item.discount
+                        ? getDiscountPrice(item.cost, item.discount)
+                        : item.cost
+                      ) | currencyFormat
+                    }}<span class="ms-1">₫</span>
+                  </p>
+                  <p class="card-old-price">
+                    {{ (item.discount ? item.cost : '') | currencyFormat
+                    }}<span *ngIf="item.discount" class="ms-1">₫</span>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -258,16 +271,17 @@
           <p class="card-subtitle mb-2 text-body-secondary">
             {{ item.name }}
           </p>
-          <p class="card-sale">
+          <p class="card-price">
             {{
-              item.discount
-                ? getDiscountPrice(item.cost, item.discount) + ' '
-                : item.cost + ' '
-            }}<span>₫</span>
+              (item.discount
+                ? getDiscountPrice(item.cost, item.discount)
+                : item.cost
+              ) | currencyFormat
+            }}<span class="ms-1">₫</span>
           </p>
           <p class="card-old-price">
-            {{ item.discount ? item.cost : ''
-            }}<span *ngIf="item.discount">₫</span>
+            {{ (item.discount ? item.cost : '') | currencyFormat
+            }}<span *ngIf="item.discount" class="ms-1">₫</span>
           </p>
         </div>
       </div>

@@ -17,8 +17,8 @@ const routerConfig: ExtraOptions = {
   imports: [
     RouterModule.forRoot(appRoutes, routerConfig),
     BrowserModule,
-    LayoutModule,
     BrowserAnimationsModule,
+    LayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
