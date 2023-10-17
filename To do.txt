@@ -7,9 +7,9 @@
 - product detail
  + other product: use carousel x
  + show image? x
- + detail: ? type scroll ? library ?? manual
-- brand list: nothing
-- brand's product: nothing
+ + detail: ? type scroll ? library ?? manual x
+- brand list: nothing x
+- brand's product: nothing x
 - news + detail: onlu css
 - discount: use from product list
 - contact: api map
