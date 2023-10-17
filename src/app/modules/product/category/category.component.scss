@@ -1,17 +1,3 @@
-.banner {
-  position: relative;
-  &::before {
-    background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
-    content: '';
-    position: absolute;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-  }
-}
-
 .category {
   margin: 0 40px;
   .btn {

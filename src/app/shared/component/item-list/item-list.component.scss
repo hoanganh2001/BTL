@@ -194,6 +194,20 @@
     align-items: center;
   }
 }
+.btn-all {
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  text-transform: uppercase;
+  color: #000;
+  background-color: #fff;
+  border: 2px solid #000;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
 
 .btn-see-more {
   display: flex;

@@ -1,10 +1,11 @@
 <div class="banner mb-5">
   <img
-    src="https://3kshop.vn/wp-content/uploads/2019/12/PJ-OrtofonCentury-closeup-h-1-scaled.jpg"
+    src="https://3kshop.vn/wp-content/uploads/2019/09/beyerdynamic-dt-240-pro-3skhop-scaled.jpg"
     alt=""
   />
 </div>
 <div class="container mb-5">
+  <!-- Button filter feature  -->
   <div class="row justify-content-around category">
     <ng-container *ngFor="let category of categories">
       <div class="col-2">
@@ -14,6 +15,7 @@
       </div>
     </ng-container>
   </div>
+  <!-- Sort options  -->
   <div class="row justify-content-end mb-5">
     <div class="col-6">
       <div class="d-flex justify-content-end align-items-center">
@@ -35,6 +37,7 @@
     </div>
   </div>
 
+  <!-- Filter options  -->
   <div class="row">
     <div class="col-3">
       <ng-container *ngIf="filterList">
