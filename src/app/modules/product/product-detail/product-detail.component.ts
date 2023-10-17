@@ -383,7 +383,6 @@ export class ProductDetailComponent implements OnInit {
 
   ngOnInit() {
     this.selectedImage = this.listImage[0].bigSrc;
-    console.log(this.selectedImage);
   }
 
   updateImage(selectImage: any) {

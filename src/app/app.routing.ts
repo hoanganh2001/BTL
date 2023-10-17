@@ -21,6 +21,11 @@ export const appRoutes: Routes = [
             (m) => m.ProductModule,
           ),
       },
+      {
+        path: '',
+        loadChildren: () =>
+          import('./modules/brand/brand.module').then((m) => m.BrandModule),
+      },
     ],
   },
 ];
