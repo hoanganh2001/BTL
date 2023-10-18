@@ -389,8 +389,6 @@ export class ProductDetailComponent implements OnInit {
     this.listImage.forEach((item) => {
       if (item.id === selectImage) {
         this.selectedImage = item.bigSrc;
-        console.log(this.selectedImage);
-
         item.active = true;
       } else {
         item.active = false;
@@ -403,7 +401,6 @@ export class ProductDetailComponent implements OnInit {
     this.detail.forEach((item) => {
       item.active = item.id === id;
     });
-    console.log(this.detail);
   }
 
   safeHTML(content: string): SafeHtml {
