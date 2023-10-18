@@ -1,3 +1,100 @@
-<p>
-  new-list works!
-</p>
+<div class="top-news">
+  <div class="container pb-5">
+    <!-- the newest news -->
+    <div class="row">
+      <div class="col">
+        <div class="row">
+          <ng-container *ngFor="let new of newList; index as i">
+            <div [ngClass]="i < 2 ? 'col-6' : 'col-4'">
+              <ng-container
+                [ngTemplateOutlet]="cardNew"
+                [ngTemplateOutletContext]="{ new: new }"
+              ></ng-container>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="all-news">
+  <div class="container">
+    <div class="row">
+      <div class="col-8">
+        <!-- All news -->
+        <div class="news-list">
+          <h3 class="news-list-title mb-4">Tất cả bài viết</h3>
+          <ng-container *ngFor="let new of newList; index as i">
+            <ng-container
+              [ngTemplateOutlet]="cardDetail"
+              [ngTemplateOutletContext]="{
+                new: new,
+                isHover: true
+              }"
+            ></ng-container>
+          </ng-container>
+          <button class="btn btn-showmore btn--animation-hover-out">
+            Xem thêm
+          </button>
+        </div>
+      </div>
+      <!-- side new -->
+      <div class="col-4">
+        <side-bar-new
+          [newList]="newList"
+          [categories]="categories"
+        ></side-bar-new>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #cardNew let-new="new">
+  <div class="card new mt-4">
+    <img [src]="new.img" class="card-img-top new-img" [alt]="new.name" />
+    <div class="card-body new-body">
+      <h5 class="card-title new-title">{{ new.name }}</h5>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template
+  #cardDetail
+  let-new="new"
+  let-isHover="isHover"
+  let-onlyDate="onlyDate"
+>
+  <div
+    class="card news-list-item pb-4 mb-4"
+    [ngClass]="isHover ? 'news-list-item--hover' : 'news-list-item--side'"
+  >
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img
+          [src]="new.img"
+          class="img-fluid news-list-item-img rounded-start"
+          [alt]="new.name"
+        />
+      </div>
+      <div class="col-md-8">
+        <div class="card-body news-list-item-content">
+          <h5 class="card-title news-list-item-title">
+            {{ new.name }}
+          </h5>
+
+          <p class="card-text news-list-item-text">
+            <ng-container *ngIf="onlyDate; else fullDetail">
+              10 ngày trước
+            </ng-container>
+            <ng-template #fullDetail>
+              <span class="news-list-item-text-author">HieuDC </span>
+              <span class="mx-1">-</span>
+              10 ngày trước <span class="mx-1">-</span> 0 lượt xem
+            </ng-template>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

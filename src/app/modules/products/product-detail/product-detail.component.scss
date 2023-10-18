@@ -112,29 +112,16 @@
 .detail-product {
   margin-bottom: 100px;
   .btn-showmore {
-    width: fit-content;
-    width: -moz-max-content;
     margin: 50px auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
     background: #f8d859;
     text-transform: uppercase;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 19px;
-    line-height: 25px;
     color: #000;
     padding: 10px 30px;
     border-radius: 50px;
-    cursor: pointer;
     min-width: 200px;
-    -webkit-backface-visibility: hidden;
-    -moz-backface-visibility: hidden;
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-
     &:hover {
       background-color: #000;
       color: #fff;

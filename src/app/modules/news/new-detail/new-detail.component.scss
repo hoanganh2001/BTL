@@ -1,0 +1,37 @@
+.detail-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  &-name {
+    font-size: 1.75rem;
+    color: #000;
+    line-height: 1.8rem;
+    font-weight: 600;
+  }
+
+  &-author {
+    color: #f7a333;
+    span {
+      color: black;
+    }
+  }
+
+  &-text {
+    font-size: 1.15rem;
+  }
+}
+
+.detail-content ::ng-deep {
+  p {
+    font-size: 1rem !important;
+    margin-top: 0 !important;
+    margin-bottom: 1rem !important;
+  }
+
+  h2 {
+    margin-top: 0 !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  img {
+    margin: 1rem 0 !important;
+  }
+}

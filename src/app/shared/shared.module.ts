@@ -2,7 +2,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { CurrencyFormatPipe } from './pipe/currencyFormat.pipe';
+import {
+  CountDateToNowPipe,
+  CurrencyFormatPipe,
+} from './pipe/currencyFormat.pipe';
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
@@ -12,7 +15,8 @@ import { CurrencyFormatPipe } from './pipe/currencyFormat.pipe';
     ReactiveFormsModule,
     RouterModule,
     CurrencyFormatPipe,
+    CountDateToNowPipe,
   ],
-  declarations: [CurrencyFormatPipe],
+  declarations: [CurrencyFormatPipe, CountDateToNowPipe],
 })
 export class SharedModule {}

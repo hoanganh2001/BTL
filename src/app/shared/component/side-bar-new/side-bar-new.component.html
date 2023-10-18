@@ -1,0 +1,68 @@
+<div class="side-bar-news">
+  <h4 class="side-bar-header">Bài viết mới nhất</h4>
+  <ng-container *ngFor="let new of newList; index as i">
+    <ng-container
+      [ngTemplateOutlet]="cardDetail"
+      [ngTemplateOutletContext]="{
+        new: new,
+        isHover: false,
+        onlyDate: true
+      }"
+    ></ng-container>
+  </ng-container>
+</div>
+<div class="side-bar-category">
+  <h4 class="side-bar-header">Bài viết mới nhất</h4>
+  <ul>
+    <ng-container *ngFor="let category of categories">
+      <li class="side-bar-category-title">
+        <span>
+          {{ category.name }}
+          <span class="side-bar-category-quantity ms-1">
+            ({{ category.count }})
+          </span>
+        </span>
+      </li>
+    </ng-container>
+  </ul>
+</div>
+
+<ng-template
+  #cardDetail
+  let-new="new"
+  let-isHover="isHover"
+  let-onlyDate="onlyDate"
+>
+  <div
+    class="card news-list-item pb-4 mb-4"
+    [ngClass]="isHover ? 'news-list-item--hover' : 'news-list-item--side'"
+  >
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img
+          [src]="new.img"
+          class="img-fluid news-list-item-img rounded-start"
+          [alt]="new.name"
+        />
+      </div>
+      <div class="col-md-8">
+        <div class="card-body news-list-item-content">
+          <h5 class="card-title news-list-item-title">
+            {{ new.name }}
+          </h5>
+
+          <p class="card-text news-list-item-text">
+            <ng-container *ngIf="onlyDate; else fullDetail">
+              10 ngày trước
+            </ng-container>
+            <ng-template #fullDetail>
+              <span class="news-list-item-text-author">HieuDC </span>
+              <span class="mx-1">-</span>
+              10 ngày trước <span class="mx-1">-</span> 0 lượt xem
+            </ng-template>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

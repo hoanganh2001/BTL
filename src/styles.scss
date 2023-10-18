@@ -85,6 +85,15 @@ body {
   position: relative;
   overflow: hidden;
   z-index: 1;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  font-style: normal !important;
+  font-weight: bold !important;
+  font-size: 19px !important;
+  line-height: 25px !important;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
@@ -96,7 +105,6 @@ body {
 .btn--animation-hover-out {
   &:hover {
     color: #000 !important;
-
     &::after {
       left: 0;
       top: 0;
