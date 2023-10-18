@@ -1,23 +1,23 @@
 import { Route } from '@angular/router';
 import { BrandListComponent } from './brand-list/brand-list.component';
-import { BrandProductDetailComponent } from './brand-product-detail/brand-product-detail.component';
+import { BrandProductListComponent } from './brand-product-list/brand-product-list.component';
 
-export const BrandRoutes: Route[] = [
+export const BrandsRoutes: Route[] = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'brand',
+    redirectTo: 'brands',
   },
   {
-    path: 'brand',
+    path: 'brands',
     component: BrandListComponent,
   },
   {
-    path: 'brand',
+    path: 'brands',
     children: [
       {
         path: ':brandName',
-        component: BrandProductDetailComponent,
+        component: BrandProductListComponent,
       },
     ],
   },

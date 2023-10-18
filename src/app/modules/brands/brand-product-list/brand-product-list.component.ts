@@ -1,15 +1,13 @@
-import { filter } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { filterData } from '../../product/category/category.type';
 import { Constant } from 'src/app/shared/constant';
 
 @Component({
-  selector: 'app-brand-product-detail',
-  templateUrl: './brand-product-detail.component.html',
-  styleUrls: ['./brand-product-detail.component.scss'],
+  selector: 'app-brand-product-list',
+  templateUrl: './brand-product-list.component.html',
+  styleUrls: ['./brand-product-list.component.scss'],
 })
-export class BrandProductDetailComponent implements OnInit {
+export class BrandProductListComponent implements OnInit {
   brandName?: string;
   sortOption = {
     title: 'SẮP XẾP THEO:',

@@ -17,14 +17,19 @@ export const appRoutes: Routes = [
       {
         path: '',
         loadChildren: () =>
-          import('./modules/product/product.module').then(
-            (m) => m.ProductModule,
+          import('./modules/products/products.module').then(
+            (m) => m.ProductsModule,
           ),
       },
       {
         path: '',
         loadChildren: () =>
-          import('./modules/brand/brand.module').then((m) => m.BrandModule),
+          import('./modules/brands/brands.module').then((m) => m.BrandsModule),
+      },
+      {
+        path: '',
+        loadChildren: () =>
+          import('./modules/news/news.module').then((m) => m.NewsModule),
       },
     ],
   },

@@ -3,18 +3,18 @@ import { Route } from '@angular/router';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 
-export const ProductRoutes: Route[] = [
+export const ProductsRoutes: Route[] = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'product',
+    redirectTo: 'products',
   },
   {
-    path: 'product',
+    path: 'products',
     component: ProductListComponent,
   },
   {
-    path: 'product',
+    path: 'products',
     children: [
       {
         path: ':category',

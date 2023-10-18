@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BrandListModule } from './brand-list/brand-list.module';
-import { BrandRoutes } from './brand.routing';
 import { RouterModule } from '@angular/router';
-import { BrandProductDetailModule } from './brand-product-detail/brand-product-detail.module';
+import { BrandProductListModule } from './brand-product-list/brand-product-list.module';
+import { BrandsRoutes } from './brands.routing';
 
 @NgModule({
   imports: [
-    RouterModule.forChild(BrandRoutes),
+    RouterModule.forChild(BrandsRoutes),
     SharedModule,
     BrandListModule,
-    BrandProductDetailModule,
+    BrandProductListModule,
   ],
 })
-export class BrandModule {}
+export class BrandsModule {}
