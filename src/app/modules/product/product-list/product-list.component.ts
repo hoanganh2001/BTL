@@ -422,6 +422,11 @@ export class ProductListComponent implements OnInit {
     },
   ];
 
+  categoriesOption = {
+    type: Constant.TYPE_SORT_FILTER.FILTER_TYPE,
+    categories: this.categories,
+  };
+
   constructor(private _myElement: ElementRef, private _router: Router) {}
 
   ngOnInit() {}

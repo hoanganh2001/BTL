@@ -1,0 +1,90 @@
+<ng-container *ngIf="data">
+  <ng-container *ngIf="data.type === TYPE_SORT_FILTER.FILTER_TYPE">
+    <div class="col-12">
+      <div class="row justify-content-around category">
+        <ng-container *ngFor="let category of data.categories">
+          <div class="col-2">
+            <button
+              type="button"
+              class="btn btn-filter-type btn--animation-hover-in text-uppercase"
+            >
+              {{ category.name }}
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="data.type === TYPE_SORT_FILTER.SORT && data.sorts">
+    <div class="d-flex justify-content-end align-items-center">
+      <h3 class="text-uppercase sort-text">{{ data.title }}</h3>
+      <mat-select
+        class="sort-option text-capitalize"
+        [(value)]="data.sorts[0].id"
+        (valueChange)="sortData()"
+      >
+        <mat-option
+          class="text-capitalize"
+          *ngFor="let sort of data.sorts"
+          [value]="sort.id"
+        >
+          {{ sort.name }}
+        </mat-option>
+      </mat-select>
+    </div>
+  </ng-container>
+
+  <ng-container
+    *ngIf="data.type === TYPE_SORT_FILTER.FILTER_FEATURE && data.filters"
+  >
+    <div class="brand-logo" *ngIf="data.filters.brand as brand">
+      <img [src]="brand.img" [alt]="brand.name" />
+    </div>
+    <ng-container *ngIf="data.filters.list">
+      <div class="filter" *ngFor="let filter of data.filters.list">
+        <ng-container *ngIf="filter.type === FILTER_TYPE.MULTI_CHECKBOX">
+          <h4 class="filter-header-text">{{ filter.title }}</h4>
+          <ul
+            class="filter-option"
+            [ngClass]="
+              filter.options && filter.options.length > 8
+                ? 'overflow-y-auto'
+                : ''
+            "
+          >
+            <li *ngFor="let option of filter.options">
+              <mat-checkbox
+                [(ngModel)]="option.completed"
+                (ngModelChange)="filterData()"
+                class="text-capitalize"
+                >{{ option.name }}</mat-checkbox
+              >
+            </li>
+          </ul>
+        </ng-container>
+        <ng-container *ngIf="filter.type === FILTER_TYPE.RANGE_INPUT">
+          <h4 class="filter-header-text">{{ filter.title }}</h4>
+          <p class="filter-header-text-hint mb-4">
+            {{ filter.description }}
+          </p>
+          <table class="d-flex justify-content-center" cellspacing="0">
+            <tr>
+              <td>
+                <mat-form-field class="">
+                  <input matInput type="number" />
+                </mat-form-field>
+              </td>
+              <td><span class="mx-4">-</span></td>
+              <td>
+                <mat-form-field class="">
+                  <input matInput type="number" />
+                </mat-form-field>
+              </td>
+            </tr>
+          </table>
+        </ng-container>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-container>

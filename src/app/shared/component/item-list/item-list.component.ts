@@ -16,7 +16,7 @@ export class ItemListComponent implements OnInit {
   videoSrc?: SafeResourceUrl;
   currItemSlide?: number;
   firstPrv: boolean = true;
-  TYPE_LIST = Constant.TYPE_LIST;
+  readonly TYPE_LIST = Constant.TYPE_LIST;
   constructor(protected _sanitizer: DomSanitizer) {}
 
   ngOnInit() {

@@ -13,330 +13,342 @@ export class CategoryComponent implements OnInit {
 
   ngOnInit() {}
 
-  sortOption = [
-    {
-      id: 'new',
-      name: 'mới nhất',
-    },
-    {
-      id: 'old',
-      name: 'cũ nhất',
-    },
-    {
-      id: 'cheap',
-      name: 'Giá thấp đến cao',
-    },
-    {
-      id: 'expensive',
-      name: 'Giá cao đến thấp',
-    },
-  ];
+  sortOption = {
+    title: 'SẮP XẾP THEO:',
+    type: Constant.TYPE_SORT_FILTER.SORT,
+    sorts: [
+      {
+        id: 'new',
+        name: 'mới nhất',
+      },
+      {
+        id: 'old',
+        name: 'cũ nhất',
+      },
+      {
+        id: 'cheap',
+        name: 'Giá thấp đến cao',
+      },
+      {
+        id: 'expensive',
+        name: 'Giá cao đến thấp',
+      },
+    ],
+  };
 
-  categories = [
-    {
-      id: 'full',
-      name: 'Full size',
-    },
-    {
-      id: 'on',
-      name: 'on ear',
-    },
-    {
-      id: 'earbud',
-      name: 'earbud',
-    },
-    {
-      id: 'in',
-      name: 'in ear',
-    },
-    {
-      id: 'wireless',
-      name: 'wireless',
-    },
-    {
-      id: 'true_wireless',
-      name: 'true wireless',
-    },
-    {
-      id: 'custome',
-      name: 'custome in ear',
-    },
-  ];
+  categories = {
+    type: Constant.TYPE_SORT_FILTER.FILTER_TYPE,
+    categories: [
+      {
+        id: 'full',
+        name: 'Full size',
+      },
+      {
+        id: 'on',
+        name: 'on ear',
+      },
+      {
+        id: 'earbud',
+        name: 'earbud',
+      },
+      {
+        id: 'in',
+        name: 'in ear',
+      },
+      {
+        id: 'wireless',
+        name: 'wireless',
+      },
+      {
+        id: 'true_wireless',
+        name: 'true wireless',
+      },
+      {
+        id: 'custome',
+        name: 'custome in ear',
+      },
+    ],
+  };
 
-  filterList: filterData[] = [
-    {
-      id: 'brand',
-      name: 'Thương hiệu',
-      type: 'multi_checkbox',
-      options: [
+  filter = {
+    type: Constant.TYPE_SORT_FILTER.FILTER_FEATURE,
+    filters: {
+      list: [
         {
-          id: 1,
-          name: 'AKG',
-          completed: false,
+          id: 'brand',
+          title: 'Thương hiệu',
+          type: Constant.FILTER_TYPE.MULTI_CHECKBOX,
+          options: [
+            {
+              id: 1,
+              name: 'AKG',
+              completed: false,
+            },
+            {
+              id: 2,
+              name: 'Apple',
+              completed: false,
+            },
+            {
+              id: 3,
+              name: 'Audeze',
+              completed: false,
+            },
+            {
+              id: 4,
+              name: 'Audio Technica',
+              completed: false,
+            },
+            {
+              id: 5,
+              name: 'Bang & Olufsen',
+              completed: false,
+            },
+            {
+              id: 6,
+              name: 'Beats',
+              completed: false,
+            },
+            {
+              id: 7,
+              name: 'Beyerdynamic',
+              completed: false,
+            },
+            {
+              id: 8,
+              name: 'Bose',
+              completed: false,
+            },
+            {
+              id: 9,
+              name: 'Campfire Audio',
+              completed: false,
+            },
+            {
+              id: 10,
+              name: 'Denon',
+              completed: false,
+            },
+            {
+              id: 11,
+              name: 'FiiO',
+              completed: false,
+            },
+            {
+              id: 12,
+              name: 'Focal',
+              completed: false,
+            },
+            {
+              id: 13,
+              name: 'Hãng khác',
+              completed: false,
+            },
+            {
+              id: 14,
+              name: 'HifiMan',
+              completed: false,
+            },
+            {
+              id: 15,
+              name: 'Jabra',
+              completed: false,
+            },
+            {
+              id: 16,
+              name: 'Jade Audio',
+              completed: false,
+            },
+            {
+              id: 17,
+              name: 'JBL',
+              completed: false,
+            },
+            {
+              id: 18,
+              name: 'Klipsch',
+              completed: false,
+            },
+            {
+              id: 19,
+              name: 'Koss',
+              completed: false,
+            },
+            {
+              id: 20,
+              name: 'Marshall',
+              completed: false,
+            },
+            {
+              id: 21,
+              name: 'Master and Dynamic',
+              completed: false,
+            },
+            {
+              id: 22,
+              name: 'Dan Clark Audio',
+              completed: false,
+            },
+            {
+              id: 23,
+              name: 'Noble',
+              completed: false,
+            },
+            {
+              id: 24,
+              name: 'Partron',
+              completed: false,
+            },
+            {
+              id: 25,
+              name: 'Radius',
+              completed: false,
+            },
+            {
+              id: 26,
+              name: 'RHA',
+              completed: false,
+            },
+            {
+              id: 27,
+              name: 'Sennheiser',
+              completed: false,
+            },
+            {
+              id: 28,
+              name: 'Shure',
+              completed: false,
+            },
+            {
+              id: 29,
+              name: 'Skullcandy',
+              completed: false,
+            },
+            {
+              id: 30,
+              name: 'Sony',
+              completed: false,
+            },
+            {
+              id: 31,
+              name: 'Stax',
+              completed: false,
+            },
+            {
+              id: 32,
+              name: 'Westone',
+              completed: false,
+            },
+            {
+              id: 33,
+              name: 'Yuin',
+              completed: false,
+            },
+            {
+              id: 34,
+              name: 'Padmate',
+              completed: false,
+            },
+          ],
         },
         {
-          id: 2,
-          name: 'Apple',
-          completed: false,
+          id: 'headType',
+          title: 'headphone type',
+          type: Constant.FILTER_TYPE.MULTI_CHECKBOX,
+          options: [
+            {
+              id: 'full',
+              name: 'Full size',
+              completed: false,
+            },
+            {
+              id: 'on',
+              name: 'on ear',
+              completed: false,
+            },
+            {
+              id: 'earbud',
+              name: 'earbud',
+              completed: false,
+            },
+            {
+              id: 'in',
+              name: 'in ear',
+              completed: false,
+            },
+            {
+              id: 'wireless',
+              name: 'wireless',
+              completed: false,
+            },
+            {
+              id: 'true_wireless',
+              name: 'true wireless',
+              completed: false,
+            },
+            {
+              id: 'custome',
+              name: 'custome in ear',
+              completed: false,
+            },
+          ],
         },
         {
-          id: 3,
-          name: 'Audeze',
-          completed: false,
+          id: 'headfeature',
+          title: 'headphone feature',
+          type: Constant.FILTER_TYPE.MULTI_CHECKBOX,
+          options: [
+            {
+              id: 1,
+              name: 'Chống ồn',
+              completed: false,
+            },
+            {
+              id: 2,
+              name: 'Không dây',
+              completed: false,
+            },
+            {
+              id: 3,
+              name: 'Có micro',
+              completed: false,
+            },
+            {
+              id: 4,
+              name: 'Có tăng giảm âm lượng',
+              completed: false,
+            },
+            {
+              id: 5,
+              name: 'Tai nghe thể thao',
+              completed: false,
+            },
+            {
+              id: 6,
+              name: 'Tai nghe DJ',
+              completed: false,
+            },
+            {
+              id: 7,
+              name: 'Tai nghe phòng thu',
+              completed: false,
+            },
+            {
+              id: 8,
+              name: 'Tai nghe Gaming',
+              completed: false,
+            },
+          ],
         },
         {
-          id: 4,
-          name: 'Audio Technica',
-          completed: false,
-        },
-        {
-          id: 5,
-          name: 'Bang & Olufsen',
-          completed: false,
-        },
-        {
-          id: 6,
-          name: 'Beats',
-          completed: false,
-        },
-        {
-          id: 7,
-          name: 'Beyerdynamic',
-          completed: false,
-        },
-        {
-          id: 8,
-          name: 'Bose',
-          completed: false,
-        },
-        {
-          id: 9,
-          name: 'Campfire Audio',
-          completed: false,
-        },
-        {
-          id: 10,
-          name: 'Denon',
-          completed: false,
-        },
-        {
-          id: 11,
-          name: 'FiiO',
-          completed: false,
-        },
-        {
-          id: 12,
-          name: 'Focal',
-          completed: false,
-        },
-        {
-          id: 13,
-          name: 'Hãng khác',
-          completed: false,
-        },
-        {
-          id: 14,
-          name: 'HifiMan',
-          completed: false,
-        },
-        {
-          id: 15,
-          name: 'Jabra',
-          completed: false,
-        },
-        {
-          id: 16,
-          name: 'Jade Audio',
-          completed: false,
-        },
-        {
-          id: 17,
-          name: 'JBL',
-          completed: false,
-        },
-        {
-          id: 18,
-          name: 'Klipsch',
-          completed: false,
-        },
-        {
-          id: 19,
-          name: 'Koss',
-          completed: false,
-        },
-        {
-          id: 20,
-          name: 'Marshall',
-          completed: false,
-        },
-        {
-          id: 21,
-          name: 'Master and Dynamic',
-          completed: false,
-        },
-        {
-          id: 22,
-          name: 'Dan Clark Audio',
-          completed: false,
-        },
-        {
-          id: 23,
-          name: 'Noble',
-          completed: false,
-        },
-        {
-          id: 24,
-          name: 'Partron',
-          completed: false,
-        },
-        {
-          id: 25,
-          name: 'Radius',
-          completed: false,
-        },
-        {
-          id: 26,
-          name: 'RHA',
-          completed: false,
-        },
-        {
-          id: 27,
-          name: 'Sennheiser',
-          completed: false,
-        },
-        {
-          id: 28,
-          name: 'Shure',
-          completed: false,
-        },
-        {
-          id: 29,
-          name: 'Skullcandy',
-          completed: false,
-        },
-        {
-          id: 30,
-          name: 'Sony',
-          completed: false,
-        },
-        {
-          id: 31,
-          name: 'Stax',
-          completed: false,
-        },
-        {
-          id: 32,
-          name: 'Westone',
-          completed: false,
-        },
-        {
-          id: 33,
-          name: 'Yuin',
-          completed: false,
-        },
-        {
-          id: 34,
-          name: 'Padmate',
-          completed: false,
+          id: 'price',
+          title: 'giá tiền',
+          type: Constant.FILTER_TYPE.RANGE_INPUT,
+          description: 'Chọn khoảng giá tiền (triệu đồng)',
         },
       ],
     },
-    {
-      id: 'headType',
-      name: 'headphone type',
-      type: 'multi_checkbox',
-      options: [
-        {
-          id: 'full',
-          name: 'Full size',
-          completed: false,
-        },
-        {
-          id: 'on',
-          name: 'on ear',
-          completed: false,
-        },
-        {
-          id: 'earbud',
-          name: 'earbud',
-          completed: false,
-        },
-        {
-          id: 'in',
-          name: 'in ear',
-          completed: false,
-        },
-        {
-          id: 'wireless',
-          name: 'wireless',
-          completed: false,
-        },
-        {
-          id: 'true_wireless',
-          name: 'true wireless',
-          completed: false,
-        },
-        {
-          id: 'custome',
-          name: 'custome in ear',
-          completed: false,
-        },
-      ],
-    },
-    {
-      id: 'headfeature',
-      name: 'headphone feature',
-      type: 'multi_checkbox',
-      options: [
-        {
-          id: 1,
-          name: 'Chống ồn',
-          completed: false,
-        },
-        {
-          id: 2,
-          name: 'Không dây',
-          completed: false,
-        },
-        {
-          id: 3,
-          name: 'Có micro',
-          completed: false,
-        },
-        {
-          id: 4,
-          name: 'Có tăng giảm âm lượng',
-          completed: false,
-        },
-        {
-          id: 5,
-          name: 'Tai nghe thể thao',
-          completed: false,
-        },
-        {
-          id: 6,
-          name: 'Tai nghe DJ',
-          completed: false,
-        },
-        {
-          id: 7,
-          name: 'Tai nghe phòng thu',
-          completed: false,
-        },
-        {
-          id: 8,
-          name: 'Tai nghe Gaming',
-          completed: false,
-        },
-      ],
-    },
-    {
-      id: 'price',
-      name: 'giá tiền',
-      type: 'rangeInput',
-      options: [],
-    },
-  ];
+  };
 
   productList = {
     type: Constant.TYPE_LIST.PRODUCT_ONLY,

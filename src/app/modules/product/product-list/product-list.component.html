@@ -6,17 +6,7 @@
 </div>
 <div class="container mb-5">
   <div class="row justify-content-around category">
-    <ng-container *ngFor="let category of categories">
-      <div class="col-2">
-        <button
-          type="button"
-          (click)="scroll(category.id)"
-          class="btn text-uppercase btn-outline-dark"
-        >
-          {{ category.name }}
-        </button>
-      </div>
-    </ng-container>
+    <filter-and-sort [data]="categoriesOption"></filter-and-sort>
   </div>
   <div class="row">
     <item-list

@@ -5,11 +5,13 @@ import { ItemListModule } from 'src/app/shared/component/item-list/item-list.mod
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { FilterAndSortModule } from 'src/app/shared/component/filter-and-sort/filter-and-sort.module';
 
 @NgModule({
   imports: [
     SharedModule,
     ItemListModule,
+    FilterAndSortModule,
     MatCheckboxModule,
     MatSelectModule,
     MatInputModule,

@@ -6,4 +6,15 @@ export class Constant {
     NEW: 'new',
     VIDEO_NEW: 'video_new',
   };
+
+  public static TYPE_SORT_FILTER = {
+    SORT: 'sort',
+    FILTER_FEATURE: 'filter_feature',
+    FILTER_TYPE: 'filter_type',
+  };
+
+  public static FILTER_TYPE = {
+    MULTI_CHECKBOX: 'multi_checkbox',
+    RANGE_INPUT: 'range_input',
+  };
 }

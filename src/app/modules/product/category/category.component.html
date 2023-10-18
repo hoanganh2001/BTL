@@ -7,80 +7,19 @@
 <div class="container mb-5">
   <!-- Button filter feature  -->
   <div class="row justify-content-around category">
-    <ng-container *ngFor="let category of categories">
-      <div class="col-2">
-        <button type="button" class="btn text-uppercase btn-outline-dark">
-          {{ category.name }}
-        </button>
-      </div>
-    </ng-container>
+    <filter-and-sort [data]="categories"></filter-and-sort>
   </div>
   <!-- Sort options  -->
   <div class="row justify-content-end mb-5">
     <div class="col-6">
-      <div class="d-flex justify-content-end align-items-center">
-        <h3 class="text-uppercase sort-text">Sắp xếp theo:</h3>
-        <mat-select
-          class="sort-option text-capitalize"
-          [(value)]="sortOption[0].id"
-          (valueChange)="sortData()"
-        >
-          <mat-option
-            class="text-capitalize"
-            *ngFor="let sort of sortOption"
-            [value]="sort.id"
-          >
-            {{ sort.name }}
-          </mat-option>
-        </mat-select>
-      </div>
+      <filter-and-sort [data]="sortOption"></filter-and-sort>
     </div>
   </div>
 
   <!-- Filter options  -->
   <div class="row">
     <div class="col-3">
-      <ng-container *ngIf="filterList">
-        <div class="filter" *ngFor="let filter of filterList">
-          <ng-container *ngIf="filter.type === 'multi_checkbox'">
-            <h4 class="filter-header-text">{{ filter.name }}</h4>
-            <ul
-              class="filter-option"
-              [ngClass]="filter.options.length > 8 ? 'overflow-y-auto' : ''"
-            >
-              <li *ngFor="let option of filter.options">
-                <mat-checkbox
-                  [(ngModel)]="option.completed"
-                  (ngModelChange)="filterData()"
-                  class="text-capitalize"
-                  >{{ option.name }}</mat-checkbox
-                >
-              </li>
-            </ul>
-          </ng-container>
-          <ng-container *ngIf="filter.type === 'rangeInput'">
-            <h4 class="filter-header-text">{{ filter.name }}</h4>
-            <p class="filter-header-text-hint mb-4">
-              Chọn khoảng giá tiền (triệu đồng)
-            </p>
-            <table class="d-flex justify-content-center" cellspacing="0">
-              <tr>
-                <td>
-                  <mat-form-field class="">
-                    <input matInput type="number" />
-                  </mat-form-field>
-                </td>
-                <td><span class="mx-4">-</span></td>
-                <td>
-                  <mat-form-field class="">
-                    <input matInput type="number" />
-                  </mat-form-field>
-                </td>
-              </tr>
-            </table>
-          </ng-container>
-        </div>
-      </ng-container>
+      <filter-and-sort [data]="filter"></filter-and-sort>
     </div>
     <div class="col-9">
       <div class="container">
