@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import RouterConfig from 'src/app/core/config/router.config';
 import { Constant } from 'src/app/shared/constant';
 
 @Component({
@@ -437,6 +438,6 @@ export class ProductListComponent implements OnInit {
   }
 
   redirectTo(path: any) {
-    this._router.navigateByUrl('product/' + path);
+    this._router.navigateByUrl(RouterConfig.PRODUCT_CATEGORY + '/' + path);
   }
 }

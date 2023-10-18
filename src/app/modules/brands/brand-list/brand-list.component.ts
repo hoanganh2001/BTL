@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import RouterConfig from 'src/app/core/config/router.config';
 
 @Component({
   selector: 'app-brand-list',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./brand-list.component.scss'],
 })
 export class BrandListComponent implements OnInit {
+  readonly brandRoute = RouterConfig.BRANDS;
   brandList = {
     title: 'brand list',
     data: [

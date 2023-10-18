@@ -20,15 +20,6 @@ export const ProductsRoutes: Route[] = [
         path: ':category',
         component: CategoryComponent,
       },
-      {
-        path: ':category',
-        children: [
-          {
-            path: 'detail',
-            component: ProductDetailComponent,
-          },
-        ],
-      },
     ],
   },
 ];

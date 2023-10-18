@@ -189,6 +189,7 @@
   align-items: center;
   transform: translate(50%, 50%);
   transition: all 0.7s ease-in-out;
+  pointer-events: none;
 }
 
 .overlay-action {
@@ -449,4 +450,10 @@
   &-next {
     right: 0;
   }
+}
+
+.product-item {
+  border: none;
+  background-color: transparent;
+  text-align: left;
 }

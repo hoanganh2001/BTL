@@ -92,7 +92,7 @@
       <ng-container *ngFor="let item of section.data">
         <ng-container
           [ngTemplateOutlet]="card"
-          [ngTemplateOutletContext]="{ item: item, column: 4 }"
+          [ngTemplateOutletContext]="{ item: item, column: column }"
         ></ng-container>
       </ng-container>
     </div>
@@ -241,7 +241,7 @@
     class="mb-4 {{ row ? 'me-5' : '' }}"
     [ngClass]="column ? 'col-' + (12 / column).toString() : ''"
   >
-    <a href="#">
+    <button (click)="redirectToDetail(item.id)" class="product-item">
       <div class="card card-normal">
         <div class="card-discount" *ngIf="item.discount">
           {{ '-' + item.discount + '%' }}
@@ -285,6 +285,6 @@
           </p>
         </div>
       </div>
-    </a>
+    </button>
   </div>
 </ng-template>

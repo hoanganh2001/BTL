@@ -19,7 +19,7 @@
             [ngClass]="brandList.data.length > 15 ? 'overflow-y-auto' : ''"
           >
             <li *ngFor="let brand of brandList.data">
-              <a [routerLink]="['/brand/' + brand.name]">
+              <a [routerLink]="[brandRoute + '/' + brand.name]">
                 {{ brand.name }}
               </a>
             </li>
@@ -33,7 +33,10 @@
         <ng-container *ngFor="let brand of brandList.data; index as i">
           <ng-container *ngIf="!limit || i < limit">
             <div class="col-3">
-              <a class="brand-logo" [routerLink]="['/brand/' + brand.name]">
+              <a
+                class="brand-logo"
+                [routerLink]="[brandRoute + '/' + brand.name]"
+              >
                 <img [src]="brand.img" [alt]="brand.name" />
               </a>
             </div>

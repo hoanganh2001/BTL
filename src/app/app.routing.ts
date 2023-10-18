@@ -38,6 +38,13 @@ export const appRoutes: Routes = [
             (m) => m.PromotionModule,
           ),
       },
+      {
+        path: '**',
+        loadChildren: () =>
+          import(
+            './modules/products/product-detail/product-detail.module'
+          ).then((m) => m.ProductDetailModule),
+      },
     ],
   },
 ];

@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Constant } from 'src/app/shared/constant';
 import { SectionData } from './item-list.type';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import RouterConfig from 'src/app/core/config/router.config';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'item-list',
@@ -17,7 +19,8 @@ export class ItemListComponent implements OnInit {
   currItemSlide?: number;
   firstPrv: boolean = true;
   readonly TYPE_LIST = Constant.TYPE_LIST;
-  constructor(protected _sanitizer: DomSanitizer) {}
+  readonly RouterConfig = RouterConfig;
+  constructor(protected _sanitizer: DomSanitizer, private _router: Router) {}
 
   ngOnInit() {
     this.playSelectedVideo();
@@ -68,5 +71,9 @@ export class ItemListComponent implements OnInit {
       behavior: 'smooth',
       block: 'start',
     });
+  }
+
+  redirectToDetail(id: any) {
+    this._router.navigateByUrl(this._router.url + '/detail');
   }
 }

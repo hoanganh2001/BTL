@@ -2,7 +2,7 @@
 <div class="body">
   <div class="navbar navbar-expand-lg bg-black position-sticky">
     <div class="container">
-      <a class="navbar-brand text-white" href="#"
+      <a class="navbar-brand text-white" [routerLink]="routeLink.HOME"
         ><img src="assets/images/logo/a-logo-3K.svg" alt="logo 3K"
       /></a>
       <button
@@ -19,19 +19,23 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" routerLink="products">Sản phẩm</a>
+            <a class="nav-link" [routerLink]="routeLink.PRODUCT_CATEGORY"
+              >Sản phẩm</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="brands">Thương hiệu</a>
+            <a class="nav-link" [routerLink]="routeLink.BRANDS">Thương hiệu</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="news">Tin tức</a>
+            <a class="nav-link" [routerLink]="routeLink.NEWS">Tin tức</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Khuyến mãi</a>
+            <a class="nav-link" [routerLink]="routeLink.PROMOTION"
+              >Khuyến mãi</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Liên hệ</a>
+            <a class="nav-link" [routerLink]="routeLink.CONTACT">Liên hệ</a>
           </li>
         </ul>
         <div class="d-flex align-items-center">
@@ -79,8 +83,8 @@
         <ul class="col footer__about">
           <h4 class="footer__title title">Giới thiệu</h4>
           <li><a href="">Giới thiệu về 3K Shop</a></li>
-          <li><a routerLink="brands">Thương hiệu</a></li>
-          <li><a routerLink="products">Sản Phẩm</a></li>
+          <li><a [routerLink]="routeLink.BRANDS">Thương hiệu</a></li>
+          <li><a [routerLink]="routeLink.PRODUCT_CATEGORY">Sản Phẩm</a></li>
         </ul>
         <ul class="col footer__policy">
           <h4 class="footer__title title">Các chính sách</h4>
