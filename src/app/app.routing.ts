@@ -31,6 +31,13 @@ export const appRoutes: Routes = [
         loadChildren: () =>
           import('./modules/news/news.module').then((m) => m.NewsModule),
       },
+      {
+        path: '',
+        loadChildren: () =>
+          import('./modules/promotion/promotion.module').then(
+            (m) => m.PromotionModule,
+          ),
+      },
     ],
   },
 ];
