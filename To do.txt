@@ -10,12 +10,14 @@
  + detail: ? type scroll ? library ?? manual x
 - brand list: nothing x
 - brand's product: nothing x
-- news + detail: onlu css
-- discount: use from product list
-- contact: api map
+- news + detail: onlu css x
+- discount: use from product list x
+- contact: api map x
 - my-profile:đơn hàng, update info, favorite
+- policy: text;
+- make api get nav item
 - header submenu
-
+- responsive and add function
 - backend:
  + get list product
  + get brand

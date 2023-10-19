@@ -39,6 +39,13 @@ export const appRoutes: Routes = [
           ),
       },
       {
+        path: '',
+        loadChildren: () =>
+          import('./modules/contact/contact.module').then(
+            (m) => m.ContactModule,
+          ),
+      },
+      {
         path: '**',
         loadChildren: () =>
           import(
