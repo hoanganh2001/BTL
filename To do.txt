@@ -13,8 +13,8 @@
 - news + detail: onlu css x
 - discount: use from product list x
 - contact: api map x
-- my-profile:đơn hàng, update info, favorite
-- policy: text;
+- policy: text x
+- my-profile:đơn hàng, update info, favorite x
 - make api get nav item
 - header submenu
 - responsive and add function

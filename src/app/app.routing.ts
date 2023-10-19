@@ -46,6 +46,23 @@ export const appRoutes: Routes = [
           ),
       },
       {
+        path: '',
+        loadChildren: () =>
+          import('./modules/about/about.module').then((m) => m.AboutModule),
+      },
+      {
+        path: '',
+        loadChildren: () =>
+          import('./modules/policy/policy.module').then((m) => m.PolicyModule),
+      },
+      {
+        path: '',
+        loadChildren: () =>
+          import('./modules/my-profile/my-profile.module').then(
+            (m) => m.MyProfileModule,
+          ),
+      },
+      {
         path: '**',
         loadChildren: () =>
           import(

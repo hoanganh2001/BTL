@@ -1,0 +1,49 @@
+<form [formGroup]="accountDetailForm" *ngIf="accountDetailForm">
+  <div class="row">
+    <div class="col-6">
+      <mat-form-field class="mb-3 w-100" appearance="fill">
+        <mat-label class="text-capitalize">Tên</mat-label>
+        <input matInput formControlName="first_name" />
+      </mat-form-field>
+      <mat-form-field class="mb-3 w-100" appearance="fill">
+        <mat-label class="text-capitalize">Họ</mat-label>
+        <input matInput formControlName="last_name" />
+      </mat-form-field>
+      <mat-form-field class="mb-3 w-100" appearance="fill">
+        <mat-label class="text-capitalize">Tên hiển thị</mat-label>
+        <input matInput formControlName="display_name" />
+        <mat-hint class="text-hint"
+          >Đây sẽ là cách mà tên của bạn sẽ được hiển thị trong phần tài khoản
+          và trong phần đánh giá
+        </mat-hint>
+      </mat-form-field>
+      <mat-form-field class="mb-3 w-100" appearance="fill">
+        <mat-label class="text-capitalize">Email</mat-label>
+        <input matInput formControlName="email" />
+      </mat-form-field>
+    </div>
+    <div class="col-6">
+      <mat-form-field class="mb-3 w-100" appearance="fill">
+        <mat-label class="text-capitalize"
+          >Mật khẩu hiện tại (bỏ trống nếu không đổi)
+        </mat-label>
+        <input matInput formControlName="old_password" />
+      </mat-form-field>
+      <mat-form-field class="mb-3 w-100" appearance="fill">
+        <mat-label class="text-capitalize"
+          >Mật khẩu mới (bỏ trống nếu không đổi)
+        </mat-label>
+        <input matInput formControlName="confirm_password" />
+      </mat-form-field>
+      <mat-form-field class="mb-3 w-100" appearance="fill">
+        <mat-label class="text-capitalize">Xác nhận mật khẩu mới </mat-label>
+        <input matInput formControlName="new_password" />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="row">
+    <button type="button" class="col-4 btn-save btn--animation-hover-out">
+      Lưu thay đổi
+    </button>
+  </div>
+</form>

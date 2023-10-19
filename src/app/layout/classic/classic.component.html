@@ -55,12 +55,13 @@
               <i class="bi bi-search" style="font-size: 14px"></i>
             </button>
           </form>
-          <button
+          <a
             class="btn btn-user nav-btn rounded-circle d-flex align-items-center d-flex justify-content-center"
             type="submit"
+            [routerLink]="routeLink.MY_PROFILE"
           >
             <i class="bi bi-person" style="font-size: 14px"></i>
-          </button>
+          </a>
           <button
             class="btn btn-cart nav-btn nav-btn--big rounded-circle d-flex align-items-center d-flex justify-content-center"
             type="submit"
@@ -82,17 +83,35 @@
       <div class="footer__content col-9 row">
         <ul class="col footer__about">
           <h4 class="footer__title title">Giới thiệu</h4>
-          <li><a href="">Giới thiệu về 3K Shop</a></li>
+          <li><a [routerLink]="routeLink.ABOUT">Giới thiệu về 3K Shop</a></li>
           <li><a [routerLink]="routeLink.BRANDS">Thương hiệu</a></li>
           <li><a [routerLink]="routeLink.PRODUCT_CATEGORY">Sản Phẩm</a></li>
         </ul>
         <ul class="col footer__policy">
           <h4 class="footer__title title">Các chính sách</h4>
-          <li><a href="">Bảo mật thông tin cá nhân</a></li>
-          <li><a href="">Cam kết hàng hóa</a></li>
-          <li><a href="">Chính sách vận chuyển</a></li>
-          <li><a href="">Hình thức thanh toán</a></li>
-          <li><a href="">Hướng dẫn mua trả góp</a></li>
+          <li>
+            <a [routerLink]="routeLink.POLICY + '/bao-mat-thong-tin'"
+              >Bảo mật thông tin cá nhân</a
+            >
+          </li>
+          <li>
+            <a [routerLink]="routeLink.POLICY + '/cam-ket'">Cam kết hàng hóa</a>
+          </li>
+          <li>
+            <a [routerLink]="routeLink.POLICY + '/van-chuyen'"
+              >Chính sách vận chuyển</a
+            >
+          </li>
+          <li>
+            <a [routerLink]="routeLink.POLICY + '/thanh-toan'"
+              >Hình thức thanh toán</a
+            >
+          </li>
+          <li>
+            <a [routerLink]="routeLink.POLICY + '/tra-gop'"
+              >Hướng dẫn mua trả góp</a
+            >
+          </li>
         </ul>
         <ul class="col footer__address">
           <h4 class="footer__title title">Hồ Chí Minh</h4>
