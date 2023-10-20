@@ -15,8 +15,10 @@
 - contact: api map x
 - policy: text x
 - my-profile:đơn hàng, update info, favorite x
-- make api get nav item
-- header submenu
+- make api get nav item x
+- header submenu x
+- payment
+- order
 - responsive and add function
 - backend:
  + get list product
