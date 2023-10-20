@@ -1,0 +1,57 @@
+<div class="container position-absolute sub-menu p-4" *ngIf="subMenu">
+  <div class="row row-cols-5" *ngIf="subMenu.type === SUBMENU_TYPE.LIST">
+    <ng-container *ngFor="let brand of subMenu.list; index as i">
+      <div class="col">
+        <a class="brand-logo" [routerLink]="[subMenu.link + '/' + brand.name]">
+          <img [src]="brand.img" [alt]="brand.name" />
+        </a>
+      </div>
+    </ng-container>
+    <a [routerLink]="subMenu.link" class="col-12">
+      <button class="btn-all btn--animation-hover-out">Xem tất cả</button>
+    </a>
+  </div>
+  <div
+    class="row"
+    *ngIf="subMenu.type === SUBMENU_TYPE.CATEGORY && subMenu.category"
+  >
+    <div class="col-3">
+      <ul class="product-category">
+        <li
+          *ngFor="let item of subMenu.category.data"
+          [ngClass]="item.active ? 'active' : ''"
+          (mouseenter)="hoverIn(item.id)"
+        >
+          <a [routerLink]="'/'">
+            <span class="product-category-icon">
+              <i class="bi" [ngClass]="item.icon" *ngIf="item.icon"></i>
+              <img [src]="item.svg" [alt]="item.title" *ngIf="item.svg" />
+            </span>
+            {{ item.title }}
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-6">
+      <div class="row">
+        <ng-container *ngFor="let item of selected_category">
+          <div class="col-6 category-type">
+            <h4 class="category-type-header">{{ item.title }}</h4>
+            <ul class="category-type-list">
+              <li *ngFor="let option of item.options">
+                <a href="">{{ option.name }}</a>
+              </li>
+            </ul>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="col-3">
+      <img
+        [src]="subMenu.category.logo"
+        [alt]="subMenu.category.alt"
+        class="category-img"
+      />
+    </div>
+  </div>
+</div>

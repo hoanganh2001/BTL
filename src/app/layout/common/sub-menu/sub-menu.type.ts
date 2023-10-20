@@ -1,0 +1,28 @@
+export interface SubmenuData {
+  type: string;
+  link?: string;
+  list?: ListData[];
+  category?: CategoryListData;
+}
+
+export interface CategoryListData {
+  data: CategoryData[];
+  logo: string;
+  alt?: string;
+}
+
+export interface CategoryData {
+  id: string;
+  title: string;
+  link?: string;
+  icon?: string;
+  svg?: string;
+  active: boolean;
+  data?: any[];
+}
+
+export interface ListData {
+  id: number | string;
+  name: string;
+  img?: string;
+}
