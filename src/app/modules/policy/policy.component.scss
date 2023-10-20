@@ -1,0 +1,13 @@
+.policy-content {
+  margin-bottom: 3rem;
+
+  ::ng-deep {
+    p {
+      margin-bottom: 1rem !important;
+    }
+
+    ul {
+      list-style: revert !important;
+    }
+  }
+}

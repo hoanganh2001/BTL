@@ -1,0 +1,19 @@
+<div class="container my-5">
+  <div class="row">
+    <div class="col-4">
+      <ul class="my-profile-menu">
+        <li><a [routerLink]="MyProfileURL + '/order'">Đơn hàng</a></li>
+        <li>
+          <a [routerLink]="MyProfileURL + '/account'">Thông tin tài khoản</a>
+        </li>
+        <li>
+          <a [routerLink]="MyProfileURL + '/loved'">Sản phẩm yêu thích</a>
+        </li>
+        <li><a [routerLink]="MyProfileURL + '/account'">Đăng xuất</a></li>
+      </ul>
+    </div>
+    <div class="col-8">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

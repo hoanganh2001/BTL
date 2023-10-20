@@ -1,0 +1,22 @@
+.text-hint {
+  font-size: 0.8rem !important;
+  color: #8b8b8b !important;
+  line-height: 1rem;
+  font-style: italic !important;
+}
+
+input {
+  background-color: transparent !important;
+}
+
+.btn-save {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  color: #fff;
+  padding: 10px 30px;
+  border-radius: 50px;
+  min-width: 200px;
+}

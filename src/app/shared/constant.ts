@@ -17,4 +17,9 @@ export class Constant {
     MULTI_CHECKBOX: 'multi_checkbox',
     RANGE_INPUT: 'range_input',
   };
+
+  public static SUBMENU_TYPE = {
+    LIST: 'list',
+    CATEGORY: 'category',
+  };
 }

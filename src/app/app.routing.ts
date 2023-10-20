@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
+import { InitialDataResolver } from './app.resolvers';
 
 export const appRoutes: Routes = [
   {
@@ -7,6 +8,9 @@ export const appRoutes: Routes = [
     component: LayoutComponent,
     data: {
       layout: 'classic',
+    },
+    resolve: {
+      initialData: InitialDataResolver,
     },
     children: [
       {
@@ -43,6 +47,23 @@ export const appRoutes: Routes = [
         loadChildren: () =>
           import('./modules/contact/contact.module').then(
             (m) => m.ContactModule,
+          ),
+      },
+      {
+        path: '',
+        loadChildren: () =>
+          import('./modules/about/about.module').then((m) => m.AboutModule),
+      },
+      {
+        path: '',
+        loadChildren: () =>
+          import('./modules/policy/policy.module').then((m) => m.PolicyModule),
+      },
+      {
+        path: '',
+        loadChildren: () =>
+          import('./modules/my-profile/my-profile.module').then(
+            (m) => m.MyProfileModule,
           ),
       },
       {
