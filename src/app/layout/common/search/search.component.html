@@ -1,0 +1,19 @@
+<div class="d-flex align-items-center">
+  <form class="d-flex align-items-center" role="search">
+    <input
+      class="form-control me-2 input-search"
+      [formControl]="searchFormControl"
+      type="search"
+      [ngStyle]="{ display: isShow ? 'block' : '' }"
+      placeholder="Search"
+      aria-label="Search"
+    />
+    <button
+      class="btn btn-search nav-btn rounded-circle d-flex align-items-center d-flex justify-content-center"
+      type="button"
+      (click)="showInput()"
+    >
+      <i class="bi bi-search" style="font-size: 14px"></i>
+    </button>
+  </form>
+</div>
