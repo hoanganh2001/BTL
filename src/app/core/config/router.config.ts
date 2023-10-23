@@ -14,4 +14,6 @@ export default class RouterConfig {
   public static POLICY_TRANSFER = this.HOME + '/policy';
   public static POLICY_PAYMENT = this.HOME + '/policy';
   public static POLICY_INSTALLMENT = this.HOME + '/policy';
+
+  public static ORDER = this.HOME + '/order';
 }

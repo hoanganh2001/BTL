@@ -1,0 +1,194 @@
+<div class="order">
+  <div class="container">
+    <div class="row user-info-content-row">
+      <div class="col-8">
+        <div class="order-item cart">
+          <div class="row">
+            <h2 class="col-8 order-item-header cart-header">
+              Giỏ hàng<span class="cart-header-count">(1 sản phẩm)</span>
+            </h2>
+            <span class="cart-header-label col-2">giá tiền</span>
+            <span class="cart-header-label col-2">số lượng</span>
+          </div>
+          <div class="cart-item">
+            <div class="row">
+              <div
+                class="col-1 d-flex justify-content-center align-items-center"
+              >
+                <button class="cart-item-btn">
+                  <i class="bi bi-trash-fill"></i>
+                </button>
+              </div>
+              <div class="col-2 d-flex align-items-center">
+                <img
+                  src="https://3kshop.vn/wp-content/uploads/2023/05/3kshop-fiio-fd11-1-300x300.png"
+                  alt=""
+                  class="cart-item-img"
+                />
+              </div>
+              <div class="col d-flex align-items-center">
+                <span class="cart-item-name">FIIO FD11</span>
+              </div>
+              <div class="col-2 d-flex align-items-center">
+                <span class="cart-item-price">1.099.000 ₫</span>
+              </div>
+              <div class="col-2 d-flex align-items-center">
+                <mat-form-field class="cart-item-quantity">
+                  <input
+                    matInput
+                    type="number"
+                    class="cart-item-quantity"
+                    min="0"
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="order-item user-info">
+          <h2 class="order-item-header">Thông tin giao hàng</h2>
+          <div class="order-item-list user-info-content">
+            <div class="row user-info-content-row align-items-center">
+              <div class="col-3 mb-3">
+                <span class="user-info-content-label">
+                  Tên<span class="ms-1 required">*</span>
+                </span>
+              </div>
+              <mat-form-field class="col">
+                <input matInput />
+              </mat-form-field>
+            </div>
+            <div class="row user-info-content-row align-items-center">
+              <div class="col-3 mb-3">
+                <span class="user-info-content-label">
+                  Địa chỉ<span class="ms-1 required">*</span>
+                </span>
+              </div>
+              <mat-form-field class="col">
+                <input matInput />
+              </mat-form-field>
+            </div>
+            <div class="row user-info-content-row align-items-center">
+              <div class="col-3 mb-3">
+                <span class="user-info-content-label">
+                  Email<span class="ms-1 required">*</span>
+                </span>
+              </div>
+              <mat-form-field class="col">
+                <input matInput />
+              </mat-form-field>
+            </div>
+            <div class="row user-info-content-row align-items-center">
+              <div class="col-3 mb-3">
+                <span class="user-info-content-label">
+                  Số điện thoại <span class="ms-1 required">*</span>
+                </span>
+              </div>
+              <mat-form-field class="col">
+                <input matInput />
+              </mat-form-field>
+            </div>
+            <div class="row user-info-content-row align-items-center">
+              <div class="col-3 mb-3">
+                <span class="user-info-content-label"
+                  >Ghi chú<span class="ms-1 required">*</span></span
+                >
+              </div>
+              <mat-form-field class="col">
+                <textarea matInput></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="order-item payment">
+          <h2 class="order-item-header">phương thức thanh toán</h2>
+          <div class="order-item-list payment-content">
+            <div class="row align-items-center">
+              <mat-checkbox class="example-margin" (change)="check()">
+                Chuyển khoản ngân hàng
+              </mat-checkbox>
+              <mat-hint
+                class="payment-content-hint"
+                [ngClass]="{ 'd-block': allComplete }"
+                >Vui lòng ghi chú tên sản phẩm trong phần nội dung chuyển khoản.
+                Đơn hàng sẽ đươc đóng gói và giao sau khi 3K Shop nhận được
+                khoản thanh toán.</mat-hint
+              >
+            </div>
+            <div class="row align-items-center">
+              <mat-checkbox class="example-margin">
+                Trả tiền mặt khi nhận hàng
+              </mat-checkbox>
+              <mat-hint class="payment-content-hint"
+                >Trả tiền mặt khi giao hàng (Chỉ áp dụng cho khu vực nội thành
+                TP. Hồ Chí Minh)</mat-hint
+              >
+            </div>
+            <div class="row align-items-center">
+              <mat-checkbox class="example-margin">
+                Thanh toán cổng nội địa
+              </mat-checkbox>
+              <mat-hint class="payment-content-hint"
+                >Bạn có thể thanh toán thông qua các thẻ ATM nội địa của hầu hết
+                các ngân hàng</mat-hint
+              >
+            </div>
+            <div class="row align-items-center">
+              <mat-checkbox class="example-margin">
+                Thanh toán cổng quốc tế
+              </mat-checkbox>
+              <mat-hint class="payment-content-hint"
+                >Bạn có thể thanh toán thông qua các thẻ quốc tế (Visa, Master,
+                JCB,…)</mat-hint
+              >
+            </div>
+            <div class="row align-items-center">
+              <mat-checkbox class="example-margin">
+                Thanh toán cổng quốc tế (trả góp)
+              </mat-checkbox>
+              <mat-hint class="payment-content-hint"
+                >Bạn có thể thanh toán trả góp thông qua các thẻ quốc tế (Visa,
+                Master, JCB,…)</mat-hint
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="order-card">
+          <div class="order-card-item d-flex justify-content-between">
+            <p>Tạm tính:</p>
+            <p>1.099.000đ</p>
+          </div>
+          <div class="order-card-item d-flex justify-content-between">
+            <p>Vận chuyển:</p>
+            <p>Miễn phí</p>
+          </div>
+          <div class="order-card-total d-flex justify-content-between">
+            <p>Thành tiền:</p>
+            <p class="price">1.099.000đ</p>
+          </div>
+        </div>
+        <div class="order-card order-card-coupon">
+          <span class="order-card-coupon-header">
+            Mã giảm giá / Quà tặng<i class="bi bi-gift ms-2"></i>
+          </span>
+          <div class="order-card-coupon-input">
+            <mat-form-field class="input-field">
+              <input matInput placeholder="Nhập ở đây" />
+            </mat-form-field>
+            <button class="btn btn-apply btn--animation-hover-out">
+              Áp dụng
+            </button>
+          </div>
+        </div>
+        <button class="btn btn-buy btn--animation-hover-out">
+          Thanh toán ngay
+        </button>
+        <button class="btn btn-return btn--animation-hover-in">
+          Quay lại cửa hàng
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

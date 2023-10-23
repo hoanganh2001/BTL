@@ -67,6 +67,11 @@ export const appRoutes: Routes = [
           ),
       },
       {
+        path: '',
+        loadChildren: () =>
+          import('./modules/order/order.module').then((m) => m.OrderModule),
+      },
+      {
         path: '**',
         loadChildren: () =>
           import(
