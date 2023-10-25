@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Constant } from 'src/app/shared/constant';
+import { HomeService } from './home.service';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +8,7 @@ import { Constant } from 'src/app/shared/constant';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  constructor() {}
+  constructor(private _homeService: HomeService) {}
 
   banner = [
     'assets/images/banner/Ưu-dãi-Neumman-mới.jpg',
@@ -179,49 +180,7 @@ export class HomeComponent implements OnInit {
     header: 'Sản phẩm mới',
     type: Constant.TYPE_LIST.PRODUCT,
     isFirst: true,
-    data: [
-      {
-        img: 'https://3kshop.vn/wp-content/uploads/fly-images/37385/230d75d2a50360eebf9a76a040bffb9f-450x450-c.jpeg',
-        name: 'Klipsch The One II3',
-        cost: 4800000,
-        discount: 25,
-      },
-      {
-        img: 'https://3kshop.vn/wp-content/uploads/fly-images/37385/230d75d2a50360eebf9a76a040bffb9f-450x450-c.jpeg',
-        name: 'Klipsch The One II123',
-        cost: 4500000,
-      },
-      {
-        img: 'https://3kshop.vn/wp-content/uploads/fly-images/50621/noble-stage-3-1-450x450-c.jpeg',
-        name: 'Noble Stage 3',
-        cost: 4500000,
-      },
-      {
-        img: 'https://3kshop.vn/wp-content/uploads/fly-images/50542/yamaha-yg-01-2-450x450-c.jpeg',
-        name: 'Yamaha YH-G01',
-        cost: 4500000,
-      },
-      {
-        img: 'https://3kshop.vn/wp-content/uploads/fly-images/47464/3kshop-elgato-cam-link-4k-11-450x450-c.png',
-        name: 'Elgato Cam Link 4K',
-        cost: 4500000,
-      },
-      {
-        img: 'https://3kshop.vn/wp-content/uploads/fly-images/47490/3kshop-elgato-stream-deck-xl-1-450x450-c.png',
-        name: 'Elgato Stream Deck XL',
-        cost: 4500000,
-      },
-      {
-        img: 'https://3kshop.vn/wp-content/uploads/fly-images/47503/3kshop-elgato-stream-deck-mk2-4-450x450-c.png',
-        name: 'Elgato Stream Deck MK2',
-        cost: 4500000,
-      },
-      {
-        img: 'https://3kshop.vn/wp-content/uploads/fly-images/47724/3kshop-elgato-flex-arm-l-2-450x450-c.jpg',
-        name: 'Elgato Flex Arm L',
-        cost: 4500000,
-      },
-    ],
+    data: [],
   };
 
   new = {
@@ -324,63 +283,7 @@ export class HomeComponent implements OnInit {
   analogProduct = {
     header: 'Sản phẩm Analog',
     type: Constant.TYPE_LIST.PRODUCT,
-    data: [
-      {
-        img: 'https://3kshop.vn/wp-content/uploads/fly-images/23942/analog-turntable-ath-atlp120xusb-3kshop-1-450x450-c.jpg',
-        name: 'Audio Technica AT-LP120XUSB',
-        cost: 12040000,
-      },
-      {
-        img: 'https://3kshop.vn/wp-content/uploads/fly-images/23114/analog-cartridge-ath-atoc9mlii-3kshop-1-450x450-c.jpg',
-        name: 'Audio Technica AT-OC9ML/II',
-        cost: 17610000,
-      },
-      {
-        img: 'https://3kshop.vn/wp-content/uploads/fly-images/23090/analog-cartridge-ath-vm740ml-3kshop-1-450x450-c.jpg',
-        name: 'Audio Technica VM740ML',
-        cost: 11460000,
-      },
-      {
-        img: 'https://3kshop.vn/wp-content/uploads/fly-images/22941/turntable-ath-atlp5x-3kshop-1-450x450-c.jpg',
-        name: 'Audio Technica AT-LP5X',
-        cost: 14410000,
-      },
-      {
-        img: 'https://3kshop.vn/wp-content/uploads/fly-images/22974/analog-turntable-ath-atlpw40wn-3kshop-1-450x450-c.jpg',
-        name: 'Audio Technica AT-LPW40WN',
-        cost: 12490000,
-      },
-      {
-        img: 'https://3kshop.vn/wp-content/uploads/fly-images/22955/analog-cadtridge-ath-art1000-3kshop-1-450x450-c.jpg',
-        name: 'Audio Technica AT-ART1000',
-        cost: 147810000,
-      },
-      {
-        img: 'https://3kshop.vn/wp-content/uploads/fly-images/22937/turntable-pioneer-pl990-3kshop-1-450x450-c.jpg',
-        name: 'Pioneer PL-990',
-        cost: 4590000,
-      },
-      {
-        img: 'https://3kshop.vn/wp-content/uploads/fly-images/22556/clearaudio-nano-v2-phono-3kshop-0-450x450-c.jpg',
-        name: 'Clearaudio Nano Phono V2',
-        cost: 10550000,
-      },
-      {
-        img: 'https://3kshop.vn/wp-content/uploads/fly-images/22453/ortofon-quintet-black-s-mc-cartridge-3kshop-2-450x450-c.jpg',
-        name: 'Ortofon Quintet Black S MC',
-        cost: 22680000,
-      },
-      {
-        img: 'https://3kshop.vn/wp-content/uploads/fly-images/51698/fiio-ff1-3-450x450-c.jpeg',
-        name: 'FiiO FF1',
-        cost: 750000,
-      },
-      {
-        img: 'https://3kshop.vn/wp-content/uploads/fly-images/31707/sennheiser-ie-100-pro-clear-1-450x450-c.jpg',
-        name: 'Sennheiser IE 100 PRO',
-        cost: 3090000,
-      },
-    ],
+    data: [],
   };
 
   topBannerAds = [
@@ -404,6 +307,43 @@ export class HomeComponent implements OnInit {
       url: '',
     },
   ];
+  bodyProductSearch: any;
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getNewProduct();
+    this.getAnalogProduct();
+  }
+
+  getNewProduct() {
+    const body = {
+      limit: 9,
+      skip: 0,
+      sort_by: 'create_date',
+      order_by: 'desc',
+    };
+    this._homeService.getItemsOnSearch(body).subscribe({
+      next: (res) => {
+        if (res) {
+          this.newProduct.data = res;
+        }
+      },
+    });
+  }
+
+  getAnalogProduct() {
+    const body = {
+      limit: 11,
+      skip: 0,
+      sort_by: 'create_date',
+      order_by: 'desc',
+      category: 'analog',
+    };
+    this._homeService.getItemsOnSearch(body).subscribe({
+      next: (res) => {
+        if (res) {
+          this.analogProduct.data = res;
+        }
+      },
+    });
+  }
 }

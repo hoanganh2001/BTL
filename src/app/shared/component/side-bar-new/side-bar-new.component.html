@@ -37,7 +37,7 @@
     class="card news-list-item pb-4 mb-4"
     [ngClass]="isHover ? 'news-list-item--hover' : 'news-list-item--side'"
   >
-    <div class="row g-0">
+    <a [routerLink]="newsURL + new.id" routerLinkActive="true" class="row g-0">
       <div class="col-md-4">
         <img
           [src]="new.img"
@@ -53,16 +53,17 @@
 
           <p class="card-text news-list-item-text">
             <ng-container *ngIf="onlyDate; else fullDetail">
-              10 ngày trước
+              {{ new.create_date }}
             </ng-container>
             <ng-template #fullDetail>
-              <span class="news-list-item-text-author">HieuDC </span>
+              <span class="news-list-item-text-author">{{ new.author }} </span>
               <span class="mx-1">-</span>
-              10 ngày trước <span class="mx-1">-</span> 0 lượt xem
+              {{ new.create_date | dateToNow }} <span class="mx-1">-</span>
+              {{ new.view }} lượt xem
             </ng-template>
           </p>
         </div>
       </div>
-    </div>
+    </a>
   </div>
 </ng-template>

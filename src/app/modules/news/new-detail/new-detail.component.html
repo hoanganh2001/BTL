@@ -1,26 +1,26 @@
 <div class="container my-5">
   <div class="row">
-    <div class="col-8">
+    <div class="col-8" *ngIf="newDetail">
       <div class="detail-header">
-        <img [src]="newDatil.img" [alt]="newDatil.name" />
-        <h1 class="detail-header-name mt-4 pb-3">{{ newDatil.name }}</h1>
+        <img [src]="newDetail.img" [alt]="newDetail.name" />
+        <h1 class="detail-header-name mt-4 pb-3">{{ newDetail.name }}</h1>
         <div class="detail-header-text pb-3">
           <span class="detail-header-author"
-            >{{ newDatil.author }}<span class="mx-1">-</span></span
+            >{{ newDetail.author }}<span class="mx-1">-</span></span
           >
 
-          {{ newDatil.createDate | countDateToNow }}
-          <span class="ms-1">- {{ newDatil.view }} lượt xem</span>
+          {{ newDetail.create_date | dateToNow }}
+          <span class="ms-1">- {{ newDetail.view }} lượt xem</span>
         </div>
       </div>
       <div
         class="detail-content"
-        [innerHTML]="getSafeHTML(newDatil.description)"
+        [innerHTML]="getSafeHTML(newDetail.content)"
       ></div>
     </div>
     <div class="col-4">
       <side-bar-new
-        [newList]="newList"
+        [newList]="latestNewList"
         [categories]="categories"
       ></side-bar-new>
     </div>

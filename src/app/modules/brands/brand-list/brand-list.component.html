@@ -16,7 +16,11 @@
           <h4 class="brand-header text-uppercase">{{ brandList.title }}</h4>
           <ul
             class="brand-option"
-            [ngClass]="brandList.data.length > 15 ? 'overflow-y-auto' : ''"
+            [ngClass]="
+              brandList.data && brandList.data.length > 15
+                ? 'overflow-y-auto'
+                : ''
+            "
           >
             <li *ngFor="let brand of brandList.data">
               <a [routerLink]="[brandRoute + '/' + brand.name]">

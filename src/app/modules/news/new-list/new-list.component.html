@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col">
         <div class="row">
-          <ng-container *ngFor="let new of newList; index as i">
+          <ng-container *ngFor="let new of latestNewList; index as i">
             <div [ngClass]="i < 2 ? 'col-6' : 'col-4'">
               <ng-container
                 [ngTemplateOutlet]="cardNew"
@@ -34,7 +34,11 @@
               }"
             ></ng-container>
           </ng-container>
-          <button class="btn btn-showmore btn--animation-hover-out">
+          <button
+            class="btn btn-showmore btn--animation-hover-out"
+            (click)="showMore()"
+            *ngIf="listLimit.skip + listLimit.limit < listTotal"
+          >
             Xem thêm
           </button>
         </div>
@@ -42,7 +46,7 @@
       <!-- side new -->
       <div class="col-4">
         <side-bar-new
-          [newList]="newList"
+          [newList]="latestNewList"
           [categories]="categories"
         ></side-bar-new>
       </div>
@@ -51,12 +55,12 @@
 </div>
 
 <ng-template #cardNew let-new="new">
-  <div class="card new mt-4">
+  <a [routerLink]="newsURL + new.id" class="card new mt-4">
     <img [src]="new.img" class="card-img-top new-img" [alt]="new.name" />
     <div class="card-body new-body">
       <h5 class="card-title new-title">{{ new.name }}</h5>
     </div>
-  </div>
+  </a>
 </ng-template>
 
 <ng-template
@@ -65,7 +69,8 @@
   let-isHover="isHover"
   let-onlyDate="onlyDate"
 >
-  <div
+  <a
+    [routerLink]="new.id"
     class="card news-list-item pb-4 mb-4"
     [ngClass]="isHover ? 'news-list-item--hover' : 'news-list-item--side'"
   >
@@ -73,7 +78,7 @@
       <div class="col-md-4">
         <img
           [src]="new.img"
-          class="img-fluid news-list-item-img rounded-start"
+          class="news-list-item-img rounded-start"
           [alt]="new.name"
         />
       </div>
@@ -85,16 +90,17 @@
 
           <p class="card-text news-list-item-text">
             <ng-container *ngIf="onlyDate; else fullDetail">
-              10 ngày trước
+              {{ new.create_date | dateToNow }}
             </ng-container>
             <ng-template #fullDetail>
-              <span class="news-list-item-text-author">HieuDC </span>
+              <span class="news-list-item-text-author">{{ new.author }} </span>
               <span class="mx-1">-</span>
-              10 ngày trước <span class="mx-1">-</span> 0 lượt xem
+              {{ new.create_date | dateToNow }} <span class="mx-1">-</span>
+              {{ new.view ? new.view : 0 }} lượt xem
             </ng-template>
           </p>
         </div>
       </div>
     </div>
-  </div>
+  </a>
 </ng-template>

@@ -16,7 +16,7 @@ export const NewsRoutes: Route[] = [
     path: 'news',
     children: [
       {
-        path: ':newTitle',
+        path: ':newId',
         component: NewDetailComponent,
       },
     ],

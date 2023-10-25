@@ -3,12 +3,3 @@ export interface sideBarCategory {
   name: string;
   count: number;
 }
-
-export interface sideBarNewList {
-  id: number | string;
-  name: string;
-  img: string;
-  author: string;
-  createDate: string;
-  view: number;
-}

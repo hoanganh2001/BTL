@@ -1,7 +1,11 @@
-<a
+<button
   class="btn btn-user nav-btn rounded-circle d-flex align-items-center d-flex justify-content-center"
   type="submit"
-  [routerLink]="routerURL.MY_PROFILE"
+  [matMenuTriggerFor]="userMenu"
 >
   <i class="bi bi-person" style="font-size: 14px"></i>
-</a>
+</button>
+<mat-menu #userMenu="matMenu" xPosition="before">
+  <button mat-menu-item>Thông tin</button>
+  <button mat-menu-item>Đăng xuất</button>
+</mat-menu>
