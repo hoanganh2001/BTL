@@ -1,0 +1,26 @@
+{
+  "type": "Compass Connections",
+  "version": {
+    "$numberInt": "1"
+  },
+  "connections": [
+    {
+      "id": "88a925f4-2317-4743-9dd1-cc6e8893eaf9",
+      "lastUsed": {
+        "$date": {
+          "$numberLong": "1698230169230"
+        }
+      },
+      "favorite": {
+        "name": "DoAn",
+        "color": "color2"
+      },
+      "connectionOptions": {
+        "connectionString": "mongodb://localhost:27017/",
+        "oidc": {
+          "serializedState": "eyJvaWRjUGx1Z2luU3RhdGVWZXJzaW9uIjowLCJzdGF0ZSI6W119"
+        }
+      }
+    }
+  ]
+}
