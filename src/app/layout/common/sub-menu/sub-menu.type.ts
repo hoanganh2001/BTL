@@ -1,5 +1,6 @@
 export interface SubmenuData {
   type: string;
+  name?: string;
   link?: string;
   list?: ListData[];
   category?: CategoryListData;

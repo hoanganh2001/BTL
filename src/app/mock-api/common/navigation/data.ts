@@ -542,59 +542,9 @@ export const headerNavigation: Navigation[] = [
     link: RouterConfig.BRANDS,
     submenu: {
       type: SUBMENU_TYPE.LIST,
+      name: 'brands',
       link: RouterConfig.BRANDS,
-      list: [
-        {
-          id: 0,
-          name: 'Abyss',
-          img: 'https://3kshop.vn/wp-content/uploads/2022/10/abyss-logo-01.png',
-        },
-        {
-          id: 1,
-          name: 'Acoustic Energy',
-          img: 'https://3kshop.vn/wp-content/uploads/2019/10/acoustic-energy-logo-3kshop.svg',
-        },
-        {
-          id: 2,
-          name: 'AKG',
-          img: 'https://3kshop.vn/wp-content/uploads/2019/10/akg-logo-3kshop.svg',
-        },
-        {
-          id: 3,
-          name: 'ALO Audio',
-          img: 'https://3kshop.vn/wp-content/uploads/2018/11/3kshop-alo-audio-logo.jpg',
-        },
-        {
-          id: 4,
-          name: 'Analysis Plus',
-          img: 'https://3kshop.vn/wp-content/uploads/2019/10/analysis-plus-logo-3kshop.svg',
-        },
-        {
-          id: 5,
-          name: 'Apple',
-          img: 'https://3kshop.vn/wp-content/uploads/2020/06/Apple_logo.jpg',
-        },
-        {
-          id: 6,
-          name: 'Astell&Kern',
-          img: 'https://3kshop.vn/wp-content/uploads/2018/11/3kshop-astell-and-kern-logo.svg',
-        },
-        {
-          id: 7,
-          name: 'Audeze',
-          img: 'https://3kshop.vn/wp-content/uploads/2018/11/3kshop-audeze-logo.svg',
-        },
-        {
-          id: 8,
-          name: 'Audio GD',
-          img: 'https://3kshop.vn/wp-content/uploads/2018/11/3kshop-logo-audiogd.svg',
-        },
-        {
-          id: 9,
-          name: 'Audio Pro',
-          img: 'https://3kshop.vn/wp-content/uploads/2021/12/Audio_Pro-01.svg',
-        },
-      ],
+      list: [],
     },
   },
   {
