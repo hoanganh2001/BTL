@@ -2,7 +2,7 @@ const $$ = document.querySelectorAll.bind(document);
 const dap = [];
 
 async function GetData(type, feature, i, length) {
-  console.log(1);
+  console.log(i, length);
   await $$('.list-products-content .product-item .box')?.forEach(
     (item, arrIn) => {
       const img = item
@@ -30,18 +30,14 @@ async function GetData(type, feature, i, length) {
       });
     },
   );
-  console.log(2);
-  if (i <= length) {
+  if (length !== 0 && i <= length) {
     i += 1;
     await setTimeout(() => {
       document
         .getElementsByClassName('pagination-item active')[0]
         .nextElementSibling.childNodes[0].click();
-      console.log(3);
       GetData(type, feature, i, length);
     }, 5000);
-  } else {
-    i = 1;
   }
   return true;
 }
@@ -91,8 +87,10 @@ async function get3(e, inDex) {
           break;
         }
       }
-      const length = $$('pagination-item').length - 2;
-
+      const length = $$('.pagination-item').length
+        ? $$('.pagination-item').length - 2
+        : 0;
+      console.log(length);
       GetData(type, null, inDex, length).then((value) => {
         if (value) {
           setTimeout(() => {
@@ -113,6 +111,7 @@ async function get2() {
 
 async function get4(e, i) {
   setTimeout(() => {
+    console.log('start');
     e?.click();
     setTimeout(() => {
       let feature = 0;
@@ -150,7 +149,10 @@ async function get4(e, i) {
           break;
         }
       }
-      const length = $$('pagination-item').length - 2;
+      console.log('data-finish');
+      const length = $$('.pagination-item').length
+        ? $$('.pagination-item').length - 2
+        : 0;
 
       GetData(null, feature, i, length).then((value) => {
         if (value) {
@@ -165,10 +167,8 @@ async function get4(e, i) {
 
 get1().then((value) => {
   if (value) {
-    console.log(dap);
     get2().then((value2) => {
       if (value2) {
-        console.log(dap);
       }
     });
   }
