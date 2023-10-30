@@ -1,11 +1,10 @@
 const $$ = document.querySelectorAll.bind(document);
 const dap = [];
-let index = 1;
-let length = $$('pagination-item').length - 2;
 
-async function GetData(type, feature) {
-  setTimeout(() => {
-    $$('.list-products-content .product-item .box')?.forEach((item) => {
+async function GetData(type, feature, i, length) {
+  console.log(1);
+  await $$('.list-products-content .product-item .box')?.forEach(
+    (item, arrIn) => {
       const img = item
         ?.getElementsByClassName('has-image')[0]
         ?.children[0]?.childNodes[0]?.getAttribute('src');
@@ -29,25 +28,38 @@ async function GetData(type, feature) {
         feature: feature ? feature : 0,
         view: 0,
       });
-    });
-    if (index <= length) {
-      index += 1;
+    },
+  );
+  console.log(2);
+  if (i <= length) {
+    i += 1;
+    await setTimeout(() => {
       document
         .getElementsByClassName('pagination-item active')[0]
         .nextElementSibling.childNodes[0].click();
-      setTimeout(() => {
-        GetData(type, feature);
-      }, 2000);
-    } else {
-      return;
-    }
-  }, 5000);
+      console.log(3);
+      GetData(type, feature, i, length);
+    }, 5000);
+  } else {
+    i = 1;
+  }
+  return true;
 }
 
+async function detail() {}
+
 async function get1() {
-  $$('.selector:nth-child(2) input').forEach((e) => {
+  $$('.selector:nth-child(2) input').forEach((e, i) => {
+    const inDex = 1;
+    get3(e, inDex);
+  });
+  return true;
+}
+
+async function get3(e, inDex) {
+  await setTimeout(async () => {
     e?.click();
-    setTimeout(() => {
+    await setTimeout(() => {
       let type = 0;
       switch (e?.parentElement.innerText.toLowerCase()) {
         case 'full size'.toLowerCase().trim(): {
@@ -79,17 +91,28 @@ async function get1() {
           break;
         }
       }
-      GetData(type, null);
-      setTimeout(() => {
-        e?.click();
-      }, 2000);
+      const length = $$('pagination-item').length - 2;
+
+      GetData(type, null, inDex, length).then((value) => {
+        if (value) {
+          setTimeout(() => {
+            e?.click();
+          }, 2000);
+        }
+      });
     }, 5000);
+  }, 10000);
+}
+
+async function get2() {
+  $$('.selector:nth-child(3) input').forEach((e, i) => {
+    get4(e, i);
   });
   return true;
 }
 
-async function get2() {
-  $$('.selector:nth-child(3) input').forEach((e) => {
+async function get4(e, i) {
+  setTimeout(() => {
     e?.click();
     setTimeout(() => {
       let feature = 0;
@@ -127,17 +150,26 @@ async function get2() {
           break;
         }
       }
-      GetData(null, feature);
-      setTimeout(() => {
-        e?.click();
-      }, 20000);
+      const length = $$('pagination-item').length - 2;
+
+      GetData(null, feature, i, length).then((value) => {
+        if (value) {
+          setTimeout(() => {
+            e?.click();
+          }, 20000);
+        }
+      });
     }, 5000);
-  });
-  return true;
+  }, 10000);
 }
 
 get1().then((value) => {
   if (value) {
-    get2();
+    console.log(dap);
+    get2().then((value2) => {
+      if (value2) {
+        console.log(dap);
+      }
+    });
   }
 });
