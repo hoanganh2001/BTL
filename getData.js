@@ -1,175 +1,220 @@
 const $$ = document.querySelectorAll.bind(document);
 const dap = [];
 
-async function GetData(type, feature, i, length) {
-  console.log(i, length);
-  await $$('.list-products-content .product-item .box')?.forEach(
-    (item, arrIn) => {
-      const img = item
-        ?.getElementsByClassName('has-image')[0]
-        ?.children[0]?.childNodes[0]?.getAttribute('src');
-      const name =
-        item?.children[0]?.children[1]?.lastChild?.lastChild?.innerText;
-      const price =
-        item?.children[1]?.getElementsByClassName(
-          'woocommerce-Price-amount amount',
-        )[0]?.innerText | null;
-      const discount =
-        item?.getElementsByClassName('percent-sale')?.innerText | null;
+const length = $$(`.selector:nth-child(2) input`).length;
+function delay(ms) {
+  return new Promise((resolve, reject) => setTimeout(resolve, ms));
+}
 
-      dap.push({
-        name: name,
-        img: img,
-        price: price,
-        discount: discount,
-        create_date: null,
-        category: '1',
-        type: type ? type : 0,
-        feature: feature ? feature : 0,
-        view: 0,
-      });
-    },
-  );
-  if (length !== 0 && i <= length) {
+async function getType(length) {
+  const e = $$(`.selector:nth-child(2) input`)[length - 1];
+  await clickType(e).then((value) => {
+    if (length > 0) {
+      getType(length - 1);
+    } else {
+      console.log('done');
+      return true;
+    }
+  });
+}
+
+async function clickType(e) {
+  e?.click();
+  let type = 0;
+  const index = 0;
+  await delay(10000).then(async () => {
+    const text = e?.parentElement?.innerText?.toLowerCase().trim();
+    switch (text) {
+      case 'full sized': {
+        type = 1;
+        break;
+      }
+      case 'on ear': {
+        type = 2;
+        break;
+      }
+      case 'earbud': {
+        type = 3;
+        break;
+      }
+      case 'in ear': {
+        type = 4;
+        break;
+      }
+      case 'wireless': {
+        type = 5;
+        break;
+      }
+      case 'true wireless': {
+        type = 6;
+        break;
+      }
+      case 'custom in ear': {
+        type = 7;
+        break;
+      }
+    }
+    await GetData(type, null, index).then(async (value) => {
+      e?.click();
+      delay(2000);
+    });
+  });
+}
+getType(length);
+
+async function GetData(type, feature, i, text) {
+  await delay(4000).then(async () => {
+    $$('.list-products-content .product-item .box')?.forEach(
+      async (item, arrIn) => {
+        const name = item?.getElementsByClassName('title')[0]?.innerText;
+        const price =
+          item?.children[1]?.getElementsByClassName(
+            'woocommerce-Price-amount amount',
+          )[0]?.innerText | null;
+        const discount =
+          item?.getElementsByClassName('percent-sale')?.innerText | null;
+        const quantity =
+          item[0]?.getElementsByClassName(
+            '-icon -icon-text top-left style-black',
+          ).length > 0
+            ? null
+            : 0;
+
+        dap.push({
+          name: name,
+          img: img,
+          price: price,
+          discount: discount,
+          create_date: null,
+          category: '1',
+          type: type ? type : 0,
+          feature: feature ? feature : 0,
+          view: 0,
+          quantity: quantity,
+          brand: text,
+        });
+      },
+    );
+  });
+  const length =
+    $$('.pagination-item')?.length > 0 ? $$('.pagination-item')?.length - 1 : 0;
+  if (length !== 0 && i < length) {
     i += 1;
-    await setTimeout(() => {
+    await delay(3000).then(async () => {
       document
         .getElementsByClassName('pagination-item active')[0]
-        .nextElementSibling.childNodes[0].click();
-      GetData(type, feature, i, length);
-    }, 5000);
+        ?.nextElementSibling?.childNodes[0]?.click();
+      await GetData(type, feature, i);
+    });
+  } else {
+    return true;
   }
-  return true;
 }
 
-async function detail() {}
+function delay(ms) {
+  return new Promise((resolve, reject) => setTimeout(resolve, ms));
+}
 
-async function get1() {
-  $$('.selector:nth-child(2) input').forEach((e, i) => {
-    const inDex = 1;
-    get3(e, inDex);
+const $$ = document.querySelectorAll.bind(document);
+const length2 = $$('.selector:nth-child(1) input').length;
+const dap = [];
+
+async function getFeature(length) {
+  const e = $$(`.selector:nth-child(1) input`)[length - 1];
+  await clickFeature(e).then((value) => {
+    if (length > 0) {
+      getFeature(length - 1);
+    } else {
+      return true;
+    }
   });
   return true;
 }
 
-async function get3(e, inDex) {
-  await setTimeout(async () => {
-    e?.click();
-    await setTimeout(() => {
-      let type = 0;
-      switch (e?.parentElement.innerText.toLowerCase()) {
-        case 'full size'.toLowerCase().trim(): {
-          type = 1;
-          break;
-        }
-        case 'on ear'.toLowerCase().trim(): {
-          type = 2;
-          break;
-        }
-        case 'earbud'.toLowerCase().trim(): {
-          type = 3;
-          break;
-        }
-        case 'in ear'.toLowerCase().trim(): {
-          type = 4;
-          break;
-        }
-        case 'wireless'.toLowerCase().trim(): {
-          type = 5;
-          break;
-        }
-        case 'true wireless'.toLowerCase().trim(): {
-          type = 6;
-          break;
-        }
-        case 'custome in ear'.toLowerCase().trim(): {
-          type = 7;
-          break;
-        }
-      }
-      const length = $$('.pagination-item').length
-        ? $$('.pagination-item').length - 2
-        : 0;
-      console.log(length);
-      GetData(type, null, inDex, length).then((value) => {
-        if (value) {
-          setTimeout(() => {
-            e?.click();
-          }, 2000);
-        }
-      });
-    }, 5000);
-  }, 10000);
-}
-
-async function get2() {
-  $$('.selector:nth-child(3) input').forEach((e, i) => {
-    get4(e, i);
-  });
-  return true;
-}
-
-async function get4(e, i) {
-  setTimeout(() => {
-    console.log('start');
-    e?.click();
-    setTimeout(() => {
-      let feature = 0;
-      switch (e.parentElement.innerText.toLowerCase().trim()) {
-        case 'chống ồn'.toLowerCase().trim(): {
-          feature = 1;
-          break;
-        }
-        case 'không dây'.toLowerCase().trim(): {
-          feature = 2;
-          break;
-        }
-        case 'có micro'.toLowerCase().trim(): {
-          feature = 3;
-          break;
-        }
-        case 'có tăng giảm âm lượng'.toLowerCase().trim(): {
-          feature = 4;
-          break;
-        }
-        case 'tai nghe thể thao'.toLowerCase().trim(): {
-          feature = 5;
-          break;
-        }
-        case 'tai nghe dj'.toLowerCase().trim(): {
-          feature = 6;
-          break;
-        }
-        case 'tai nghe phòng thu'.toLowerCase().trim(): {
-          feature = 7;
-          break;
-        }
-        case 'tai nghe gaming'.toLowerCase().trim(): {
-          feature = 8;
-          break;
-        }
-      }
-      console.log('data-finish');
-      const length = $$('.pagination-item').length
-        ? $$('.pagination-item').length - 2
-        : 0;
-
-      GetData(null, feature, i, length).then((value) => {
-        if (value) {
-          setTimeout(() => {
-            e?.click();
-          }, 20000);
-        }
-      });
-    }, 5000);
-  }, 10000);
-}
-
-get1().then((value) => {
-  if (value) {
-    get2().then((value2) => {
-      if (value2) {
+async function clickFeature(e) {
+  e?.click();
+  let feature = 0;
+  const index = 0;
+  await delay(6000).then(async () => {
+    const text = e?.parentElement?.innerText?.toLowerCase().trim();
+    console.log(text);
+    await GetData(null, null, index, text).then(async (value) => {
+      if (value) {
+        e?.click();
+        e?.click();
+        e?.click();
+        delay(2000);
       }
     });
-  }
+  });
+  return true;
+}
+
+getFeature(length2);
+
+e1.filter(function (item, pos) {
+  item.type = e1
+    .map((t) => {
+      return item.name === t.name ? t.type : null;
+    })
+    .filter((t) => t);
+
+  return e1.findIndex((t) => t.name === item.name) === pos;
 });
+
+e2.map((t) => {
+  t.type = t.type
+    .filter((t, p, a) => {
+      return a.findIndex((va) => va === t) === p;
+    })
+    .flat();
+  t.type = t.type.length === 1 ? t.type[0] : t.type[2];
+  return t;
+});
+
+async function GetData(type, feature, i, text) {
+  await delay(4000).then(async () => {
+    $$('.list-products-content .product-item .box')?.forEach(
+      async (item, arrIn) => {
+        const name = item?.getElementsByClassName('title')[0]?.innerText;
+        const gift =
+          item?.getElementsByClassName('-icon -icon-icon top-right') &&
+          item?.getElementsByClassName('-icon -icon-icon top-right').length > 0;
+
+        const discount =
+          item
+            ?.getElementsByClassName('percent-sale')[0]
+            ?.innerText?.replace('-', '')
+            .replace('%', '') | null;
+        const quantity =
+          item?.getElementsByClassName(
+            '-icon -icon-text top-left style-black',
+          ) &&
+          item?.getElementsByClassName('-icon -icon-text top-left style-black')
+            .length > 0
+            ? 1
+            : 0;
+
+        dap.push({
+          name: name,
+          discount: discount,
+          quantity: quantity,
+          gift: gift,
+        });
+      },
+    );
+  });
+  const length =
+    $$('.pagination-item')?.length > 0 ? $$('.pagination-item')?.length - 1 : 0;
+  if (length !== 0 && i < length) {
+    i += 1;
+    await delay(3000).then(async () => {
+      document
+        .getElementsByClassName('pagination-item active')[0]
+        ?.nextElementSibling?.childNodes[0]?.click();
+      await GetData(type, feature, i);
+    });
+  } else {
+    return true;
+  }
+}
