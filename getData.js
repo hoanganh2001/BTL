@@ -67,10 +67,13 @@ async function GetData(type, feature, i, text) {
     $$('.list-products-content .product-item .box')?.forEach(
       async (item, arrIn) => {
         const name = item?.getElementsByClassName('title')[0]?.innerText;
-        const price =
-          item?.children[1]?.getElementsByClassName(
-            'woocommerce-Price-amount amount',
-          )[0]?.innerText | null;
+        const img = item
+          ?.getElementsByClassName('has-image')[0]
+          ?.getElementsByTagName('img')[0]
+          ?.getAttribute('src');
+        const price = item?.children[1]?.getElementsByClassName(
+          'woocommerce-Price-amount amount',
+        )[0]?.innerText;
         const discount =
           item?.getElementsByClassName('percent-sale')?.innerText | null;
         const quantity =
