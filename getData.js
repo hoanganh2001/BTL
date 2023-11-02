@@ -25,35 +25,16 @@ async function clickType(e) {
   await delay(10000).then(async () => {
     const text = e?.parentElement?.innerText?.toLowerCase().trim();
     switch (text) {
-      case 'full sized': {
-        type = 1;
+      case 'kệ': {
+        type = 64;
         break;
       }
-      case 'on ear': {
-        type = 2;
-        break;
-      }
-      case 'earbud': {
-        type = 3;
-        break;
-      }
-      case 'in ear': {
-        type = 4;
-        break;
-      }
-      case 'wireless': {
-        type = 5;
-        break;
-      }
-      case 'true wireless': {
-        type = 6;
-        break;
-      }
-      case 'custom in ear': {
-        type = 7;
+      case 'loa': {
+        type = 65;
         break;
       }
     }
+
     await GetData(type, null, index).then(async (value) => {
       e?.click();
       delay(2000);
@@ -62,7 +43,7 @@ async function clickType(e) {
 }
 getType(length);
 
-async function GetData(type, feature, i, text) {
+async function GetData(type, feature, i) {
   await delay(4000).then(async () => {
     $$('.list-products-content .product-item .box')?.forEach(
       async (item, arrIn) => {
@@ -89,12 +70,12 @@ async function GetData(type, feature, i, text) {
           price: price,
           discount: discount,
           create_date: null,
-          category: '1',
+          category: 2,
           type: type ? type : 0,
           feature: feature ? feature : 0,
           view: 0,
           quantity: quantity,
-          brand: text,
+          brand: name.split(' ')[0].trim(),
         });
       },
     );
@@ -119,11 +100,11 @@ function delay(ms) {
 }
 
 const $$ = document.querySelectorAll.bind(document);
-const length2 = $$('.selector:nth-child(1) input').length;
+const length2 = $$('.selector:nth-child(3) input').length;
 const dap = [];
 
 async function getFeature(length) {
-  const e = $$(`.selector:nth-child(1) input`)[length - 1];
+  const e = $$(`.selector:nth-child(3) input`)[length - 1];
   await clickFeature(e).then((value) => {
     if (length > 0) {
       getFeature(length - 1);
@@ -140,8 +121,58 @@ async function clickFeature(e) {
   const index = 0;
   await delay(6000).then(async () => {
     const text = e?.parentElement?.innerText?.toLowerCase().trim();
-    console.log(text);
-    await GetData(null, null, index, text).then(async (value) => {
+    switch (text) {
+      case 'streaming dac': {
+        feature = 9;
+        break;
+      }
+      case 'dsd suport': {
+        feature = 10;
+        break;
+      }
+      case 'r2r ladder dac': {
+        feature = 11;
+        break;
+      }
+      case 'pre out': {
+        feature = 12;
+        break;
+      }
+      case 'bluetooth': {
+        feature = 13;
+        break;
+      }
+      case 'wifi': {
+        feature = 14;
+        break;
+      }
+      case 'tube amp': {
+        feature = 15;
+        break;
+      }
+      case 'solid amp': {
+        feature = 16;
+        break;
+      }
+      case 'tích hợp phono': {
+        feature = 17;
+        break;
+      }
+      case 'usb power supply': {
+        feature = 18;
+        break;
+      }
+      case 'power filter': {
+        feature = 19;
+        break;
+      }
+      case 'digital filter': {
+        feature = 20;
+        break;
+      }
+    }
+
+    await GetData(null, feature, index).then(async (value) => {
       if (value) {
         e?.click();
         e?.click();
