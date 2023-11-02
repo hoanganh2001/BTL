@@ -43,7 +43,7 @@ async function clickType(e) {
 }
 getType(length);
 
-async function GetData(type, feature, i) {
+async function GetData(type, feature, i, category) {
   await delay(4000).then(async () => {
     $$('.list-products-content .product-item .box')?.forEach(
       async (item, arrIn) => {
@@ -52,17 +52,26 @@ async function GetData(type, feature, i) {
           ?.getElementsByClassName('has-image')[0]
           ?.getElementsByTagName('img')[0]
           ?.getAttribute('src');
+
         const price = item?.children[1]?.getElementsByClassName(
           'woocommerce-Price-amount amount',
         )[0]?.innerText;
         const discount =
-          item?.getElementsByClassName('percent-sale')?.innerText | null;
+          item
+            ?.getElementsByClassName('percent-sale')[0]
+            ?.innerText.replace('-', '')
+            .replace('%', '') | null;
         const quantity =
           item[0]?.getElementsByClassName(
             '-icon -icon-text top-left style-black',
-          ).length > 0
+          )?.length > 0
             ? null
-            : 0;
+            : 1;
+        const gift =
+          item[0]?.getElementsByClassName('-icon -icon-icon top-right').length >
+          0
+            ? 1
+            : null;
 
         dap.push({
           name: name,
@@ -70,12 +79,13 @@ async function GetData(type, feature, i) {
           price: price,
           discount: discount,
           create_date: null,
-          category: 2,
+          category: category,
           type: type ? type : 0,
           feature: feature ? feature : 0,
           view: 0,
           quantity: quantity,
           brand: name.split(' ')[0].trim(),
+          gift: gift,
         });
       },
     );
@@ -88,7 +98,7 @@ async function GetData(type, feature, i) {
       document
         .getElementsByClassName('pagination-item active')[0]
         ?.nextElementSibling?.childNodes[0]?.click();
-      await GetData(type, feature, i);
+      await GetData(type, feature, i, category);
     });
   } else {
     return true;
@@ -100,8 +110,8 @@ function delay(ms) {
 }
 
 const $$ = document.querySelectorAll.bind(document);
-const length2 = $$('.selector:nth-child(3) input').length;
 const dap = [];
+const length2 = $$('.selector:nth-child(3) input').length;
 
 async function getFeature(length) {
   const e = $$(`.selector:nth-child(3) input`)[length - 1];
