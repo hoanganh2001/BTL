@@ -66,6 +66,279 @@ export class BrandProductListComponent implements OnInit {
     ],
   };
 
+  type = [
+    { id: 1, name: 'Full size', category_type_id: 1 },
+    { id: 2, name: 'on ear', category_type_id: 1 },
+    { id: 3, name: 'earbud', category_type_id: 1 },
+    { id: 4, name: 'in ear', category_type_id: 1 },
+    { id: 5, name: 'wireless', category_type_id: 1 },
+    { id: 6, name: 'true wireless', category_type_id: 1 },
+    { id: 7, name: 'custome in ear', category_type_id: 1 },
+    { id: 8, name: 'Desktop DAC', category_type_id: 2 },
+    { id: 9, name: 'Portable DAC/Amp', category_type_id: 2 },
+    { id: 10, name: 'Portable Amplifier', category_type_id: 2 },
+    { id: 11, name: 'Headphone Amplifier', category_type_id: 2 },
+    { id: 12, name: 'Speakers Amplifier', category_type_id: 2 },
+    { id: 13, name: 'Transport', category_type_id: 2 },
+    { id: 14, name: 'Preamp', category_type_id: 2 },
+    { id: 15, name: 'Bluetooth Receiver', category_type_id: 2 },
+    { id: 16, name: 'Bluetooth Transmitter', category_type_id: 2 },
+    { id: 17, name: 'Loseless Player', category_type_id: 3 },
+    { id: 18, name: '24BIT Player', category_type_id: 3 },
+    { id: 19, name: 'DSD Player', category_type_id: 3 },
+    { id: 20, name: 'Conference Speaker', category_type_id: 4 },
+    { id: 21, name: 'Portable Speaker', category_type_id: 4 },
+    { id: 22, name: 'Smart Home Speaker', category_type_id: 4 },
+    { id: 23, name: 'Computer Speaker', category_type_id: 4 },
+    { id: 24, name: 'Bookshelf Speaker', category_type_id: 4 },
+    { id: 25, name: 'Home Theater Speaker', category_type_id: 4 },
+    { id: 26, name: 'Soundbars', category_type_id: 4 },
+    { id: 27, name: 'Subwoofer', category_type_id: 4 },
+    { id: 28, name: 'Floor Standing Speaker', category_type_id: 4 },
+    { id: 29, name: 'Active Speaker', category_type_id: 4 },
+    { id: 30, name: 'Wireless Speaker', category_type_id: 4 },
+    { id: 31, name: 'MM', category_type_id: 5 },
+    { id: 32, name: 'MC', category_type_id: 5 },
+    { id: 33, name: '4.4mm', category_type_id: 6 },
+    { id: 34, name: 'Wireless', category_type_id: 6 },
+    { id: 35, name: '2-pin connector', category_type_id: 6 },
+    { id: 36, name: '2.5mm connector', category_type_id: 6 },
+    { id: 37, name: '3.5mm connector', category_type_id: 6 },
+    { id: 38, name: 'MMCX connector', category_type_id: 6 },
+    { id: 39, name: 'Bluetooth cable', category_type_id: 6 },
+    { id: 40, name: 'Apple Lightning cable', category_type_id: 6 },
+    { id: 41, name: '7 IC', category_type_id: 7 },
+    { id: 42, name: '7 Loa', category_type_id: 7 },
+    { id: 43, name: '7 Coaxial', category_type_id: 7 },
+    { id: 44, name: '7 optical', category_type_id: 7 },
+    { id: 45, name: '7 USB', category_type_id: 7 },
+    { id: 46, name: 'Microphone', category_type_id: 8 },
+    { id: 47, name: 'Ear tips', category_type_id: 8 },
+    { id: 48, name: 'Ear pads', category_type_id: 8 },
+    { id: 49, name: 'Hộp đựng', category_type_id: 8 },
+    { id: 50, name: 'Leather case', category_type_id: 8 },
+    { id: 51, name: 'Lọc nhiễu', category_type_id: 8 },
+    { id: 52, name: 'Adapter nguồn', category_type_id: 8 },
+  ];
+
+  feature = [
+    {
+      id: 1,
+      name: 'Chống ồn',
+      category_feature_id: 1,
+    },
+    {
+      id: 2,
+      name: 'Không dây',
+      category_feature_id: 1,
+    },
+    {
+      id: 3,
+      name: 'Có micro',
+      category_feature_id: 1,
+    },
+    {
+      id: 4,
+      name: 'Có tăng giảm âm lượng',
+      category_feature_id: 1,
+    },
+    {
+      id: 5,
+      name: 'Tai nghe thể thao',
+      category_feature_id: 1,
+    },
+    {
+      id: 6,
+      name: 'Tai nghe DJ',
+      category_feature_id: 1,
+    },
+    {
+      id: 7,
+      name: 'Tai nghe phòng thu',
+      category_feature_id: 1,
+    },
+    {
+      id: 8,
+      name: 'Tai nghe Gaming',
+      category_feature_id: 1,
+    },
+    {
+      id: 9,
+      name: 'Streaming DAC',
+      category_feature_id: 2,
+    },
+    {
+      id: 10,
+      name: 'DSD Suport',
+      category_feature_id: 2,
+    },
+    {
+      id: 11,
+      name: 'R2R ladder DAC',
+      category_feature_id: 2,
+    },
+    {
+      id: 12,
+      name: 'Pre Out',
+      category_feature_id: 2,
+    },
+    {
+      id: 13,
+      name: 'Bluetooth',
+      category_feature_id: 2,
+    },
+    {
+      id: 14,
+      name: 'Wifi',
+      category_feature_id: 2,
+    },
+    {
+      id: 15,
+      name: 'Tube amp',
+      category_feature_id: 2,
+    },
+    {
+      id: 16,
+      name: 'Solid amp',
+      category_feature_id: 2,
+    },
+    {
+      id: 17,
+      name: 'Tích hợp Phono',
+      category_feature_id: 2,
+    },
+    {
+      id: 18,
+      name: 'USB power supply',
+      category_feature_id: 2,
+    },
+    {
+      id: 19,
+      name: 'Power Filter',
+      category_feature_id: 2,
+    },
+    {
+      id: 20,
+      name: 'Digital Filter',
+      category_feature_id: 2,
+    },
+    {
+      id: 21,
+      name: 'Touchscreen',
+      category_feature_id: 3,
+    },
+    {
+      id: 22,
+      name: 'Native DSD',
+      category_feature_id: 3,
+    },
+    {
+      id: 23,
+      name: 'Bluetooth',
+      category_feature_id: 3,
+    },
+    {
+      id: 24,
+      name: 'Wifi',
+      category_feature_id: 3,
+    },
+    {
+      id: 25,
+      name: 'OTG Support',
+      category_feature_id: 3,
+    },
+    {
+      id: 26,
+      name: 'USB DAC',
+      category_feature_id: 3,
+    },
+    {
+      id: 27,
+      name: 'Line out',
+      category_feature_id: 3,
+    },
+    {
+      id: 28,
+      name: 'Balance out',
+      category_feature_id: 3,
+    },
+    {
+      id: 29,
+      name: 'Digital out',
+      category_feature_id: 3,
+    },
+    {
+      id: 30,
+      name: 'Bluetooth',
+      category_feature_id: 4,
+    },
+    {
+      id: 31,
+      name: 'Airplay',
+      category_feature_id: 4,
+    },
+    {
+      id: 32,
+      name: 'Wifi',
+      category_feature_id: 4,
+    },
+    {
+      id: 33,
+      name: 'Multi-room',
+      category_feature_id: 4,
+    },
+    {
+      id: 34,
+      name: 'Tích hợp DAC',
+      category_feature_id: 4,
+    },
+    {
+      id: 35,
+      name: 'Tích hợp Amply',
+      category_feature_id: 4,
+    },
+    {
+      id: 36,
+      name: 'Tích hợp Phono',
+      category_feature_id: 4,
+    },
+    {
+      id: 37,
+      name: 'Trợ lý ảo',
+      category_feature_id: 4,
+    },
+    {
+      id: 38,
+      name: 'Digital Output',
+      category_feature_id: 5,
+    },
+    {
+      id: 39,
+      name: 'Bluetooth',
+      category_feature_id: 5,
+    },
+    {
+      id: 40,
+      name: 'Tích hợp Phono',
+      category_feature_id: 5,
+    },
+    {
+      id: 41,
+      name: 'Tích hợp Tonearm',
+      category_feature_id: 5,
+    },
+    {
+      id: 42,
+      name: 'Tích hợp Cartridge',
+      category_feature_id: 5,
+    },
+    {
+      id: 43,
+      name: 'Phono stage',
+      category_feature_id: 6,
+    },
+  ];
+
   filter = {
     type: Constant.TYPE_SORT_FILTER.FILTER_FEATURE,
     filters: {
@@ -502,7 +775,21 @@ export class BrandProductListComponent implements OnInit {
   constructor(private _activeRoute: ActivatedRoute) {}
 
   ngOnInit() {
-    this.brandName = this._activeRoute.snapshot.paramMap.get('brandName') || '';
+    let head = `switch(e?.innerText.toLowerCase()) {`;
+    let foot = '}';
+    let body = '';
+    let currId = 1;
+    this.feature.forEach((item) => {
+      if (item.category_feature_id === currId) {
+        body += `case '${item.name.toLocaleLowerCase()}': {feature = ${
+          item.id
+        };break;}`;
+      } else {
+        console.log(head + body + foot);
+        body = '';
+        currId = item.category_feature_id;
+      }
+    });
   }
 
   sortData() {

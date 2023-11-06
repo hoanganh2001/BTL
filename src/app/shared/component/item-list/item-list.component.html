@@ -57,14 +57,13 @@
                   <p class="card-price">
                     {{
                       (item.discount
-                        ? getDiscountPrice(item.cost, item.discount)
-                        : item.cost
+                        ? getDiscountPrice(item.price, item.discount)
+                        : item.price
                       ) | currencyFormat
-                    }}<span class="ms-1">₫</span>
+                    }}
                   </p>
                   <p class="card-old-price">
-                    {{ (item.discount ? item.cost : '') | currencyFormat
-                    }}<span *ngIf="item.discount" class="ms-1">₫</span>
+                    {{ item.discount ? (item.price | currencyFormat) : '' }}
                   </p>
                 </div>
               </div>
@@ -274,14 +273,13 @@
           <p class="card-price">
             {{
               (item.discount
-                ? getDiscountPrice(item.cost, item.discount)
-                : item.cost
+                ? getDiscountPrice(item.price, item.discount)
+                : item.price
               ) | currencyFormat
-            }}<span class="ms-1">₫</span>
+            }}
           </p>
-          <p class="card-old-price">
-            {{ (item.discount ? item.cost : '') | currencyFormat
-            }}<span *ngIf="item.discount" class="ms-1">₫</span>
+          <p class="card-old-price" hidden>
+            {{ item.discount ? (item.price | currencyFormat) : '' }}
           </p>
         </div>
       </div>

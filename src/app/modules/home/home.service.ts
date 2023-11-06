@@ -23,17 +23,32 @@ export class HomeService {
       })
       .pipe(
         map((res: any) => {
+          console.log(res);
           return res.data.map((item: productResponseData) => ({
-            id: item._id,
-            category: item.category,
-            cost: item.cost,
+            id: item.id,
+            price: item.price,
             create_date: item.create_date,
             discount: item.discount,
-            img: item.img,
+            img: item.image,
             name: item.name,
-            view: item.view,
+            view: item.view_number,
+            gift: item.gift_id,
           }));
         }),
       );
+  }
+
+  getCategoriesOnSearch(): Observable<any> {
+    return this._httpClient.get(`${environment.endpoint}/categories`).pipe(
+      map((res: any) => {
+        console.log(res);
+        return res.data.map((item: productResponseData) => ({
+          id: item.id,
+          price: item.price,
+          create_date: item.create_date,
+          discount: item.discount,
+        }));
+      }),
+    );
   }
 }

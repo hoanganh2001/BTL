@@ -23,8 +23,8 @@ export class BrandService {
       .pipe(
         map((res: any) => {
           return res.data.map((item: brandResponseData) => ({
-            id: item._id,
-            img: item.img,
+            id: item.id,
+            img: item.image,
             name: item.name,
           }));
         }),
