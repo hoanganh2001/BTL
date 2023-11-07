@@ -1,7 +1,5 @@
-import { filter } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Constant } from 'src/app/shared/constant';
-import { filterData } from './category.type';
 
 @Component({
   selector: 'app-category',

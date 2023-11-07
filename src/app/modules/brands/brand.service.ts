@@ -16,18 +16,8 @@ export class BrandService {
    *
    */
   getBrands(body: any): Observable<any> {
-    return this._httpClient
-      .get(`${environment.endpoint}/brands`, {
-        params: body,
-      })
-      .pipe(
-        map((res: any) => {
-          return res.data.map((item: brandResponseData) => ({
-            id: item.id,
-            img: item.image,
-            name: item.name,
-          }));
-        }),
-      );
+    return this._httpClient.get(`${environment.endpoint}/brands`, {
+      params: body,
+    });
   }
 }

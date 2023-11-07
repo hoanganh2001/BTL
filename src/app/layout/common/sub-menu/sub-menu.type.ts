@@ -23,7 +23,6 @@ export interface CategoryData {
 }
 
 export interface ListData {
-  id: number | string;
   name: string;
   img?: string;
 }

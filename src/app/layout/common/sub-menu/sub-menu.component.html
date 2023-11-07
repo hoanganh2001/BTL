@@ -2,7 +2,10 @@
   <div class="row row-cols-5" *ngIf="subMenu.type === SUBMENU_TYPE.LIST">
     <ng-container *ngFor="let brand of subMenu.list; index as i">
       <div class="col">
-        <a class="brand-logo" [routerLink]="[subMenu.link + '/' + brand.name]">
+        <a
+          class="brand-logo"
+          [routerLink]="[subMenu.link + '/' + brand.name.replace(' ', '-')]"
+        >
           <img [src]="brand.img" [alt]="brand.name" />
         </a>
       </div>
@@ -22,7 +25,7 @@
           [ngClass]="item.active ? 'active' : ''"
           (mouseenter)="hoverIn(item.id)"
         >
-          <a [routerLink]="'/'">
+          <a [routerLink]="item.link">
             <span class="product-category-icon">
               <i class="bi" [ngClass]="item.icon" *ngIf="item.icon"></i>
               <img [src]="item.svg" [alt]="item.title" *ngIf="item.svg" />
@@ -39,7 +42,11 @@
             <h4 class="category-type-header">{{ item.title }}</h4>
             <ul class="category-type-list">
               <li *ngFor="let option of item.options">
-                <a href="">{{ option.name }}</a>
+                <a
+                  [routerLink]="currCategoryURL"
+                  [queryParams]="{ id: option.id }"
+                  >{{ option.name }}</a
+                >
               </li>
             </ul>
           </div>

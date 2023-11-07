@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import RouterConfig from 'src/app/core/config/router.config';
 import { BrandService } from '../brand.service';
-import { brandList } from '../brand.types';
+import { brandList, brandResponseData } from '../brand.types';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-brand-list',
@@ -23,11 +24,24 @@ export class BrandListComponent implements OnInit {
   }
 
   getBrandList() {
-    this._brandService.getBrands(null).subscribe((res) => {
-      if (res) {
-        this.brandList.data = res;
-      }
-    });
+    this._brandService
+      .getBrands(null)
+      .pipe(
+        map((res: any) => {
+          return res.data.map((item: brandResponseData) => ({
+            id: item.id,
+            img: item.image,
+            name: item.name,
+          }));
+        }),
+      )
+      .subscribe((res) => {
+        console.log(res);
+
+        if (res) {
+          this.brandList.data = res;
+        }
+      });
   }
 
   showMore() {

@@ -23,7 +23,9 @@
             "
           >
             <li *ngFor="let brand of brandList.data">
-              <a [routerLink]="[brandRoute + '/' + brand.name]">
+              <a
+                [routerLink]="[brandRoute + '/' + brand.name.replace(' ', '-')]"
+              >
                 {{ brand.name }}
               </a>
             </li>

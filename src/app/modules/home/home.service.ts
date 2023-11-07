@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from 'src/enviroment/enviroment';
-import { productData } from '../products/products.type';
 import { productResponseData } from './home.types';
 
 @Injectable({
@@ -23,7 +22,6 @@ export class HomeService {
       })
       .pipe(
         map((res: any) => {
-          console.log(res);
           return res.data.map((item: productResponseData) => ({
             id: item.id,
             price: item.price,
@@ -36,19 +34,5 @@ export class HomeService {
           }));
         }),
       );
-  }
-
-  getCategoriesOnSearch(): Observable<any> {
-    return this._httpClient.get(`${environment.endpoint}/categories`).pipe(
-      map((res: any) => {
-        console.log(res);
-        return res.data.map((item: productResponseData) => ({
-          id: item.id,
-          price: item.price,
-          create_date: item.create_date,
-          discount: item.discount,
-        }));
-      }),
-    );
   }
 }
