@@ -58,8 +58,6 @@ export class ProductListComponent implements OnInit {
   }
 
   getProductInCategory(list) {
-    console.log(list);
-
     list.forEach((item) => {
       const body = {
         limit: 9,
@@ -87,7 +85,6 @@ export class ProductListComponent implements OnInit {
           }
         });
     });
-    console.log(list);
   }
 
   scroll(id: number) {
@@ -96,6 +93,6 @@ export class ProductListComponent implements OnInit {
   }
 
   redirectTo(path: any) {
-    this._router.navigateByUrl(RouterConfig.PRODUCT_CATEGORY + '/' + path);
+    this._router.navigateByUrl(path);
   }
 }

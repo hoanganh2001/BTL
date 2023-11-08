@@ -50,8 +50,8 @@ export class ItemListComponent implements OnInit {
     console.log(id);
   }
 
-  clickAllBtn(id: string) {
-    this.handelBtnAction.emit(id);
+  clickAllBtn(link: string) {
+    this.handelBtnAction.emit(link);
   }
 
   scroll(a: any, i: number) {
