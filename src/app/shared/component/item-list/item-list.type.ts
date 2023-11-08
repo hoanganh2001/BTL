@@ -1,7 +1,10 @@
+import { productData } from 'src/app/modules/products/products.type';
+
 export interface SectionData {
   header?: string;
   type?: string;
+  link?: string;
   isFirst?: boolean;
-  data: any[];
+  data: productData[] | any[];
   mostViewProduct?: SectionData;
 }

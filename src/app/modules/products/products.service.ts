@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/enviroment/enviroment';
-import { productResponseData } from '../home/home.types';
 import { Observable, map } from 'rxjs';
 import { Constant } from 'src/app/shared/constant';
 
@@ -13,7 +12,19 @@ export class ProductService {
 
   constructor(private _httpClient: HttpClient) {}
 
-  getCategoriesOnSearch(): Observable<any> {
-    return this._httpClient.get(`${environment.endpoint}/categories`);
+  getCategoriesOnSearch(body?: any): Observable<any> {
+    return this._httpClient.get(`${environment.endpoint}/categories`, {
+      params: body,
+    });
+  }
+
+  getCategoriesList(): Observable<any> {
+    return this._httpClient.get(`${environment.endpoint}/categories-list`);
+  }
+
+  getItemsOnSearch(body: any): Observable<any> {
+    return this._httpClient.get(`${environment.endpoint}/products`, {
+      params: body,
+    });
   }
 }

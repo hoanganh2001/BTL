@@ -6,20 +6,20 @@
 </div>
 <div class="container mb-5">
   <!-- Button filter feature  -->
-  <div class="row category">
+  <div class="row category" *ngIf="categories.categories.length > 2">
     <filter-and-sort [data]="categories"></filter-and-sort>
   </div>
   <!-- Sort options  -->
   <div class="row mb-5">
-    <div class="col-6">
-      <filter-and-sort [data]="sortOption"></filter-and-sort>
-    </div>
+    <filter-and-sort [data]="sortOption"></filter-and-sort>
   </div>
 
   <!-- Filter options  -->
   <div class="row">
     <div class="col-3">
-      <filter-and-sort [data]="filter"></filter-and-sort>
+      <ng-container *ngFor="let item of filters">
+        <filter-and-sort [data]="item"></filter-and-sort>
+      </ng-container>
     </div>
     <div class="col-9">
       <div class="container">

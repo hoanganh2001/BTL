@@ -11,6 +11,7 @@ export class Constant {
     SORT: 'sort',
     FILTER_FEATURE: 'filter_feature',
     FILTER_TYPE: 'filter_type',
+    FILTER_BRAND: 'filter_brand',
   };
 
   public static FILTER_TYPE = {

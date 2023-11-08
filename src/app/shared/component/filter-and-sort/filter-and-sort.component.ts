@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Constant } from '../../constant';
-import { SortFilterData } from './filter-and-sort.type';
+import { Filters, SortFilterData } from './filter-and-sort.type';
 
 @Component({
   selector: 'filter-and-sort',
@@ -8,7 +8,8 @@ import { SortFilterData } from './filter-and-sort.type';
   styleUrls: ['./filter-and-sort.component.scss'],
 })
 export class FilterAndSortComponent implements OnInit {
-  @Input() data?: SortFilterData;
+  @Input() data?: SortFilterData | Filters;
+  @Output() handelFilterTypeAction = new EventEmitter();
 
   readonly TYPE_SORT_FILTER = Constant.TYPE_SORT_FILTER;
   readonly FILTER_TYPE = Constant.FILTER_TYPE;
@@ -18,4 +19,7 @@ export class FilterAndSortComponent implements OnInit {
   ngOnInit() {}
   sortData() {}
   filterData() {}
+  filterType(id: number) {
+    this.handelFilterTypeAction.emit(id);
+  }
 }

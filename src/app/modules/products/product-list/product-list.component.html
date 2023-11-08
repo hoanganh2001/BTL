@@ -6,43 +6,18 @@
 </div>
 <div class="container mb-5">
   <div class="row justify-content-around category">
-    <filter-and-sort [data]="categoriesOption"></filter-and-sort>
+    <filter-and-sort
+      [data]="categoriesOption"
+      (handelFilterTypeAction)="scroll($event)"
+    ></filter-and-sort>
   </div>
   <div class="row">
-    <item-list
-      id="headphone"
-      (handelBtnAction)="redirectTo($event)"
-      [section]="headphone"
-    ></item-list>
-    <item-list
-      id="DAC"
-      (handelBtnAction)="redirectTo($event)"
-      [section]="DAC"
-    ></item-list>
-    <item-list
-      id="DAP"
-      (handelBtnAction)="redirectTo($event)"
-      [section]="DAP"
-    ></item-list>
-    <item-list
-      id="speaker"
-      (handelBtnAction)="redirectTo($event)"
-      [section]="speaker"
-    ></item-list>
-    <item-list
-      id="homeStudio"
-      (handelBtnAction)="redirectTo($event)"
-      [section]="homeStudio"
-    ></item-list>
-    <item-list
-      id="analog"
-      (handelBtnAction)="redirectTo($event)"
-      [section]="analog"
-    ></item-list>
-    <item-list
-      id="accessory"
-      (handelBtnAction)="redirectTo($event)"
-      [section]="accessory"
-    ></item-list>
+    <ng-container *ngFor="let category of categoriesOption.categories">
+      <item-list
+        [id]="category.id"
+        (handelBtnAction)="redirectTo($event)"
+        [section]="category.product_list"
+      ></item-list>
+    </ng-container>
   </div>
 </div>
