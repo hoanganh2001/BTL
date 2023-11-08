@@ -23,8 +23,11 @@ export class SubMenuComponent implements OnInit {
   hoverIn(id: number | string) {
     this.subMenu?.category?.data.forEach((item) => {
       item.active = item.id === id;
-      this.currCategoryURL = item.link;
+      if (item.id === id) {
+        this.currCategoryURL = item.link;
+      }
     });
+
     this.selected_category = this.subMenu?.category?.data.find(
       (t) => t.active,
     )?.data;

@@ -104,7 +104,6 @@ export class ClassicComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         if (res && list.category) {
           list.category.data = res;
-          console.log(res);
         }
       });
   }
