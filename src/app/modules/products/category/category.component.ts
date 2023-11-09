@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
 import RouterConfig from 'src/app/core/config/router.config';
 import { productResponseData } from '../../home/home.types';
+import { paginatorData } from 'src/app/shared/component/paginator/paginator.types';
 
 @Component({
   selector: 'app-category',
@@ -13,7 +14,12 @@ import { productResponseData } from '../../home/home.types';
 })
 export class CategoryComponent implements OnInit {
   readonly routerURL = RouterConfig;
-
+  paginator: paginatorData = {
+    length: 0,
+    limit: 28,
+    offset: 0,
+  };
+  productSearchBody: any;
   constructor(
     private _productService: ProductService,
     private _activeRoute: ActivatedRoute,
@@ -23,37 +29,41 @@ export class CategoryComponent implements OnInit {
     this._activeRoute.paramMap.subscribe((param) => {
       if (param.get('category')) {
         this.getTypeAndFeature(param.get('category'));
-        this.getProductList(param.get('category'));
+        this.productSearchBody = {
+          limit: 28,
+          skip: 0,
+          category_name: param.get('category').replace('-', '_'),
+        };
+        this.getProductList(this.productSearchBody);
       }
     });
   }
 
-  getProductList(category_name: string) {
-    const body = {
-      limit: 28,
-      skip: 0,
-      category_name: category_name.replace('-', '_'),
-    };
+  getProductList(body: any) {
     this._productService
       .getItemsOnSearch(body)
       .pipe(
-        map((res: any) => {
-          return res.data.map((item: productResponseData) => ({
-            id: item.id,
-            price: item.price,
-            create_date: item.create_date,
-            discount: item.discount,
-            image: item.image,
-            name: item.name,
-            view: item.view_number,
-            gift: item.gift_id,
+        map((value: any) => {
+          value.data = value.data.map((res: productResponseData) => ({
+            id: res.id,
+            price: res.price,
+            create_date: res.create_date,
+            discount: res.discount,
+            image: res.image,
+            name: res.name,
+            view: res.view_number,
+            gift: res.gift_id,
           }));
+          return value;
         }),
       )
       .subscribe({
         next: (res) => {
           if (res) {
-            this.productList.data = res;
+            this.productList.data = res.data;
+            this.paginator.length = res.meta.length;
+            this.paginator.offset = res.meta.offset ? res.meta.offset : 0;
+            this.paginator.limit = res.meta.limit;
           }
         },
       });
@@ -171,5 +181,15 @@ export class CategoryComponent implements OnInit {
 
   sortData() {
     console.log('sort');
+  }
+
+  handelPagging(page: paginatorData) {
+    this.productSearchBody = {
+      ...this.productSearchBody,
+      offset: page.offset,
+      limit: page.limit,
+    };
+
+    this.getProductList(this.productSearchBody);
   }
 }

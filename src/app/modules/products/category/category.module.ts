@@ -6,6 +6,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { FilterAndSortModule } from 'src/app/shared/component/filter-and-sort/filter-and-sort.module';
+import { PaginatorModule } from 'src/app/shared/component/paginator/paginator.module';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { FilterAndSortModule } from 'src/app/shared/component/filter-and-sort/fi
     MatCheckboxModule,
     MatSelectModule,
     MatInputModule,
+    PaginatorModule,
   ],
   declarations: [CategoryComponent],
 })
