@@ -9,7 +9,7 @@ import { Filters, SortFilterData } from './filter-and-sort.type';
 })
 export class FilterAndSortComponent implements OnInit {
   @Input() data?: SortFilterData | Filters;
-  @Output() handelFilterTypeAction = new EventEmitter();
+  @Output() handelFilterCategoryAction = new EventEmitter();
 
   readonly TYPE_SORT_FILTER = Constant.TYPE_SORT_FILTER;
   readonly FILTER_TYPE = Constant.FILTER_TYPE;
@@ -19,7 +19,7 @@ export class FilterAndSortComponent implements OnInit {
   ngOnInit() {}
   sortData() {}
   filterData() {}
-  filterType(id: number) {
-    this.handelFilterTypeAction.emit(id);
+  filterCategory(id: string) {
+    this.handelFilterCategoryAction.emit(id);
   }
 }

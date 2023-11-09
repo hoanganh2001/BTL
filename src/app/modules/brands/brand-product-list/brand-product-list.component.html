@@ -1,0 +1,47 @@
+<div class="banner mb-5">
+  <img
+    src="https://3kshop.vn/wp-content/uploads/2019/09/beyerdynamic-dt-240-pro-3skhop-scaled.jpg"
+    alt=""
+  />
+</div>
+<div class="container mb-5">
+  <div class="row">
+    <div class="col">
+      <h2 class="header">{{ brandDetail?.name }}</h2>
+    </div>
+  </div>
+
+  <!-- Button filter feature  -->
+  <div class="row">
+    <filter-and-sort
+      [data]="categories"
+      (handelFilterCategoryAction)="filterCategory($event)"
+    ></filter-and-sort>
+  </div>
+  <!-- Sort options  -->
+  <div class="row justify-content-end mb-5">
+    <div class="col-6">
+      <filter-and-sort [data]="sortOption"></filter-and-sort>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- filter type  -->
+    <div class="col-3 border-end">
+      <div class="brand-logo" *ngIf="brandDetail as brand">
+        <img [src]="brand.image" [alt]="brand.name" />
+      </div>
+      <ng-container *ngFor="let item of filters">
+        <filter-and-sort [data]="item"></filter-and-sort>
+      </ng-container>
+    </div>
+    <div class="col-9">
+      <item-list [section]="productList" [column]="4"></item-list>
+      <paginator
+        *ngIf="paginator.length > paginator.limit"
+        [paginator]="paginator"
+        (handelPaggingEvent)="handelPagging($event)"
+      ></paginator>
+    </div>
+  </div>
+</div>

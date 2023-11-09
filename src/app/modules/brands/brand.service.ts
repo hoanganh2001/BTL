@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { environment } from 'src/enviroment/enviroment';
 import { brandResponseData } from './brand.types';
 
@@ -10,13 +10,20 @@ import { brandResponseData } from './brand.types';
 export class BrandService {
   constructor(private _httpClient: HttpClient) {}
 
-  /**
-   * Get approval request list on search pop up
-   *
-   *
-   */
+  private brandId: BehaviorSubject<number> = new BehaviorSubject<number>(null);
+  public brandIdSubject$: Observable<number> = this.brandId.asObservable();
+  getBrandId(id: number) {
+    this.brandId.next(id);
+  }
+
   getBrands(body: any): Observable<any> {
     return this._httpClient.get(`${environment.endpoint}/brands`, {
+      params: body,
+    });
+  }
+
+  getBrandsCategories(body: any): Observable<any> {
+    return this._httpClient.get(`${environment.endpoint}/brands-categories`, {
       params: body,
     });
   }

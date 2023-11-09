@@ -52,4 +52,8 @@ export class BrandListComponent implements OnInit {
         ? this.limit * 2
         : null;
   }
+
+  routeToBrand(id) {
+    this._brandService.getBrandId(parseInt(id));
+  }
 }

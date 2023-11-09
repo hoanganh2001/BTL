@@ -6,7 +6,7 @@ export interface brandResponseData {
 
 export interface brandData {
   id: string;
-  img: string;
+  image: string;
   name: string;
 }
 

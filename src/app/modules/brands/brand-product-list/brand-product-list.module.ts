@@ -6,6 +6,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ItemListModule } from 'src/app/shared/component/item-list/item-list.module';
 import { FilterAndSortModule } from 'src/app/shared/component/filter-and-sort/filter-and-sort.module';
 import { BrandProductListComponent } from './brand-product-list.component';
+import { PaginatorModule } from 'src/app/shared/component/paginator/paginator.module';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { BrandProductListComponent } from './brand-product-list.component';
     MatCheckboxModule,
     MatSelectModule,
     MatInputModule,
+    PaginatorModule,
   ],
   declarations: [BrandProductListComponent],
 })

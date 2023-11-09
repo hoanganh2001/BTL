@@ -7,7 +7,8 @@
             <button
               type="button"
               class="btn btn-filter-type btn--animation-hover-in text-uppercase"
-              (click)="filterType(category.id)"
+              [ngClass]="{ active: category.active }"
+              (click)="filterCategory(category.id)"
             >
               {{ category.name }}
             </button>
@@ -37,9 +38,6 @@
   </ng-container>
 
   <ng-container *ngIf="data.type === TYPE_SORT_FILTER.FILTER_BRAND">
-    <div class="brand-logo" *ngIf="data.logo as brand">
-      <img [src]="brand.img" [alt]="brand.name" />
-    </div>
     <div class="filter">
       <ng-container
         [ngTemplateOutlet]="checkBox"
