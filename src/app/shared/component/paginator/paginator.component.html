@@ -1,0 +1,44 @@
+<nav
+  class="d-flex justify-content-center"
+  *ngIf="pageList && pageList.length > 1"
+>
+  <ul class="pagination pagination-lg">
+    <li
+      class="page-item"
+      [ngClass]="{ 'd-none': pageList && pageList[0].active }"
+    >
+      <button
+        class="page-link"
+        (click)="handelPagging(null, -1)"
+        aria-label="Previous"
+      >
+        <span aria-hidden="true">&laquo;</span>
+      </button>
+    </li>
+    <ng-container *ngFor="let item of pageList; index as i; count as length">
+      <li
+        class="page-item"
+        [ngClass]="{ active: item.active }"
+        *ngIf="length > 5 && isIndexShow(i + 1, length)"
+      >
+        <button class="page-link" (click)="handelPagging(item.pageIndex)">
+          {{ item.pageIndex }}
+        </button>
+      </li>
+    </ng-container>
+    <li
+      class="page-item"
+      [ngClass]="{
+        'd-none': pageList && pageList[pageList?.length - 1]?.active
+      }"
+    >
+      <button
+        class="page-link"
+        (click)="handelPagging(null, 1)"
+        aria-label="Next"
+      >
+        <span aria-hidden="true">&raquo;</span>
+      </button>
+    </li>
+  </ul>
+</nav>

@@ -1,0 +1,14 @@
+.pagination {
+  .page-link {
+    border: none !important;
+    color: #000;
+    min-width: 80px;
+  }
+
+  .page-item.active {
+    .page-link {
+      background-color: black;
+      color: white;
+    }
+  }
+}
