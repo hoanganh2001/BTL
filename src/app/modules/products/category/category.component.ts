@@ -1,5 +1,10 @@
 import { ProductService } from 'src/app/modules/products/products.service';
-import { Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { Constant } from 'src/app/shared/constant';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
@@ -11,6 +16,7 @@ import { paginatorData } from 'src/app/shared/component/paginator/paginator.type
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryComponent implements OnInit {
   readonly routerURL = RouterConfig;
@@ -23,6 +29,7 @@ export class CategoryComponent implements OnInit {
   constructor(
     private _productService: ProductService,
     private _activeRoute: ActivatedRoute,
+    private _changeDetectorRef: ChangeDetectorRef,
   ) {}
 
   ngOnInit() {
@@ -31,7 +38,7 @@ export class CategoryComponent implements OnInit {
         this.getTypeAndFeature(param.get('category'));
         this.productSearchBody = {
           limit: 28,
-          skip: 0,
+          offset: 0,
           category_name: param.get('category').replace('-', '_'),
         };
         this.getProductList(this.productSearchBody);
@@ -64,6 +71,7 @@ export class CategoryComponent implements OnInit {
             this.paginator.length = res.meta.length;
             this.paginator.offset = res.meta.offset ? res.meta.offset : 0;
             this.paginator.limit = res.meta.limit;
+            this._changeDetectorRef.markForCheck();
           }
         },
       });
@@ -84,14 +92,22 @@ export class CategoryComponent implements OnInit {
               data.push({
                 type: 'type',
                 title: e.typeHeader,
-                options: e.typeList,
+                options: e.typeList.map((t, i) => ({
+                  id: t.id,
+                  name: t.name,
+                  active: false,
+                })),
               });
             });
             item.feature.forEach((e) => {
               data.push({
                 type: 'feature',
                 title: e.featureHeader,
-                options: e.featureList,
+                options: e.featureList.map((t, i) => ({
+                  id: t.id,
+                  name: t.name,
+                  active: false,
+                })),
               });
             });
           });
@@ -104,6 +120,7 @@ export class CategoryComponent implements OnInit {
         this.categories.categories = typeList[0].options;
         this.filters.find((t) => t.id === 'type').options = typeList;
         this.filters.find((t) => t.id === 'feature').options = featureList;
+        this._changeDetectorRef.markForCheck();
       });
   }
 
@@ -112,19 +129,19 @@ export class CategoryComponent implements OnInit {
     type: Constant.TYPE_SORT_FILTER.SORT,
     sorts: [
       {
-        id: 'new',
+        id: 'create_date desc',
         name: 'mới nhất',
       },
       {
-        id: 'old',
+        id: 'create_date',
         name: 'cũ nhất',
       },
       {
-        id: 'cheap',
+        id: 'price',
         name: 'Giá thấp đến cao',
       },
       {
-        id: 'expensive',
+        id: 'price desc',
         name: 'Giá cao đến thấp',
       },
     ],
@@ -173,14 +190,38 @@ export class CategoryComponent implements OnInit {
     data: [],
   };
 
-  filterData() {
-    console.log('filter');
-    //add pram brand
-    //call api
+  filterTypeFeature(data) {
+    data.forEach((t) => {
+      if (t.type === 'type')
+        this.productSearchBody = {
+          ...this.productSearchBody,
+          type_id: t.ids,
+        };
+      if (t.type === 'feature') {
+        this.productSearchBody = {
+          ...this.productSearchBody,
+          feature_id: t.ids,
+        };
+      }
+      this.productSearchBody['offset'] = 0;
+    });
+    this.getProductList(this.productSearchBody);
   }
 
-  sortData() {
-    console.log('sort');
+  sortData(data) {
+    const sortData = data.split(' ');
+    this.productSearchBody = {
+      ...this.productSearchBody,
+      offset: 0,
+      order_by: sortData[0],
+      sort_by: sortData[1],
+    };
+
+    if (sortData.length === 1) {
+      delete this.productSearchBody['sort_by'];
+    }
+
+    this.getProductList(this.productSearchBody);
   }
 
   handelPagging(page: paginatorData) {
@@ -188,6 +229,20 @@ export class CategoryComponent implements OnInit {
       ...this.productSearchBody,
       offset: page.offset,
       limit: page.limit,
+    };
+
+    this.getProductList(this.productSearchBody);
+  }
+
+  filterCategory(id: string) {
+    this.categories.categories = this.categories.categories.map((t) => {
+      t.active = t.id === id;
+      return t;
+    });
+    this.productSearchBody = {
+      ...this.productSearchBody,
+      offset: 0,
+      type_id: id,
     };
 
     this.getProductList(this.productSearchBody);

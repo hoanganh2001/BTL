@@ -3,7 +3,7 @@ export interface SortFilterData {
   type?: string;
   categories?: any[];
   sorts?: any[];
-  filters?: FiltersData;
+  options?: FiltersData[];
 }
 
 export interface FiltersData {
@@ -12,6 +12,7 @@ export interface FiltersData {
 }
 
 export interface Filters {
+  id: string;
   title: string;
   type: string;
   options?: checkboxData[];

@@ -7,18 +7,27 @@
 <div class="container mb-5">
   <!-- Button filter feature  -->
   <div class="row category" *ngIf="categories.categories.length > 2">
-    <filter-and-sort [data]="categories"></filter-and-sort>
+    <filter-and-sort
+      [data]="categories"
+      (handelFilterCategoryAction)="filterCategory($event)"
+    ></filter-and-sort>
   </div>
   <!-- Sort options  -->
   <div class="row mb-5">
-    <filter-and-sort [data]="sortOption"></filter-and-sort>
+    <filter-and-sort
+      [data]="sortOption"
+      (handelSortAction)="sortData($event)"
+    ></filter-and-sort>
   </div>
 
   <!-- Filter options  -->
   <div class="row">
     <div class="col-3">
       <ng-container *ngFor="let item of filters">
-        <filter-and-sort [data]="item"></filter-and-sort>
+        <filter-and-sort
+          [data]="item"
+          (handelFilterTypeAction)="filterTypeFeature($event)"
+        ></filter-and-sort>
       </ng-container>
     </div>
     <div class="col-9">
@@ -26,7 +35,9 @@
         <item-list [section]="productList" [column]="4"></item-list>
         <paginator
           *ngIf="paginator.length > paginator.limit"
-          [paginator]="paginator"
+          [length]="paginator.length"
+          [offset]="paginator.offset"
+          [limit]="paginator.limit"
           (handelPaggingEvent)="handelPagging($event)"
         ></paginator>
       </div>

@@ -23,8 +23,8 @@
       <h3 class="text-uppercase sort-text">{{ data.title }}</h3>
       <mat-select
         class="sort-option text-capitalize"
-        [(value)]="data.sorts[0].id"
-        (valueChange)="sortData()"
+        [formControl]="sortFormControl"
+        (selectionChange)="sortData(sortFormControl.value)"
       >
         <mat-option
           class="text-capitalize"
@@ -84,8 +84,8 @@
   >
     <li *ngFor="let option of filter.options">
       <mat-checkbox
-        [(ngModel)]="option.completed"
-        (ngModelChange)="filterData()"
+        [(ngModel)]="option.active"
+        (ngModelChange)="filterCheckBox()"
         class="text-capitalize"
         >{{ option.name }}</mat-checkbox
       >
