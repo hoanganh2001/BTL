@@ -11,4 +11,8 @@
       color: white;
     }
   }
+  .page-link:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
 }

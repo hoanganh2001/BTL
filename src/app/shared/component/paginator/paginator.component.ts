@@ -1,13 +1,23 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { pageList, paginatorData } from './paginator.types';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
+import { pageList } from './paginator.types';
 
 @Component({
   selector: 'paginator',
   templateUrl: './paginator.component.html',
   styleUrls: ['./paginator.component.scss'],
 })
-export class PaginatorComponent implements OnInit {
-  @Input() paginator: paginatorData;
+export class PaginatorComponent implements OnInit, OnChanges {
+  @Input() length: number;
+  @Input() offset: number;
+  @Input() limit: number;
   @Output() handelPaggingEvent = new EventEmitter();
 
   pageList: pageList[] = [];
@@ -15,32 +25,50 @@ export class PaginatorComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    if (this.paginator.length > this.paginator.limit) {
-      const pageTotal = this.paginator.length / this.paginator.limit;
+    if (this.length > this.limit) {
+      const pageTotal = this.length / this.limit;
       for (let i = 0; i < Math.ceil(pageTotal); i++) {
-        const currPage =
-          this.paginator.offset === 0
-            ? 0
-            : this.paginator.offset / this.paginator.limit;
+        const currPage = this.offset === 0 ? 0 : this.offset / this.limit;
         this.pageList.push({
           pageIndex: i + 1,
           active: currPage === i,
         });
       }
-      this.paginator.length = this.paginator.length;
+      this.length = this.length;
     }
   }
 
+  public ngOnChanges(changes: SimpleChanges): void {
+    if ('length' in changes || 'offset' in changes) {
+      if (
+        this.length > this.limit ||
+        (changes['offset'].currentValue === 0 &&
+          changes['offset'].previousValue !== 0)
+      ) {
+        this.pageList = [];
+        const pageTotal = this.length / this.limit;
+        for (let i = 0; i < Math.ceil(pageTotal); i++) {
+          const currPage = this.offset === 0 ? 0 : this.offset / this.limit;
+          this.pageList.push({
+            pageIndex: i + 1,
+            active: currPage === i,
+          });
+        }
+        this.length = this.length;
+      }
+    }
+  }
   handelPagging(page?: number, action?: number) {
     if (!action) {
       this.pageList = this.pageList.map((t) => {
         t.active = t.pageIndex === page;
         return t;
       });
-      this.paginator = {
-        ...this.paginator,
-        offset: this.paginator.limit * (page - 1),
-      };
+      this.handelPaggingEvent.emit({
+        length: this.length,
+        limit: this.limit,
+        offset: this.limit * (page - 1),
+      });
     } else {
       const activePage = this.pageList.findIndex((t) => t.active);
       this.pageList = this.pageList.map((t, i, a) => {
@@ -50,14 +78,13 @@ export class PaginatorComponent implements OnInit {
         }
         return t;
       });
-      this.paginator = {
-        ...this.paginator,
+      this.handelPaggingEvent.emit({
+        length: this.length,
+        limit: this.limit,
         offset:
-          this.paginator.limit *
-          (this.pageList.find((t) => t.active).pageIndex - 1),
-      };
+          this.limit * (this.pageList.find((t) => t.active).pageIndex - 1),
+      });
     }
-    this.handelPaggingEvent.emit(this.paginator);
   }
 
   isIndexShow(i: number, length: number): boolean {
