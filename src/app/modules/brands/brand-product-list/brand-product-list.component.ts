@@ -18,8 +18,6 @@ import { paginatorData } from 'src/app/shared/component/paginator/paginator.type
   selector: 'app-brand-product-list',
   templateUrl: './brand-product-list.component.html',
   styleUrls: ['./brand-product-list.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BrandProductListComponent implements OnInit {
   brandName?: string;
@@ -189,8 +187,6 @@ export class BrandProductListComponent implements OnInit {
           this.paginator.offset = res.meta.offset ? res.meta.offset : 0;
           this.paginator.limit = res.meta.limit;
         }
-
-        this._changeDetectorRef.markForCheck();
       });
   }
 
@@ -209,14 +205,22 @@ export class BrandProductListComponent implements OnInit {
               data.push({
                 type: 'type',
                 title: e.typeHeader,
-                options: e.typeList,
+                options: e.typeList.map((t, i) => ({
+                  id: t.id,
+                  name: t.name,
+                  active: false,
+                })),
               });
             });
             item.feature.forEach((e) => {
               data.push({
                 type: 'feature',
                 title: e.featureHeader,
-                options: e.featureList,
+                options: e.featureList.map((t, i) => ({
+                  id: t.id,
+                  name: t.name,
+                  active: false,
+                })),
               });
             });
           });
@@ -228,17 +232,46 @@ export class BrandProductListComponent implements OnInit {
         const featureList = res.filter((t) => t.type === 'feature');
         this.filters.find((t) => t.id === 'type').options = typeList;
         this.filters.find((t) => t.id === 'feature').options = featureList;
+        console.log(this.filters);
       });
   }
 
-  sortData() {
-    console.log('sort');
+  filterTypeFeature(data) {
+    const typeIds = [];
+    const featureIds = [];
+    data.forEach((t) => {
+      if (t.type === 'type') {
+        typeIds.push(t.ids);
+      }
+      if (t.type === 'feature') {
+        featureIds.push(t.ids);
+      }
+    });
+    this.productSearchBody = {
+      ...this.productSearchBody,
+      offset: 0,
+      feature_id: featureIds.flat(),
+      type_id: typeIds.flat(),
+    };
+    if (typeIds.length <= 0) delete this.productSearchBody['type_id'];
+    if (featureIds.length <= 0) delete this.productSearchBody['feature_id'];
+    this.getProductList(this.productSearchBody);
   }
 
-  filterData() {
-    console.log('filter');
-    //add pram brand
-    //call api
+  sortData(data) {
+    const sortData = data.split(' ');
+    this.productSearchBody = {
+      ...this.productSearchBody,
+      offset: 0,
+      order_by: sortData[0],
+      sort_by: sortData[1],
+    };
+
+    if (sortData.length === 1) {
+      delete this.productSearchBody['sort_by'];
+    }
+
+    this.getProductList(this.productSearchBody);
   }
 
   filterCategory(id: string) {
@@ -247,7 +280,13 @@ export class BrandProductListComponent implements OnInit {
       return t;
     });
     this.getTypeAndFeature(id);
-    this.getProductList(id);
+    this.productSearchBody = {
+      category_id: id,
+      brand_id: this.brandDetail.id,
+      limit: 28,
+      offset: 0,
+    };
+    this.getProductList(this.productSearchBody);
   }
 
   handelPagging(page: paginatorData) {
