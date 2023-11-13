@@ -13,6 +13,7 @@ import { brandData } from '../brand.types';
 import { ProductService } from '../../products/products.service';
 import { productResponseData } from '../../home/home.types';
 import { paginatorData } from 'src/app/shared/component/paginator/paginator.types';
+import { rangeInput } from 'src/app/shared/component/filter-and-sort/filter-and-sort.type';
 
 @Component({
   selector: 'app-brand-product-list',
@@ -27,6 +28,7 @@ export class BrandProductListComponent implements OnInit {
     offset: 0,
   };
   productSearchBody: any;
+  temp;
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -286,6 +288,22 @@ export class BrandProductListComponent implements OnInit {
       limit: 28,
       offset: 0,
     };
+    this.getProductList(this.productSearchBody);
+  }
+
+  filterRange(range: rangeInput) {
+    this.productSearchBody = {
+      ...this.productSearchBody,
+      start_price: range.startRange,
+      end_price: range.endRange,
+      limit: 28,
+      offset: 0,
+    };
+    if (!range.startRange) {
+      delete this.productSearchBody['start_price'];
+    } else if (!range.endRange) {
+      delete this.productSearchBody['end_price'];
+    }
     this.getProductList(this.productSearchBody);
   }
 

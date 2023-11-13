@@ -12,6 +12,7 @@ export class Constant {
     FILTER_FEATURE: 'filter_feature',
     FILTER_TYPE: 'filter_type',
     FILTER_BRAND: 'filter_brand',
+    FILTER_TYPE_BUTTON: 'filter_type_btn',
   };
 
   public static FILTER_TYPE = {

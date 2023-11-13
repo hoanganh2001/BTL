@@ -11,6 +11,7 @@ import { map } from 'rxjs';
 import RouterConfig from 'src/app/core/config/router.config';
 import { productResponseData } from '../../home/home.types';
 import { paginatorData } from 'src/app/shared/component/paginator/paginator.types';
+import { rangeInput } from 'src/app/shared/component/filter-and-sort/filter-and-sort.type';
 
 @Component({
   selector: 'app-category',
@@ -36,17 +37,15 @@ export class CategoryComponent implements OnInit {
     this._activeRoute.paramMap.subscribe((param) => {
       if (param.get('category')) {
         this.getTypeAndFeature(param.get('category'));
-        this.productSearchBody = {
-          limit: 28,
-          offset: 0,
-          category_name: param.get('category').replace('-', '_'),
-        };
-        this.getProductList(this.productSearchBody);
       }
     });
   }
 
   getProductList(body: any) {
+    if (!body['offset']) {
+      body['offset'] = 0;
+      body['limit'] = 28;
+    }
     this._productService
       .getItemsOnSearch(body)
       .pipe(
@@ -74,6 +73,23 @@ export class CategoryComponent implements OnInit {
             this._changeDetectorRef.markForCheck();
           }
         },
+      });
+  }
+
+  getBrandList(body: any) {
+    this._productService
+      .getBrandsOnCategory(body)
+      .pipe(
+        map((res) => {
+          return res.data.map((item) => ({
+            id: item.id,
+            name: item.name,
+            active: false,
+          }));
+        }),
+      )
+      .subscribe((value) => {
+        this.filters.find((t) => t.id === 'brand').options = value;
       });
   }
 
@@ -111,15 +127,22 @@ export class CategoryComponent implements OnInit {
               });
             });
           });
-          return data;
+          return { category_id: res.data[0].id, data: data };
         }),
       )
       .subscribe((res) => {
-        const typeList = res.filter((t) => t.type === 'type');
-        const featureList = res.filter((t) => t.type === 'feature');
-        this.categories.categories = typeList[0].options;
+        this.productSearchBody = {
+          category_id: res.category_id,
+        };
+
+        const typeList = res.data.filter((t) => t.type === 'type');
+        const featureList = res.data.filter((t) => t.type === 'feature');
+        this.categories.options = typeList[0].options;
         this.filters.find((t) => t.id === 'type').options = typeList;
         this.filters.find((t) => t.id === 'feature').options = featureList;
+        this.getBrandList(this.productSearchBody);
+        this.getProductList(this.productSearchBody);
+
         this._changeDetectorRef.markForCheck();
       });
   }
@@ -148,8 +171,9 @@ export class CategoryComponent implements OnInit {
   };
 
   categories = {
-    type: Constant.TYPE_SORT_FILTER.FILTER_TYPE,
-    categories: [],
+    id: 'type',
+    type: Constant.TYPE_SORT_FILTER.FILTER_TYPE_BUTTON,
+    options: [],
   };
 
   filters = [
@@ -191,20 +215,15 @@ export class CategoryComponent implements OnInit {
   };
 
   filterTypeFeature(data) {
+    const typeIds = [];
+    const featureIds = [];
+    const brandIds = [];
     data.forEach((t) => {
-      if (t.type === 'type')
-        this.productSearchBody = {
-          ...this.productSearchBody,
-          type_id: t.ids,
-        };
-      if (t.type === 'feature') {
-        this.productSearchBody = {
-          ...this.productSearchBody,
-          feature_id: t.ids,
-        };
-      }
-      this.productSearchBody['offset'] = 0;
+      this.productSearchBody[`${t.type + '_id'}`] = t.ids;
+      if (!this.productSearchBody[`${t.type + '_id'}`])
+        delete this.productSearchBody[`${t.type + '_id'}`];
     });
+    this.productSearchBody['offset'] = 0;
     this.getProductList(this.productSearchBody);
   }
 
@@ -234,17 +253,19 @@ export class CategoryComponent implements OnInit {
     this.getProductList(this.productSearchBody);
   }
 
-  filterCategory(id: string) {
-    this.categories.categories = this.categories.categories.map((t) => {
-      t.active = t.id === id;
-      return t;
-    });
+  filterRange(range: rangeInput) {
     this.productSearchBody = {
       ...this.productSearchBody,
+      start_price: range.startRange,
+      end_price: range.endRange,
+      limit: 28,
       offset: 0,
-      type_id: id,
     };
-
+    if (!range.startRange) {
+      delete this.productSearchBody['start_price'];
+    } else if (!range.endRange) {
+      delete this.productSearchBody['end_price'];
+    }
     this.getProductList(this.productSearchBody);
   }
 }

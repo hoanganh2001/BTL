@@ -23,7 +23,7 @@ export class BrandService {
   }
 
   getBrandsCategories(body: any): Observable<any> {
-    return this._httpClient.get(`${environment.endpoint}/brands-categories`, {
+    return this._httpClient.get(`${environment.endpoint}/categories-of-brand`, {
       params: body,
     });
   }

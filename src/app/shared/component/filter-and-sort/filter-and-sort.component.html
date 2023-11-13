@@ -1,5 +1,5 @@
 <ng-container *ngIf="data">
-  <ng-container *ngIf="data.type === TYPE_SORT_FILTER.FILTER_TYPE">
+  <ng-container *ngIf="data.type === TYPE_SORT_FILTER.FILTER_CATEGORY">
     <div class="col-12">
       <div class="row d-flex justify-content-center category">
         <ng-container *ngFor="let category of data.categories">
@@ -11,6 +11,25 @@
               (click)="filterCategory(category.id)"
             >
               {{ category.name }}
+            </button>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="data.type === TYPE_SORT_FILTER.FILTER_TYPE_BUTTON">
+    <div class="col-12">
+      <div class="row d-flex justify-content-center category">
+        <ng-container *ngFor="let item of data.options">
+          <div class="btn-container col">
+            <button
+              type="button"
+              class="btn btn-filter-type btn--animation-hover-in text-uppercase"
+              [ngClass]="{ active: item.active }"
+              (click)="filterType(item.id)"
+            >
+              {{ item.name }}
             </button>
           </div>
         </ng-container>
@@ -85,7 +104,7 @@
     <li *ngFor="let option of filter.options">
       <mat-checkbox
         [(ngModel)]="option.active"
-        (ngModelChange)="filterCheckBox()"
+        (ngModelChange)="filterType()"
         class="text-capitalize"
         >{{ option.name }}</mat-checkbox
       >
@@ -97,17 +116,26 @@
   <p class="filter-header-text-hint mb-4">
     {{ filter.description }}
   </p>
-  <table class="d-flex justify-content-center" cellspacing="0">
+  <table
+    class="d-flex justify-content-center"
+    cellspacing="0"
+    [formGroup]="rangeForm"
+  >
     <tr>
       <td>
         <mat-form-field class="">
-          <input matInput type="number" />
+          <input matInput min="0" formControlName="startRange" type="number" />
         </mat-form-field>
       </td>
       <td><span class="mx-4">-</span></td>
       <td>
         <mat-form-field class="">
-          <input matInput type="number" />
+          <input
+            matInput
+            min="{{ rangeForm?.get('startRange')?.value }}"
+            formControlName="endRange"
+            type="number"
+          />
         </mat-form-field>
       </td>
     </tr>

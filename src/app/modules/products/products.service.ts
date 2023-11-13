@@ -27,4 +27,17 @@ export class ProductService {
       params: body,
     });
   }
+
+  getBrandsOnCategory(body: any): Observable<any> {
+    return this._httpClient.get(
+      `${environment.endpoint}/brands-with-category`,
+      {
+        params: body,
+      },
+    );
+  }
+
+  getProductDetail(id: string): Observable<any> {
+    return this._httpClient.get(`${environment.endpoint}/product-detail/` + id);
+  }
 }

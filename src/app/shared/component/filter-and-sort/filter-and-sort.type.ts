@@ -1,7 +1,9 @@
 export interface SortFilterData {
+  id?: string;
   title?: string;
   type?: string;
   categories?: any[];
+  filterData?: string;
   sorts?: any[];
   options?: FiltersData[];
 }
@@ -30,4 +32,9 @@ export interface brandImage {
   id: string | number;
   name: string;
   img: string;
+}
+
+export interface rangeInput {
+  startRange?: number;
+  endRange?: number;
 }

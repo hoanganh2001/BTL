@@ -6,10 +6,10 @@
 </div>
 <div class="container mb-5">
   <!-- Button filter feature  -->
-  <div class="row category" *ngIf="categories.categories.length > 2">
+  <div class="row category" *ngIf="categories.options.length > 1">
     <filter-and-sort
       [data]="categories"
-      (handelFilterCategoryAction)="filterCategory($event)"
+      (handelFilterTypeAction)="filterTypeFeature($event)"
     ></filter-and-sort>
   </div>
   <!-- Sort options  -->
@@ -27,6 +27,7 @@
         <filter-and-sort
           [data]="item"
           (handelFilterTypeAction)="filterTypeFeature($event)"
+          (handelFilterRangeAction)="filterRange($event)"
         ></filter-and-sort>
       </ng-container>
     </div>
