@@ -24,21 +24,9 @@ export class PaginatorComponent implements OnInit, OnChanges {
 
   constructor() {}
 
-  ngOnInit() {
-    if (this.length > this.limit) {
-      const pageTotal = this.length / this.limit;
-      for (let i = 0; i < Math.ceil(pageTotal); i++) {
-        const currPage = this.offset === 0 ? 0 : this.offset / this.limit;
-        this.pageList.push({
-          pageIndex: i + 1,
-          active: currPage === i,
-        });
-      }
-      this.length = this.length;
-    }
-  }
+  ngOnInit() {}
 
-  public ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {
     if ('length' in changes || 'offset' in changes) {
       if (
         this.length > this.limit ||
@@ -55,6 +43,8 @@ export class PaginatorComponent implements OnInit, OnChanges {
           });
         }
         this.length = this.length;
+      } else if (this.length <= this.limit) {
+        this.pageList = [];
       }
     }
   }

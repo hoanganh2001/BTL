@@ -19,7 +19,7 @@
       <li
         class="page-item"
         [ngClass]="{ active: item.active }"
-        *ngIf="length > 5 && isIndexShow(i + 1, length)"
+        *ngIf="length > 1 && isIndexShow(i + 1, length)"
       >
         <button class="page-link" (click)="handelPagging(item.pageIndex)">
           {{ item.pageIndex }}
