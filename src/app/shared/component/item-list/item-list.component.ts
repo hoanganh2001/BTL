@@ -1,9 +1,11 @@
+import { OrderService } from './../../../modules/order/order.service';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Constant } from 'src/app/shared/constant';
 import { SectionData } from './item-list.type';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import RouterConfig from 'src/app/core/config/router.config';
 import { Router } from '@angular/router';
+import { ToastService } from '../toast';
 
 @Component({
   selector: 'item-list',
@@ -20,7 +22,12 @@ export class ItemListComponent implements OnInit {
   firstPrv: boolean = true;
   readonly TYPE_LIST = Constant.TYPE_LIST;
   readonly RouterConfig = RouterConfig;
-  constructor(protected _sanitizer: DomSanitizer, private _router: Router) {}
+  constructor(
+    protected _sanitizer: DomSanitizer,
+    private _router: Router,
+    private _orderService: OrderService,
+    private _toastService: ToastService,
+  ) {}
 
   ngOnInit() {
     this.playSelectedVideo();
@@ -46,8 +53,10 @@ export class ItemListComponent implements OnInit {
     icon.style.color = icon.style.color ? '' : 'red';
   }
 
-  addToCart(id: any) {
-    console.log(id);
+  addToCart(event, id: string) {
+    event.stopPropagation();
+    this._toastService.showSuccess('Successful add!');
+    this._orderService.addToCart(id);
   }
 
   clickAllBtn(link: string) {

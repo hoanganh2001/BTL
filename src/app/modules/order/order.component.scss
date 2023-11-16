@@ -181,6 +181,36 @@
         }
       }
     }
+
+    &-discount {
+      box-sizing: border-box;
+      border-radius: 99px;
+      width: -moz-max-content;
+      width: 50px;
+      padding: 2px 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #ffcf00;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 16px;
+      text-transform: uppercase;
+      color: #000;
+    }
+
+    &-old-price {
+      font-weight: normal;
+      font-size: 12px;
+      line-height: 15px;
+      height: 15px;
+      text-transform: uppercase;
+      margin-top: 4px !important;
+      color: #000;
+      text-decoration-line: line-through;
+      opacity: 0.7;
+    }
   }
 }
 

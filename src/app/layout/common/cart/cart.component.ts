@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import RouterConfig from 'src/app/core/config/router.config';
+import { OrderService } from 'src/app/modules/order/order.service';
 
 @Component({
   selector: 'cart',
@@ -8,9 +9,17 @@ import RouterConfig from 'src/app/core/config/router.config';
   styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
-  constructor(private _router: Router) {}
+  constructor(private _router: Router, private _orderService: OrderService) {}
+  cartNumber: number;
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getCartQuantity();
+  }
+  getCartQuantity() {
+    this._orderService.cartSubject$.subscribe((value) => {
+      this.cartNumber = JSON.parse(value)?.length || null;
+    });
+  }
 
   redirectTo() {
     this._router.navigateByUrl(RouterConfig.ORDER);

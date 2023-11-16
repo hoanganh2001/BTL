@@ -4,4 +4,5 @@
   (click)="redirectTo()"
 >
   <i class="bi bi-cart" style="font-size: 20px"></i>
+  <span class="cart-number" *ngIf="cartNumber">{{ cartNumber }}</span>
 </button>

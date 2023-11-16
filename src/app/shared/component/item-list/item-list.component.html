@@ -43,7 +43,7 @@
                   <button
                     type="button"
                     class="btn btn-light overlay-button"
-                    (click)="addToCart(item.id)"
+                    (click)="addToCart($event, item.id)"
                   >
                     <i class="bi bi-cart-fill"></i>
                   </button>
@@ -259,7 +259,7 @@
               <button
                 type="button"
                 class="btn btn-light overlay-button"
-                (click)="addToCart(item.name)"
+                (click)="addToCart($event, item.id)"
               >
                 <i class="bi bi-cart-fill"></i>
               </button>

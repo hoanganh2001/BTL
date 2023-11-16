@@ -1,0 +1,15 @@
+.btn-cart {
+  position: relative;
+  .cart-number {
+    position: absolute;
+    top: -5px;
+    right: 0;
+    background: yellow;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
