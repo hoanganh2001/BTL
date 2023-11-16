@@ -60,4 +60,15 @@ export class OrderComponent implements OnInit {
       this.totalPrice += price * item.quantity;
     });
   }
+
+  updateQuantity(quantity: number, id: number) {
+    this._orderService.updateQuantity(id, quantity);
+    this.getTotal(this.cartList);
+  }
+
+  remove(id: number) {
+    this._orderService.removeFromCart(id);
+    this.cartList = this.cartList.filter((t) => parseInt(t.id) !== id);
+    this.getTotal(this.cartList);
+  }
 }

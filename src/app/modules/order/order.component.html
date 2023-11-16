@@ -15,7 +15,7 @@
               <div
                 class="col-1 d-flex justify-content-center align-items-center"
               >
-                <button class="cart-item-btn">
+                <button class="cart-item-btn" (click)="remove(item.id)">
                   <i class="bi bi-trash-fill"></i>
                 </button>
               </div>
@@ -50,7 +50,8 @@
                     type="number"
                     class="cart-item-quantity"
                     min="0"
-                    [(value)]="item.quantity"
+                    (ngModelChange)="updateQuantity($event, item.id)"
+                    [(ngModel)]="item.quantity"
                   />
                 </mat-form-field>
               </div>

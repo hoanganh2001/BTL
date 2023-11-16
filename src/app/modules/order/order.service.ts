@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, filter } from 'rxjs';
 import { environment } from 'src/enviroment/enviroment';
 
 @Injectable({
@@ -27,6 +27,22 @@ export class OrderService {
     } else {
       localStorage.setItem('cart', JSON.stringify([{ id: id, quantity: 1 }]));
     }
+    this.getCart(localStorage['cart']);
+  }
+
+  removeFromCart(id: number) {
+    const cart = JSON.parse(localStorage['cart']).filter((t) => t.id !== id);
+    localStorage['cart'] = JSON.stringify(cart);
+    this.getCart(localStorage['cart']);
+  }
+
+  updateQuantity(id: number, quantity: number) {
+    const cart = JSON.parse(localStorage['cart']);
+    cart.map((item) => {
+      item.quantity = item.id === id ? quantity : item.quantity;
+      return item;
+    });
+    localStorage['cart'] = JSON.stringify(cart);
     this.getCart(localStorage['cart']);
   }
 
