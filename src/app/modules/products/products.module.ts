@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { ProductsRoutes } from './products.routing';
 import { ProductListModule } from './product-list/product-list.module';
 import { CategoryModule } from './category/category.module';
+import { PaginatorModule } from 'src/app/shared/component/paginator/paginator.module';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { CategoryModule } from './category/category.module';
     ProductListModule,
     CategoryModule,
     ProductDetailModule,
+    PaginatorModule,
   ],
 })
 export class ProductsModule {}

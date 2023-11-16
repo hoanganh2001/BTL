@@ -12,29 +12,25 @@
     </div>
   </div>
   <div class="row">
-    <filter-and-sort [data]="categoriesOption"></filter-and-sort>
+    <filter-and-sort
+      [data]="categoriesOption"
+      (handelFilterCategoryAction)="filterCategory($event)"
+    ></filter-and-sort>
   </div>
   <div class="row mb-5">
-    <filter-and-sort [data]="sortOption"></filter-and-sort>
+    <filter-and-sort
+      [data]="sortOption"
+      (handelSortAction)="sortData($event)"
+    ></filter-and-sort>
   </div>
   <div class="row">
     <item-list [section]="productList" [column]="6"></item-list>
-    <nav class="d-flex justify-content-center">
-      <ul class="pagination">
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
-        <li class="page-item"><a class="page-link" href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-          <a class="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+    <paginator
+      *ngIf="paginator.length > paginator.limit"
+      [length]="paginator.length"
+      [offset]="paginator.offset"
+      [limit]="paginator.limit"
+      (handelPaggingEvent)="handelPagging($event)"
+    ></paginator>
   </div>
 </div>
