@@ -47,7 +47,7 @@ export class NewListComponent implements OnInit {
 
   listLimit: paginatorParams = {
     limit: 10,
-    skip: 0,
+    offset: 0,
   };
 
   listTotal = 0;
@@ -79,7 +79,7 @@ export class NewListComponent implements OnInit {
   }
 
   showMore() {
-    this.listLimit.skip += this.listLimit.limit;
+    this.listLimit.offset += this.listLimit.limit;
     this.getOtherNewsList(this.listLimit);
   }
 }

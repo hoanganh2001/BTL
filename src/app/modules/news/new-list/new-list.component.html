@@ -37,7 +37,7 @@
           <button
             class="btn btn-showmore btn--animation-hover-out"
             (click)="showMore()"
-            *ngIf="listLimit.skip + listLimit.limit < listTotal"
+            *ngIf="listLimit.offset + listLimit.limit < listTotal"
           >
             Xem thêm
           </button>

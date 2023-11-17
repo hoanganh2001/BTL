@@ -8,9 +8,9 @@ export interface NewListData {
 }
 
 export interface NewListResponseData {
-  _id: string;
+  id: string;
   create_date: string;
-  img: string;
+  image: string;
   name: string;
   view: string;
   author: string;
@@ -27,7 +27,7 @@ export interface NewDetailData {
 }
 
 export interface NewDetailResponseData {
-  _id: string;
+  id: string;
   create_date: string;
   img: string;
   name: string;
@@ -38,5 +38,5 @@ export interface NewDetailResponseData {
 
 export interface paginatorParams {
   limit: number;
-  skip: number;
+  offset: number;
 }

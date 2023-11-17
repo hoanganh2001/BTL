@@ -62,6 +62,7 @@ export class NewDetailComponent implements OnInit {
     this._newsService.getNewDetail(id).subscribe((res) => {
       if (res) {
         this.newDetail = res;
+        console.log(res.content);
       }
     });
   }

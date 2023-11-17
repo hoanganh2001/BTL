@@ -25,9 +25,9 @@ export class NewsService {
       map((res: BaseResponse<NewListResponseData>) => {
         if (res && res.data)
           return res.data.map((item: NewListResponseData) => ({
-            id: item._id,
+            id: item.id,
             create_date: item.create_date,
-            img: item.img,
+            img: item.image,
             name: item.name,
             view: item.view,
             author: item.author,
@@ -44,9 +44,9 @@ export class NewsService {
           if (res && res.data)
             return {
               data: res.data.map((item: NewListResponseData) => ({
-                id: item._id,
+                id: item.id,
                 create_date: item.create_date,
-                img: item.img,
+                img: item.image,
                 name: item.name,
                 view: item.view,
                 author: item.author,
@@ -58,22 +58,20 @@ export class NewsService {
   }
 
   getNewDetail(id: string) {
-    return this._httpClient
-      .get(`${environment.endpoint}/new`, { params: { id: id } })
-      .pipe(
-        map((res: any) => {
-          if (res && res.data) {
-            return {
-              id: res.data._id,
-              create_date: res.data.create_date,
-              img: res.data.img,
-              name: res.data.name,
-              view: res.data.view,
-              author: res.data.author,
-              content: res.data.content,
-            };
-          }
-        }),
-      );
+    return this._httpClient.get(`${environment.endpoint}/new/` + id).pipe(
+      map((res: any) => {
+        if (res && res.data) {
+          return {
+            id: res.data[0].id,
+            create_date: res.data[0].create_date,
+            img: res.data[0].image,
+            name: res.data[0].name,
+            view: res.data[0].view,
+            author: res.data[0].author,
+            content: res.data[0].content,
+          };
+        }
+      }),
+    );
   }
 }
