@@ -62,7 +62,11 @@ export class OrderComponent implements OnInit {
   }
 
   updateQuantity(quantity: number, id: number) {
-    this._orderService.updateQuantity(id, quantity);
+    if (quantity <= 0) {
+      this.remove(id);
+    } else {
+      this._orderService.updateQuantity(id, quantity);
+    }
     this.getTotal(this.cartList);
   }
 
