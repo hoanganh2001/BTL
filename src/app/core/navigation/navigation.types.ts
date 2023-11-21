@@ -1,4 +1,4 @@
-import { SubmenuData } from 'src/app/layout/common/sub-menu/sub-menu.type';
+import { SubmenuData } from 'app/layout/common/sub-menu/sub-menu.type';
 
 export interface Navigation {
   id: string;

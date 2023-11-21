@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject, map, takeUntil } from 'rxjs';
-import RouterConfig from 'src/app/core/config/router.config';
-import { NavigationService } from 'src/app/core/navigation/navigation.service';
-import { Navigation } from 'src/app/core/navigation/navigation.types';
-import { BrandService } from 'src/app/modules/brands/brand.service';
+import RouterConfig from 'app/core/config/router.config';
+import { NavigationService } from 'app/core/navigation/navigation.service';
+import { Navigation } from 'app/core/navigation/navigation.types';
+import { BrandService } from 'app/modules/brands/brand.service';
 import { SubmenuData } from '../common/sub-menu/sub-menu.type';
-import { ProductService } from 'src/app/modules/products/products.service';
-import { brandResponseData } from 'src/app/modules/brands/brand.types';
+import { ProductService } from 'app/modules/products/products.service';
+import { brandResponseData } from 'app/modules/brands/brand.types';
+import { getIcon } from 'app/shared/constant';
 
 @Component({
   selector: 'classic-layout',
@@ -20,6 +21,7 @@ export class ClassicComponent implements OnInit, OnDestroy {
   footerList?: Navigation[];
 
   isShow: boolean = false;
+  doneAPI: boolean = false;
 
   private _unsubscribeAll: Subject<any> = new Subject<any>();
 
@@ -80,7 +82,7 @@ export class ClassicComponent implements OnInit, OnDestroy {
               this.routerURL.PRODUCT_CATEGORY +
               '/' +
               item.name.replace('/', '-').replace(' ', '-').toLowerCase(),
-            icon: 'bi-headphones',
+            icon: getIcon(item.name),
             active: item.name === 'headphone',
             data: [],
           }));
@@ -101,9 +103,10 @@ export class ClassicComponent implements OnInit, OnDestroy {
           return data;
         }),
       )
-      .subscribe((res) => {
+      .subscribe((res: any) => {
         if (res && list.category) {
           list.category.data = res;
+          this.doneAPI = true;
         }
       });
   }

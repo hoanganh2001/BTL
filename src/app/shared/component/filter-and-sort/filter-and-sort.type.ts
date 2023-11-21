@@ -1,20 +1,14 @@
 export interface SortFilterData {
-  id?: string;
+  id?: string | number;
   title?: string;
   type?: string;
   categories?: any[];
-  filterData?: string;
-  sorts?: any[];
-  options?: FiltersData[];
-}
-
-export interface FiltersData {
-  brand?: brandImage;
-  list?: Filters[];
+  sorts?: sortData[];
+  options?: Filters[];
 }
 
 export interface Filters {
-  id: string;
+  id: string | number;
   title: string;
   type: string;
   options?: checkboxData[];
@@ -25,7 +19,12 @@ export interface Filters {
 export interface checkboxData {
   id: string | number;
   name: string;
-  completed: boolean;
+  active: boolean;
+}
+
+export interface sortData {
+  id: string;
+  name: string;
 }
 
 export interface brandImage {

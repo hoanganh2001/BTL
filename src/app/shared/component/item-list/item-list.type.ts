@@ -1,4 +1,4 @@
-import { productData } from 'src/app/modules/products/products.type';
+import { productData } from 'app/modules/products/products.type';
 
 export interface SectionData {
   header?: string;

@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { environment } from 'src/enviroment/enviroment';
+import { environment } from 'enviroment/enviroment';
 import {
   NewDetailResponseData,
   NewListResponseData,
   paginatorParams,
 } from './news.types';
-import { BaseResponse } from 'src/app/core/models/base-response.model';
+import { BaseResponse } from 'app/core/models/base-response.model';
 
 @Injectable({
   providedIn: 'root',

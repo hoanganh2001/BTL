@@ -7,7 +7,7 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { Constant } from 'src/app/shared/constant';
+import { Constant } from 'app/shared/constant';
 
 const areas = 'description,specifications';
 @Component({

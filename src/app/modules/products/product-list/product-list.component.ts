@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import RouterConfig from 'src/app/core/config/router.config';
-import { Constant } from 'src/app/shared/constant';
+import RouterConfig from 'app/core/config/router.config';
+import { Constant } from 'app/shared/constant';
 import { ProductService } from '../products.service';
 import { map } from 'rxjs';
 import { categoryResponse } from '../products.type';

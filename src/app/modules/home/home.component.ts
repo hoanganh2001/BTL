@@ -2,7 +2,7 @@ import { brandData } from './../brands/brand.types';
 import { filter, map } from 'rxjs';
 import { headerNavigation } from './../../mock-api/common/navigation/data';
 import { Component, OnInit } from '@angular/core';
-import { Constant } from 'src/app/shared/constant';
+import { Constant } from 'app/shared/constant';
 import { HomeService } from './home.service';
 import * as dayjs from 'dayjs';
 
@@ -266,7 +266,7 @@ export class HomeComponent implements OnInit {
   getNewProduct() {
     const body = {
       limit: 9,
-      skip: 0,
+      offset: 0,
     };
     this._homeService.getItemsOnSearch(body).subscribe({
       next: (res) => {
@@ -280,7 +280,7 @@ export class HomeComponent implements OnInit {
   getfeatureProduct() {
     const body = {
       limit: 11,
-      skip: 0,
+      offset: 0,
       sort_by: 'view_number',
     };
     this._homeService.getItemsOnSearch(body).subscribe({
@@ -295,7 +295,7 @@ export class HomeComponent implements OnInit {
   getAnalogProduct() {
     const body = {
       limit: 11,
-      skip: 0,
+      offset: 0,
       category_name: 'analog',
     };
     this._homeService.getItemsOnSearch(body).subscribe({

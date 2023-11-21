@@ -21,7 +21,7 @@
           <li class="nav-item" *ngFor="let item of headerList">
             <a class="nav-link" [routerLink]="item.link">{{ item.title }}</a>
             <sub-menu
-              *ngIf="item.submenu"
+              *ngIf="item.submenu && doneAPI"
               [subMenu]="item.submenu"
               class="d-none"
             ></sub-menu>

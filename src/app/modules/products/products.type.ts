@@ -1,5 +1,5 @@
 export interface productData {
-  id: string;
+  id: string | number;
   price: number;
   create_date: string;
   discount: number | null;
@@ -8,6 +8,9 @@ export interface productData {
   quantity: number;
   view_number: number;
   gift_id: number;
+  description?: string;
+  specification: string;
+  brand_name?: string;
 }
 
 export interface categoryResponse {

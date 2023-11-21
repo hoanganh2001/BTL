@@ -13,3 +13,8 @@
   animation: slideIn ease-in-out 0.3s forwards;
   height: 28px;
 }
+
+::ng-deep .cdk-overlay-container {
+  z-index: 99999;
+  top: 15px;
+}

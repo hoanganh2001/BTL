@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import RouterConfig from 'src/app/core/config/router.config';
+import RouterConfig from 'app/core/config/router.config';
 
 @Component({
   selector: 'search',

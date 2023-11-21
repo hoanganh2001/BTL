@@ -27,8 +27,16 @@
         >
           <a [routerLink]="item.link">
             <span class="product-category-icon">
-              <i class="bi" [ngClass]="item.icon" *ngIf="item.icon"></i>
-              <img [src]="item.svg" [alt]="item.title" *ngIf="item.svg" />
+              <i
+                class="bi"
+                [ngClass]="item.icon"
+                *ngIf="!item.icon?.includes('svg')"
+              ></i>
+              <img
+                [src]="item.icon"
+                [alt]="item.title"
+                *ngIf="item.icon?.includes('svg')"
+              />
             </span>
             {{ item.title }}
           </a>
@@ -55,8 +63,8 @@
     </div>
     <div class="col-3">
       <img
-        [src]="subMenu.category.logo"
-        [alt]="subMenu.category.alt"
+        [src]="subMenu.category?.logo"
+        [alt]="subMenu.category?.alt"
         class="category-img"
       />
     </div>

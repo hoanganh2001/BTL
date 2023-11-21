@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { sideBarCategory } from './side-bar-newt.type';
-import { NewListData } from 'src/app/modules/news/news.types';
-import RouterConfig from 'src/app/core/config/router.config';
+import { NewListData } from 'app/modules/news/news.types';
+import RouterConfig from 'app/core/config/router.config';
 
 @Component({
   selector: 'side-bar-new',

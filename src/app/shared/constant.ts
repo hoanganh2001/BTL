@@ -26,3 +26,22 @@ export class Constant {
     CATEGORY: 'category',
   };
 }
+export const ICON = {
+  headphone: 'bi-headphones',
+  dac: '/assets/images/icon/icon-dac.svg',
+  dap: 'bi-music-player',
+  speaker: 'bi-speaker',
+  analog: 'bi-vinyl-fill',
+  accesssory: 'bi-mic',
+};
+
+export const getIcon = (name: string): string => {
+  if (name.includes('/')) {
+    const nameArr = name.split('/');
+    return ICON[nameArr[0]] || ICON[nameArr[1]];
+  }
+  if (name.includes('phụ kiện')) {
+    return ICON['accesssory'];
+  }
+  return ICON[name];
+};

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NewListData, paginatorParams } from '../news.types';
 import { NewsService } from '../news.service';
-import RouterConfig from 'src/app/core/config/router.config';
+import RouterConfig from 'app/core/config/router.config';
 
 @Component({
   selector: 'app-new-list',

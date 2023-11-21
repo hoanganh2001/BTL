@@ -1,17 +1,17 @@
-import { ProductService } from 'src/app/modules/products/products.service';
+import { ProductService } from 'app/modules/products/products.service';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   OnInit,
 } from '@angular/core';
-import { Constant } from 'src/app/shared/constant';
+import { Constant } from 'app/shared/constant';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
-import RouterConfig from 'src/app/core/config/router.config';
+import RouterConfig from 'app/core/config/router.config';
 import { productResponseData } from '../../home/home.types';
-import { paginatorData } from 'src/app/shared/component/paginator/paginator.types';
-import { rangeInput } from 'src/app/shared/component/filter-and-sort/filter-and-sort.type';
+import { paginatorData } from 'app/shared/component/paginator/paginator.types';
+import { rangeInput } from 'app/shared/component/filter-and-sort/filter-and-sort.type';
 
 @Component({
   selector: 'app-category',
@@ -215,9 +215,6 @@ export class CategoryComponent implements OnInit {
   };
 
   filterTypeFeature(data) {
-    const typeIds = [];
-    const featureIds = [];
-    const brandIds = [];
     data.forEach((t) => {
       this.productSearchBody[`${t.type + '_id'}`] = t.ids;
       if (!this.productSearchBody[`${t.type + '_id'}`])

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { SubmenuData } from './sub-menu.type';
-import { Constant } from 'src/app/shared/constant';
+import { Constant } from 'app/shared/constant';
 
 @Component({
   selector: 'sub-menu',
@@ -11,24 +11,23 @@ export class SubMenuComponent implements OnInit {
   @Input() subMenu?: SubmenuData;
   readonly SUBMENU_TYPE = Constant.SUBMENU_TYPE;
   currCategoryURL?: string;
-  constructor() {}
   selected_category: any = [];
-
+  constructor() {}
   ngOnInit() {
-    this.selected_category = this.subMenu?.category?.data.find(
+    this.selected_category = this.subMenu.category?.data.find(
       (t) => t.active,
     )?.data;
   }
 
   hoverIn(id: number | string) {
-    this.subMenu?.category?.data.forEach((item) => {
+    this.subMenu.category?.data.forEach((item) => {
       item.active = item.id === id;
       if (item.id === id) {
         this.currCategoryURL = item.link;
       }
     });
 
-    this.selected_category = this.subMenu?.category?.data.find(
+    this.selected_category = this.subMenu.category?.data.find(
       (t) => t.active,
     )?.data;
   }

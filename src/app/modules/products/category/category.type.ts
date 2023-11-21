@@ -8,5 +8,5 @@ export interface filterData {
 export interface checkboxData {
   id: string | number;
   name: string;
-  completed: boolean;
+  active: boolean;
 }

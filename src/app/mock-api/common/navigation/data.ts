@@ -1,6 +1,6 @@
-import RouterConfig from 'src/app/core/config/router.config';
-import { Navigation } from 'src/app/core/navigation/navigation.types';
-import { Constant } from 'src/app/shared/constant';
+import RouterConfig from 'app/core/config/router.config';
+import { Navigation } from 'app/core/navigation/navigation.types';
+import { Constant } from 'app/shared/constant';
 const SUBMENU_TYPE = Constant.SUBMENU_TYPE;
 
 export const headerNavigation: Navigation[] = [

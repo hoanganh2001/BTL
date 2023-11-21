@@ -5,15 +5,15 @@ import {
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
-import { Constant } from 'src/app/shared/constant';
+import { Constant } from 'app/shared/constant';
 import { BrandService } from '../brand.service';
 import { Subject, map, takeUntil } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { brandData } from '../brand.types';
 import { ProductService } from '../../products/products.service';
 import { productResponseData } from '../../home/home.types';
-import { paginatorData } from 'src/app/shared/component/paginator/paginator.types';
-import { rangeInput } from 'src/app/shared/component/filter-and-sort/filter-and-sort.type';
+import { paginatorData } from 'app/shared/component/paginator/paginator.types';
+import { rangeInput } from 'app/shared/component/filter-and-sort/filter-and-sort.type';
 
 @Component({
   selector: 'app-brand-product-list',

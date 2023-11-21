@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Constant } from 'src/app/shared/constant';
+import { Constant } from 'app/shared/constant';
 
 @Component({
   selector: 'app-loved',

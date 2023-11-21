@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { footerNavigation, headerNavigation } from './data';
 import { HttpClient } from '@angular/common/http';
-import { MockApiService } from 'src/app/core/lib';
+import { MockApiService } from 'app/core/lib';
 
 @Injectable({
   providedIn: 'root',

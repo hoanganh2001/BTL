@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, map } from 'rxjs';
-import { environment } from 'src/enviroment/enviroment';
+import { environment } from 'enviroment/enviroment';
 import { brandResponseData } from './brand.types';
 
 @Injectable({

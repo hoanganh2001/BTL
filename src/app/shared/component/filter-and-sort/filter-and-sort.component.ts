@@ -10,7 +10,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./filter-and-sort.component.scss'],
 })
 export class FilterAndSortComponent implements OnInit {
-  @Input() data?: SortFilterData | Filters;
+  @Input() data?: Filters | SortFilterData;
   @Output() handelFilterCategoryAction = new EventEmitter();
   @Output() handelFilterTypeAction = new EventEmitter();
   @Output() handelFilterRangeAction = new EventEmitter();
@@ -28,7 +28,7 @@ export class FilterAndSortComponent implements OnInit {
       this.sortFormControl.setValue(this.data['sorts'][0].id);
     }
 
-    if (this.data.type === this.FILTER_TYPE.RANGE_INPUT) {
+    if (this.data && this.data.type === this.FILTER_TYPE.RANGE_INPUT) {
       this.rangeForm = this._formBuilder.group({
         startRange: [null],
         endRange: [null],

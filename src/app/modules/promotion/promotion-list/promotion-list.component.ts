@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Constant } from 'src/app/shared/constant';
+import { Constant } from 'app/shared/constant';
 import { ProductService } from '../../products/products.service';
 import { map } from 'rxjs';
 import { productResponseData } from '../../home/home.types';
-import { paginatorData } from 'src/app/shared/component/paginator/paginator.types';
+import { paginatorData } from 'app/shared/component/paginator/paginator.types';
 import { PromotionService } from '../promotion.service';
 
 @Component({

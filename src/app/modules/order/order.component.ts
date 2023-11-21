@@ -72,7 +72,7 @@ export class OrderComponent implements OnInit {
 
   remove(id: number) {
     this._orderService.removeFromCart(id);
-    this.cartList = this.cartList.filter((t) => parseInt(t.id) !== id);
+    this.cartList = this.cartList.filter((t) => t.id !== id);
     this.getTotal(this.cartList);
   }
 }

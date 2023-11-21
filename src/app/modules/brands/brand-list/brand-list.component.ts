@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import RouterConfig from 'src/app/core/config/router.config';
+import RouterConfig from 'app/core/config/router.config';
 import { BrandService } from '../brand.service';
 import { brandList, brandResponseData } from '../brand.types';
 import { map } from 'rxjs';
