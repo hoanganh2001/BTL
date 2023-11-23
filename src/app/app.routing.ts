@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 import { InitialDataResolver } from './app.resolvers';
+import { NoAuthGuard } from './core/auth/guards/noAuth.guard';
+import { AuthGuard } from './core/auth/guards/auth.guard';
 
 export const appRoutes: Routes = [
   {
@@ -61,6 +63,7 @@ export const appRoutes: Routes = [
       },
       {
         path: '',
+        canMatch: [AuthGuard],
         loadChildren: () =>
           import('./modules/my-profile/my-profile.module').then(
             (m) => m.MyProfileModule,
@@ -70,6 +73,14 @@ export const appRoutes: Routes = [
         path: '',
         loadChildren: () =>
           import('./modules/order/order.module').then((m) => m.OrderModule),
+      },
+      {
+        path: '',
+        canMatch: [NoAuthGuard],
+        loadChildren: () =>
+          import('./modules/sign-in/sign-in.module').then(
+            (m) => m.SignInModule,
+          ),
       },
       {
         path: '**',

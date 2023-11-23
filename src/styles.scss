@@ -106,6 +106,7 @@ body {
 .btn--animation-hover-out {
   &:hover {
     color: #000 !important;
+    background-color: #fff !important;
     &::after {
       left: 0;
       top: 0;
@@ -135,6 +136,7 @@ body {
 .btn--animation-hover-in {
   &:hover {
     color: #fff !important;
+    border: 1px solid #000 !important;
 
     &::after {
       top: 50%;

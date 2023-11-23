@@ -35,9 +35,9 @@ export class HttpErrorInterceptor implements HttpInterceptor {
     next: HttpHandler,
   ): Observable<HttpEvent<unknown>> {
     let newHeaders = new HttpHeaders();
-    newHeaders.set('Access-Control-Allow-Origin', '*');
+
     const newReq = request.clone({
-      headers: newHeaders,
+      withCredentials: true,
     });
 
     return from(this.handle(newReq, next));

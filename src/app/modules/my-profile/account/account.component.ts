@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-account',
@@ -9,7 +9,7 @@ import { FormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 export class AccountComponent implements OnInit {
   accountDetailForm?: FormGroup;
 
-  constructor(private _formBuilder: UntypedFormBuilder) {
+  constructor(private _formBuilder: FormBuilder) {
     this.accountDetailForm = this._formBuilder.group({
       first_name: ['', [Validators.required]],
       last_name: ['', [Validators.required]],
