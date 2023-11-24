@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MyProfileService } from '../my-profile.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-account',
@@ -9,7 +11,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class AccountComponent implements OnInit {
   accountDetailForm?: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder) {
+  constructor(
+    private _formBuilder: FormBuilder,
+    private _myProfile: MyProfileService,
+  ) {
     this.accountDetailForm = this._formBuilder.group({
       first_name: ['', [Validators.required]],
       last_name: ['', [Validators.required]],
@@ -21,7 +26,22 @@ export class AccountComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getMyProfile();
+  }
+
+  getMyProfile() {
+    this._myProfile
+      .getProfile()
+      .pipe(
+        map((res) => {
+          return res.data;
+        }),
+      )
+      .subscribe((res) => {
+        this.emailField.setValue(res.email);
+      });
+  }
 
   get firstNameField() {
     return this.accountDetailForm?.get('first_name');

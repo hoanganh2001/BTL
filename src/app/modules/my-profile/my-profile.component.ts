@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import RouterConfig from 'app/core/config/router.config';
+import { MyProfileService } from './my-profile.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-my-profile',
@@ -9,7 +11,7 @@ import RouterConfig from 'app/core/config/router.config';
 export class MyProfileComponent implements OnInit {
   readonly MyProfileURL = RouterConfig.MY_PROFILE;
 
-  constructor() {}
+  constructor(private _myProfile: MyProfileService) {}
 
   ngOnInit() {}
 }

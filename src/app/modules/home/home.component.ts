@@ -1,10 +1,6 @@
-import { brandData } from './../brands/brand.types';
-import { filter, map } from 'rxjs';
-import { headerNavigation } from './../../mock-api/common/navigation/data';
 import { Component, OnInit } from '@angular/core';
 import { Constant } from 'app/shared/constant';
 import { HomeService } from './home.service';
-import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'app-home',

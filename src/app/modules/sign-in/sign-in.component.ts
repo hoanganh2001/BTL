@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../core/auth/auth.service';
 import { Router } from '@angular/router';
 import RouterConfig from 'app/core/config/router.config';
+import { environment } from 'enviroment/enviroment';
+import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'app-sign-in',
@@ -13,7 +15,7 @@ export class SignInComponent implements OnInit {
   SignInForm?: FormGroup;
   SignUpForm?: FormGroup;
   isSignIn: boolean = false;
-
+  previousURL: string;
   constructor(
     private _formBuilder: FormBuilder,
     private _authService: AuthService,
@@ -24,13 +26,17 @@ export class SignInComponent implements OnInit {
       password: ['', [Validators.required]],
     });
     this.SignUpForm = this._formBuilder.group({
-      name: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      new_password: ['', [Validators.required]],
+      name: ['abcd', [Validators.required]],
+      email: ['abc@123', [Validators.required, Validators.email]],
+      new_password: ['1234', [Validators.required]],
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.previousURL =
+      this._router.lastSuccessfulNavigation?.previousNavigation?.finalUrl?.toString() ||
+      '';
+  }
 
   changeState(isSignIn: boolean) {
     this.isSignIn = isSignIn;
@@ -43,7 +49,21 @@ export class SignInComponent implements OnInit {
       password: model.password,
     };
     this._authService.logIn(body).subscribe((value) => {
-      this._router.navigateByUrl(RouterConfig.HOME);
+      window.location.href = `http://localhost:4200` + this.previousURL;
+    });
+  }
+
+  signUp() {
+    const model = this.SignUpForm.getRawValue();
+    const body = {
+      name: model.name,
+      email: model.email,
+      password: model.new_password,
+      create_date: dayjs().toJSON(),
+    };
+
+    this._authService.signUp(body).subscribe((value) => {
+      // window.location.href = `http://localhost:4200` + this.previousURL;
     });
   }
 

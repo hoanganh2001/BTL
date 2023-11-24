@@ -1,12 +1,12 @@
 <button
   class="btn btn-user nav-btn rounded-circle d-flex align-items-center d-flex justify-content-center"
   type="submit"
-  (click)="redirectToSignIn()"
-  [matMenuTriggerFor]="userMenu"
+  (click)="handleClickUser()"
+  [matMenuTriggerFor]="this.isLogIn ? userMenu : null"
 >
   <i class="bi bi-person" style="font-size: 14px"></i>
 </button>
 <mat-menu #userMenu="matMenu" xPosition="before">
-  <button mat-menu-item>Thông tin</button>
-  <button mat-menu-item>Đăng xuất</button>
+  <button mat-menu-item (click)="redirectToMyProfile()">Thông tin</button>
+  <button mat-menu-item (click)="signOut()">Đăng xuất</button>
 </mat-menu>

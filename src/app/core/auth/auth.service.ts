@@ -22,16 +22,23 @@ export class AuthService {
   ) {}
 
   logIn(body: any): Observable<any> {
-    return this._httpClient
-      .post(`${environment.endpoint}/login`, body, { withCredentials: true })
-      .pipe(
-        switchMap((response: any) => {
-          this._authenticated = true;
+    return this._httpClient.post(`${environment.endpoint}/login`, body).pipe(
+      switchMap((response: any) => {
+        this._authenticated = true;
+        // Return a new observable with the response
+        return of(response);
+      }),
+    );
+  }
 
-          // Return a new observable with the response
-          return of(response);
-        }),
-      );
+  signUp(body: any): Observable<any> {
+    return this._httpClient.post(`${environment.endpoint}/sign-up`, body).pipe(
+      switchMap((response: any) => {
+        this._authenticated = true;
+        // Return a new observable with the response
+        return of(response);
+      }),
+    );
   }
 
   /**
