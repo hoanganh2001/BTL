@@ -63,6 +63,7 @@ export class SignInComponent implements OnInit {
     };
 
     this._authService.signUp(body).subscribe((value) => {
+      if (value.message === 'success') this.isSignIn = false;
       // window.location.href = `http://localhost:4200` + this.previousURL;
     });
   }

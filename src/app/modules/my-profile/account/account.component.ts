@@ -16,9 +16,9 @@ export class AccountComponent implements OnInit {
     private _myProfile: MyProfileService,
   ) {
     this.accountDetailForm = this._formBuilder.group({
-      first_name: ['', [Validators.required]],
-      last_name: ['', [Validators.required]],
-      display_name: ['', [Validators.required]],
+      name: ['', []],
+      address: ['', []],
+      phone: ['', [Validators.pattern(/\d{10}/)]],
       email: ['', [Validators.required, Validators.email]],
       old_password: ['', []],
       confirm_password: ['', []],
@@ -39,20 +39,49 @@ export class AccountComponent implements OnInit {
         }),
       )
       .subscribe((res) => {
-        this.emailField.setValue(res.email);
+        if (res) {
+          this.nameField.setValue(res.name || '');
+          this.addressField.setValue(res.address || '');
+          this.phoneField.setValue(res.phone || '');
+          this.emailField.setValue(res.email || '');
+        }
       });
   }
 
-  get firstNameField() {
-    return this.accountDetailForm?.get('first_name');
+  updateInfo() {
+    const model = this.accountDetailForm.getRawValue();
+    const body = {
+      name: model.name || null,
+      address: model.address || null,
+      phone: model.phone || null,
+      email: model.email,
+      old_password: model.old_password,
+      confirm_password: model.confirm_password,
+      new_password: model.new_password,
+    };
+    this._myProfile
+      .updateMyProfile(body)
+      .pipe(
+        map((res) => {
+          return res;
+        }),
+      )
+      .subscribe((res) => {
+        this.getMyProfile();
+        alert(res.message);
+      });
   }
 
-  get lastNameField() {
-    return this.accountDetailForm?.get('last_name');
+  get nameField() {
+    return this.accountDetailForm?.get('name');
   }
 
-  get displayNameField() {
-    return this.accountDetailForm?.get('display_name');
+  get addressField() {
+    return this.accountDetailForm?.get('address');
+  }
+
+  get phoneField() {
+    return this.accountDetailForm?.get('phone');
   }
 
   get emailField() {

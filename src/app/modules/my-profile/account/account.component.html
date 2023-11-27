@@ -2,24 +2,26 @@
   <div class="row">
     <div class="col-6">
       <mat-form-field class="mb-3 w-100" appearance="fill">
-        <mat-label class="text-capitalize">Tên</mat-label>
-        <input matInput formControlName="first_name" />
+        <mat-label class="text-capitalize">Họ Tên</mat-label>
+        <input matInput formControlName="name" />
       </mat-form-field>
       <mat-form-field class="mb-3 w-100" appearance="fill">
-        <mat-label class="text-capitalize">Họ</mat-label>
-        <input matInput formControlName="last_name" />
+        <mat-label class="text-capitalize">Địa chỉ</mat-label>
+        <input matInput formControlName="address" />
       </mat-form-field>
       <mat-form-field class="mb-3 w-100" appearance="fill">
-        <mat-label class="text-capitalize">Tên hiển thị</mat-label>
-        <input matInput formControlName="display_name" />
-        <mat-hint class="text-hint"
-          >Đây sẽ là cách mà tên của bạn sẽ được hiển thị trong phần tài khoản
-          và trong phần đánh giá
-        </mat-hint>
+        <mat-label class="text-capitalize">Số điện thoại</mat-label>
+        <input matInput formControlName="phone" />
+        <mat-error *ngIf="accountDetailForm.get('phone').hasError('pattern')"
+          >Wrong format</mat-error
+        >
       </mat-form-field>
       <mat-form-field class="mb-3 w-100" appearance="fill">
         <mat-label class="text-capitalize">Email</mat-label>
         <input matInput formControlName="email" />
+        <mat-error *ngIf="accountDetailForm.get('email').hasError('email')"
+          >Wrong format. Email must be exp: abc@abc.com</mat-error
+        >
       </mat-form-field>
     </div>
     <div class="col-6">
@@ -42,7 +44,11 @@
     </div>
   </div>
   <div class="row">
-    <button type="button" class="col-4 btn-save btn--animation-hover-out">
+    <button
+      type="button"
+      class="col-4 btn-save btn--animation-hover-out"
+      (click)="updateInfo()"
+    >
       Lưu thay đổi
     </button>
   </div>

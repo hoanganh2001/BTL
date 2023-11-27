@@ -15,4 +15,11 @@ export class MyProfileService {
   getProfile(): Observable<any> {
     return this._httpClient.get(`${environment.endpoint}/my-profile`);
   }
+
+  updateMyProfile(body): Observable<any> {
+    return this._httpClient.post(
+      `${environment.endpoint}/update-my-profile`,
+      body,
+    );
+  }
 }
