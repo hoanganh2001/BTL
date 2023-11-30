@@ -30,10 +30,14 @@ export class OrderService {
     this.getCart(localStorage['cart']);
   }
 
-  removeFromCart(id: number) {
-    const cart = JSON.parse(localStorage['cart']).filter((t) => t.id !== id);
-    localStorage['cart'] = JSON.stringify(cart);
-    this.getCart(localStorage['cart']);
+  removeFromCart(id?: number) {
+    if (id) {
+      const cart = JSON.parse(localStorage['cart']).filter((t) => t.id !== id);
+      localStorage['cart'] = JSON.stringify(cart);
+    } else {
+      localStorage.removeItem('cart');
+    }
+    this.getCart(localStorage['cart'] || null);
   }
 
   updateQuantity(id: number, quantity: number) {
@@ -54,5 +58,13 @@ export class OrderService {
     return this._httpClient.get(`${environment.endpoint}/products`, {
       params: body,
     });
+  }
+
+  checkOut(body): Observable<any> {
+    return this._httpClient.post(`${environment.endpoint}/check-out`, body);
+  }
+
+  getOrderList(): Observable<any> {
+    return this._httpClient.get(`${environment.endpoint}/order`);
   }
 }

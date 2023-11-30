@@ -7,6 +7,7 @@ export default class RouterConfig {
   public static PROMOTION = this.HOME + 'promotion';
   public static CONTACT = this.HOME + 'contact';
   public static MY_PROFILE = this.HOME + 'my-profile';
+  public static HISTORY = this.MY_PROFILE + '/order';
   public static ABOUT = this.HOME + 'about';
 
   public static POLICY_SECURIY = this.HOME + 'policy';

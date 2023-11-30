@@ -56,7 +56,6 @@ export class AccountComponent implements OnInit {
       phone: model.phone || null,
       email: model.email,
       old_password: model.old_password,
-      confirm_password: model.confirm_password,
       new_password: model.new_password,
     };
     this._myProfile

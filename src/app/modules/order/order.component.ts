@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { OrderService } from './order.service';
 import { cartData } from './order.types';
 import { map } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { getErrorText, validateFormControls } from 'app/shared/constant';
+import { Router } from '@angular/router';
+import RouterConfig from 'app/core/config/router.config';
+import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'app-order',
@@ -10,19 +15,74 @@ import { map } from 'rxjs';
 })
 export class OrderComponent implements OnInit {
   allComplete: boolean = false;
+  orderForm?: FormGroup;
+  isClicked: boolean = false;
+  payments = [
+    {
+      id: 'bank',
+      name: 'Chuyển khoản ngân hàng',
+      hint: `Vui lòng ghi chú tên sản phẩm trong phần nội dung chuyển khoản.
+    Đơn hàng sẽ đươc đóng gói và giao sau khi 3K Shop nhận được
+    khoản thanh toán.`,
+      value: false,
+    },
+    {
+      id: 'COD',
+      name: 'Trả tiền mặt khi nhận hàng',
+      hint: `Trả tiền mặt khi giao hàng (Chỉ áp dụng cho khu vực nội thành
+        TP. Hồ Chí Minh)`,
+      value: false,
+    },
+    {
+      id: 'atm',
+      name: 'Thanh toán cổng nội địa',
+      hint: `Bạn có thể thanh toán thông qua các thẻ ATM nội địa của hầu hết
+      các ngân hàng`,
+      value: false,
+    },
+    {
+      id: 'visa',
+      name: 'Thanh toán cổng quốc tế',
+      hint: `Bạn có thể thanh toán thông qua các thẻ quốc tế (Visa, Master,
+        JCB,…)`,
+      value: false,
+    },
+  ];
   cartList: cartData[];
   totalPrice: number = 0;
-  constructor(private _orderService: OrderService) {}
+
+  constructor(
+    private _orderService: OrderService,
+    private _formBuilder: FormBuilder,
+    private _router: Router,
+  ) {
+    this.orderForm = this._formBuilder.group({
+      name: ['hahaha', [Validators.required]],
+      address: ['Ha Noi', [Validators.required]],
+      phone: [
+        '0123456789',
+        [Validators.required, Validators.pattern(/\d{10}/)],
+      ],
+      email: ['abceok8@gmail.com', [Validators.required, Validators.email]],
+      note: ['', []],
+      payment: ['', [Validators.required]],
+    });
+  }
   ngOnInit() {
     this.getCartList();
+    this.orderForm.get('payment').valueChanges.subscribe((value) => {
+      this.check(value);
+    });
   }
-  check() {
-    this.allComplete = !this.allComplete;
+  check(id) {
+    this.payments = this.payments.map((t) => {
+      t.value = t.id === id;
+      return t;
+    });
   }
 
   getCartList() {
     this.cartList = this._orderService.getCartItems();
-
     const body = { id: this.cartList.map((t) => t.id) };
     this._orderService
       .getItemsOnCart(body)
@@ -70,9 +130,53 @@ export class OrderComponent implements OnInit {
     this.getTotal(this.cartList);
   }
 
-  remove(id: number) {
+  remove(id?: number) {
     this._orderService.removeFromCart(id);
-    this.cartList = this.cartList.filter((t) => t.id !== id);
+    this.cartList = id ? this.cartList.filter((t) => t.id !== id) : [];
     this.getTotal(this.cartList);
+  }
+
+  checkOut() {
+    if (this.isClicked) {
+      return;
+    }
+    this.isClicked = true;
+
+    let formValidate = {
+      isValidated: true,
+      errors: [],
+    };
+
+    this.orderForm.markAllAsTouched();
+
+    const validateResult = validateFormControls(this.orderForm, formValidate);
+
+    if (!validateResult.isValidated) {
+      console.log(getErrorText(validateResult.errors[0]));
+      this.isClicked = false;
+      return;
+    }
+    const model = this.orderForm.getRawValue();
+    const body = {
+      name: model.name,
+      address: model.address,
+      email: model.email,
+      phone_number: model.phone,
+      note: model.note || null,
+      payment: model.payment,
+      coupon: model.coupon || null,
+      create_date: dayjs().toJSON(),
+      proudct: this.cartList.map((item) => ({
+        id: item.id,
+        quantity: item.quantity,
+      })),
+    };
+    this._orderService.checkOut(body).subscribe((value) => {
+      this.isClicked = false;
+      if (value?.isLogIn) {
+        this.remove();
+        this._router.navigateByUrl(RouterConfig.HISTORY);
+      }
+    });
   }
 }

@@ -4,14 +4,14 @@ import { SharedModule } from 'app/shared/shared.module';
 import { RouterModule } from '@angular/router';
 import { OrderRoutes } from './order.routing';
 import { MatInputModule } from '@angular/material/input';
-import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   imports: [
     RouterModule.forChild(OrderRoutes),
     SharedModule,
     MatInputModule,
-    MatCheckboxModule,
+    MatRadioModule,
   ],
   declarations: [OrderComponent],
 })

@@ -63,6 +63,11 @@ export const appRoutes: Routes = [
       },
       {
         path: '',
+        loadChildren: () =>
+          import('./modules/order/order.module').then((m) => m.OrderModule),
+      },
+      {
+        path: '',
         canMatch: [NoAuthGuard],
         loadChildren: () =>
           import('./modules/sign-in/sign-in.module').then(
@@ -76,11 +81,6 @@ export const appRoutes: Routes = [
           import('./modules/my-profile/my-profile.module').then(
             (m) => m.MyProfileModule,
           ),
-      },
-      {
-        path: '',
-        loadChildren: () =>
-          import('./modules/order/order.module').then((m) => m.OrderModule),
       },
       {
         path: '**',

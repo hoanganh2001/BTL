@@ -17,7 +17,7 @@ export class CartComponent implements OnInit {
   }
   getCartQuantity() {
     this._orderService.cartSubject$.subscribe((value) => {
-      this.cartNumber = JSON.parse(value)?.length || null;
+      this.cartNumber = value ? JSON.parse(value)?.length : null;
     });
   }
 

@@ -1,3 +1,10 @@
+import {
+  FormGroup,
+  FormArray,
+  FormControl,
+  ValidationErrors,
+} from '@angular/forms';
+
 export class Constant {
   public static TYPE_LIST = {
     PRODUCT: 'product',
@@ -44,4 +51,47 @@ export const getIcon = (name: string): string => {
     return ICON['accesssory'];
   }
   return ICON[name];
+};
+
+export const validateFormControls = (
+  formGroup: FormGroup | FormArray,
+  formValidate,
+  name?: string,
+) => {
+  Object.keys(formGroup.controls).forEach((key) => {
+    const control = formGroup.controls[key];
+    if (control instanceof FormControl) {
+      const controlErrors: ValidationErrors = control.errors;
+      if (controlErrors != null) {
+        Object.keys(controlErrors).forEach((error) => {
+          formValidate.isValidated = false;
+          formValidate.errors.push({
+            key: Number.isNaN(+key) ? key : `${name}[${key}]`,
+            error,
+            hasErrors: controlErrors[error],
+          });
+        });
+      }
+    } else if (control instanceof FormGroup || control instanceof FormArray) {
+      if (control instanceof FormArray) {
+        validateFormControls(control, formValidate, `${key}`);
+      } else {
+        validateFormControls(control, formValidate);
+      }
+    }
+  });
+  return formValidate;
+};
+
+export const getErrorText = (error: {
+  key: string;
+  error: string;
+  hasErrors: boolean;
+}): string => {
+  if (!error?.hasErrors) {
+    return null;
+  }
+  if (error.error.includes('required')) return error.key + ' is required';
+  if (error.error.includes('pattern') || error.error.includes('email'))
+    return error.key + ' is wrong format';
 };
