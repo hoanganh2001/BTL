@@ -169,6 +169,8 @@ export class OrderComponent implements OnInit {
       proudct: this.cartList.map((item) => ({
         id: item.id,
         quantity: item.quantity,
+        price: item.price,
+        discount: item.discount,
       })),
     };
     this._orderService.checkOut(body).subscribe((value) => {

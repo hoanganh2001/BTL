@@ -27,7 +27,7 @@ export class HomeService {
             price: item.price,
             create_date: item.create_date,
             discount: item.discount,
-            img: item.image,
+            image: item.image,
             name: item.name,
             view: item.view_number,
             gift: item.gift_id,

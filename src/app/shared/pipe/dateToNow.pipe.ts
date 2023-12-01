@@ -20,3 +20,12 @@ export class DateToNowPipe implements PipeTransform {
       .replace('year', 'năm');
   }
 }
+
+@Pipe({
+  name: 'dateFormat',
+})
+export class DateFormatPipe implements PipeTransform {
+  transform(value: string, format: string = 'DD/M/YYYY HH:mm:ss'): any {
+    return dayjs(value).format(format);
+  }
+}

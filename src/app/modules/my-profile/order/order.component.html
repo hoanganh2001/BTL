@@ -1,4 +1,104 @@
-<div class="col d-flex flex-column align-items-center">
+<div class="col d-flex flex-column align-items-center" *ngIf="!orderList">
   <img src="./assets/images/no-order.png" alt="" class="no-order-img mb-2" />
   <h2>No order yet. Buy more!</h2>
 </div>
+<ng-container *ngIf="orderList">
+  <div class="p-4 d-flex">
+    <div class="flex-fill row me-3 header-text">
+      <span class="text-center col-1">Id</span>
+      <span class="text-start col">Địa chỉ</span>
+      <span class="text-center col-2">Thanh Toán</span>
+      <span class="text-center col-3">Ngày đặt hàng</span>
+      <span class="text-center col-2">Trạng thái</span>
+    </div>
+    <span class="" style="width: 8px"></span>
+  </div>
+  <mat-accordion>
+    <ng-container *ngFor="let item of orderList">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="row">
+            <span class="text-center col-1">{{ item.id }}</span>
+            <span class="text-start col">{{ item.address }}</span>
+            <span class="text-center col-2">{{ item.payment }}</span>
+            <span class="text-center col-3">{{
+              item.create_date | dateFormat
+            }}</span>
+            <span class="text-center col-2 text-uppercase">{{
+              item.status
+            }}</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="px-5 py-3 rounded" style="background-color: #ededed">
+          <div class="row pb-3 header-text">
+            <div class="col-2 d-flex align-items-center"></div>
+            <div class="col d-flex align-items-center">Tên sản phẩm</div>
+            <div class="col-2 d-flex justify-content-evenly">Giá</div>
+            <div class="col-2 d-flex justify-content-center align-items-center">
+              Số lượng
+            </div>
+          </div>
+          <div
+            class=""
+            style="max-height: 288px; overflow: hidden; overflow-y: auto"
+          >
+            <div class="row pb-3" *ngFor="let product of item.product">
+              <div class="col-2 d-flex align-items-center">
+                <img
+                  [src]="product[2]"
+                  [alt]="product[1]"
+                  class="cart-item-img"
+                />
+              </div>
+              <div class="col d-flex align-items-center">
+                <span class="cart-item-name">{{ product[1] }}</span>
+              </div>
+              <div
+                class="col-2 d-flex flex-column align-items-center justify-content-evenly"
+              >
+                <span class="cart-item-price">{{
+                  (product[5]
+                    ? getDiscountPrice(product[4], product[5])
+                    : product[4]
+                  ) | currencyFormat
+                }}</span>
+                <span class="cart-item-old-price" *ngIf="product[5]">{{
+                  product[5] ? (product[4] | currencyFormat) : ''
+                }}</span>
+                <span class="cart-item-discount" *ngIf="product[5]"
+                  >-{{ product[5] }}%</span
+                >
+              </div>
+              <div
+                class="col-2 d-flex justify-content-center align-items-center"
+              >
+                <span>{{ 'x' + product[3] }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end">
+            <span class="header-text"
+              >Tổng: {{ getTotal(item.product) | currencyFormat }}</span
+            >
+          </div>
+        </div>
+        <div class="px-5 my-4 d-flex justify-content-end">
+          <button
+            (click)="cancelOrder(item.id)"
+            class="btn btn-decline btn--animation-hover-in"
+          >
+            Hủy đơn
+          </button>
+        </div>
+      </mat-expansion-panel>
+    </ng-container>
+  </mat-accordion>
+  <paginator
+    *ngIf="paginator.length > paginator.limit"
+    [length]="paginator.length"
+    [offset]="paginator.offset"
+    [limit]="paginator.limit"
+    (handelPaggingEvent)="handelPagging($event)"
+  ></paginator>
+</ng-container>

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CurrencyFormatPipe } from './pipe/currencyFormat.pipe';
-import { DateToNowPipe } from './pipe/dateToNow.pipe';
+import { DateFormatPipe, DateToNowPipe } from './pipe/dateToNow.pipe';
 
 @NgModule({
   imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
@@ -14,7 +14,8 @@ import { DateToNowPipe } from './pipe/dateToNow.pipe';
     RouterModule,
     CurrencyFormatPipe,
     DateToNowPipe,
+    DateFormatPipe,
   ],
-  declarations: [CurrencyFormatPipe, DateToNowPipe],
+  declarations: [CurrencyFormatPipe, DateToNowPipe, DateFormatPipe],
 })
 export class SharedModule {}

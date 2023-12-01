@@ -1,55 +1,57 @@
-.navbar {
-  height: 100px;
-  top: 0;
-  z-index: 99999;
-  .nav-item:hover {
-    sub-menu {
-      display: block !important;
-    }
-  }
-  .nav-link {
-    color: #fff !important;
-    position: relative;
-    text-transform: uppercase;
+.body {
+  min-height: 62vh;
+  .navbar {
     height: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &:hover::before {
-      width: calc(100% - (var(--bs-navbar-nav-link-padding-x) * 2));
+    top: 0;
+    z-index: 99999;
+    .nav-item:hover {
+      sub-menu {
+        display: block !important;
+      }
     }
-    &::before {
-      display: block;
-      content: '';
-      width: 0%;
-      height: 2px;
+    .nav-link {
+      color: #fff !important;
+      position: relative;
+      text-transform: uppercase;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &:hover::before {
+        width: calc(100% - (var(--bs-navbar-nav-link-padding-x) * 2));
+      }
+      &::before {
+        display: block;
+        content: '';
+        width: 0%;
+        height: 2px;
+        background-color: white;
+        position: absolute;
+        bottom: calc(50% - 16px);
+        transition: all ease-in-out 0.3s;
+        left: var(--bs-navbar-nav-link-padding-x);
+      }
+    }
+
+    ::ng-deep .nav-btn {
       background-color: white;
-      position: absolute;
-      bottom: calc(50% - 16px);
-      transition: all ease-in-out 0.3s;
-      left: var(--bs-navbar-nav-link-padding-x);
-    }
-  }
+      width: 32px;
+      height: 32px;
 
-  ::ng-deep .nav-btn {
-    background-color: white;
-    width: 32px;
-    height: 32px;
+      margin: 0 0.5rem;
+      &:hover {
+        transform: scale(1.1);
+        box-shadow: 0 5px 35px #a1a1a1;
+      }
 
-    margin: 0 0.5rem;
-    &:hover {
-      transform: scale(1.1);
-      box-shadow: 0 5px 35px #a1a1a1;
-    }
-
-    &--big {
-      width: 44px;
-      height: 44px;
+      &--big {
+        width: 44px;
+        height: 44px;
+      }
     }
   }
 }
-
 footer {
   padding: 60px 0;
   color: white;
