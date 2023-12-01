@@ -1,4 +1,4 @@
-<div class="order">
+<div class="order" *ngIf="cartList">
   <div class="container">
     <div class="row user-info-content-row">
       <div class="col-8" [formGroup]="orderForm" *ngIf="orderForm">
@@ -191,4 +191,8 @@
       </div>
     </div>
   </div>
+</div>
+<div class="my-5 col d-flex flex-column align-items-center" *ngIf="!cartList">
+  <img src="./assets/images/no-order.png" alt="" class="no-order-img mb-2" />
+  <h2>Nothing in your cart. Add more!</h2>
 </div>
