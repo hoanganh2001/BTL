@@ -13,11 +13,11 @@ export class OrderService {
     localStorage['cart'] || null,
   );
   public cartSubject$: Observable<string> = this.cart.asObservable();
-  getCart(id: string) {
-    this.cart.next(id);
+  getCart(cart: string) {
+    this.cart.next(cart);
   }
 
-  addToCart(id: string) {
+  addToCart(id: number) {
     if (localStorage['cart']) {
       if (!localStorage['cart'].includes(id))
         localStorage['cart'] =

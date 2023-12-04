@@ -37,7 +37,21 @@ export class ProductService {
     );
   }
 
-  getProductDetail(id: string): Observable<any> {
+  getProductDetail(id: number): Observable<any> {
     return this._httpClient.get(`${environment.endpoint}/product-detail/` + id);
+  }
+
+  addWistList(id: number): Observable<any> {
+    return this._httpClient.post(
+      `${environment.endpoint}/product-favorite/` + id,
+      {},
+    );
+  }
+
+  getFavoriteProduct(body): Observable<any> {
+    return this._httpClient.get(
+      `${environment.endpoint}/product-favorite`,
+      body,
+    );
   }
 }

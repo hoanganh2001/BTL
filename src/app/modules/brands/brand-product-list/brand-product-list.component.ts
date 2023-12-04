@@ -192,7 +192,7 @@ export class BrandProductListComponent implements OnInit {
       });
   }
 
-  getTypeAndFeature(category_id: string) {
+  getTypeAndFeature(category_id: number) {
     const body = {
       category_id: category_id,
     };
@@ -234,7 +234,6 @@ export class BrandProductListComponent implements OnInit {
         const featureList = res.filter((t) => t.type === 'feature');
         this.filters.find((t) => t.id === 'type').options = typeList;
         this.filters.find((t) => t.id === 'feature').options = featureList;
-        console.log(this.filters);
       });
   }
 
@@ -276,7 +275,7 @@ export class BrandProductListComponent implements OnInit {
     this.getProductList(this.productSearchBody);
   }
 
-  filterCategory(id: string) {
+  filterCategory(id: number) {
     this.categories.categories = this.categories.categories.map((t) => {
       t.active = t.id === id;
       return t;

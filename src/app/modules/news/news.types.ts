@@ -1,5 +1,5 @@
 export interface NewListData {
-  id: string;
+  id: number;
   create_date: string;
   img: string;
   name: string;
@@ -8,7 +8,7 @@ export interface NewListData {
 }
 
 export interface NewListResponseData {
-  id: string;
+  id: number;
   create_date: string;
   image: string;
   name: string;
@@ -17,7 +17,7 @@ export interface NewListResponseData {
 }
 
 export interface NewDetailData {
-  id: string;
+  id: number;
   create_date: string;
   img: string;
   name: string;
@@ -27,7 +27,7 @@ export interface NewDetailData {
 }
 
 export interface NewDetailResponseData {
-  id: string;
+  id: number;
   create_date: string;
   img: string;
   name: string;

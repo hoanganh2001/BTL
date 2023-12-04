@@ -1,5 +1,5 @@
 export interface sideBarCategory {
-  id: string;
+  id: number;
   name: string;
   count: number;
 }

@@ -1,12 +1,12 @@
 export interface filterData {
-  id: string;
+  id: number;
   name: string;
   type: string;
   options: checkboxData[];
 }
 
 export interface checkboxData {
-  id: string | number;
+  id: number;
   name: string;
   active: boolean;
 }

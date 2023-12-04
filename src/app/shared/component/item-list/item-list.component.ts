@@ -5,6 +5,7 @@ import { SectionData } from './item-list.type';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import RouterConfig from 'app/core/config/router.config';
 import { Router } from '@angular/router';
+import { ProductService } from 'app/modules/products/products.service';
 
 @Component({
   selector: 'item-list',
@@ -25,6 +26,7 @@ export class ItemListComponent implements OnInit {
     protected _sanitizer: DomSanitizer,
     private _router: Router,
     private _orderService: OrderService,
+    private _productService: ProductService,
   ) {}
 
   ngOnInit() {
@@ -51,7 +53,7 @@ export class ItemListComponent implements OnInit {
     icon.style.color = icon.style.color ? '' : 'red';
   }
 
-  addToCart(event, id: string) {
+  addToCart(event, id: number) {
     event.stopPropagation();
     this._orderService.addToCart(id);
   }

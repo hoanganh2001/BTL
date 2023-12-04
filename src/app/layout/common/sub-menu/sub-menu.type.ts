@@ -13,7 +13,7 @@ export interface CategoryListData {
 }
 
 export interface CategoryData {
-  id: string;
+  id: number;
   title: string;
   link?: string;
   icon?: string;

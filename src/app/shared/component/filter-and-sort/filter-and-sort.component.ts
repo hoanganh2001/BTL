@@ -91,7 +91,7 @@ export class FilterAndSortComponent implements OnInit {
     this.handelFilterRangeAction.emit(range);
   }
 
-  filterCategory(id: string) {
+  filterCategory(id: number) {
     this.rangeForm?.reset();
     this.handelFilterCategoryAction.emit(id);
   }

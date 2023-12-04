@@ -1,11 +1,11 @@
 export interface brandResponseData {
-  id: string;
+  id: number;
   image: string;
   name: string;
 }
 
 export interface brandData {
-  id: string;
+  id: number;
   image: string;
   name: string;
 }
