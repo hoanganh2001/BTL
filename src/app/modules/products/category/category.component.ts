@@ -59,6 +59,7 @@ export class CategoryComponent implements OnInit {
             name: res.name,
             view: res.view_number,
             gift: res.gift_id,
+            isFavorite: res.favorite,
           }));
           return value;
         }),

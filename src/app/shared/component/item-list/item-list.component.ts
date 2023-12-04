@@ -49,8 +49,14 @@ export class ItemListComponent implements OnInit {
     }
   }
 
-  favoriteAction(icon: any) {
-    icon.style.color = icon.style.color ? '' : 'red';
+  favoriteAction(event, id: number) {
+    event.stopPropagation();
+    this._productService.addWistList(id).subscribe((res) => {
+      this.section.data.map((t) => {
+        t.isFavorite = t.id === id;
+        return t;
+      });
+    });
   }
 
   addToCart(event, id: number) {

@@ -134,7 +134,7 @@ export class PromotionListComponent implements OnInit {
     this.getProductList(this.productSearchBody);
   }
 
-  filterCategory(id: string) {
+  filterCategory(id: number) {
     this.categoriesOption.categories = this.categoriesOption.categories.map(
       (t) => {
         t.active = t.id === id;

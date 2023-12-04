@@ -31,6 +31,7 @@ export class HomeService {
             name: item.name,
             view: item.view_number,
             gift: item.gift_id,
+            isFavorite: item.favorite,
           }));
         }),
       );

@@ -36,8 +36,6 @@ export class BrandListComponent implements OnInit {
         }),
       )
       .subscribe((res) => {
-        console.log(res);
-
         if (res) {
           this.brandList.data = res;
         }

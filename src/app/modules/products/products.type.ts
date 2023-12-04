@@ -11,6 +11,7 @@ export interface productData {
   description?: string;
   specification: string;
   brand_name?: string;
+  isFavorite?: boolean;
 }
 
 export interface categoryResponse {

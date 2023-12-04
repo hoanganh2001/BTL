@@ -8,4 +8,5 @@ export interface productResponseData {
   image: string;
   view_number: number | null;
   gift_id: number;
+  favorite: boolean;
 }

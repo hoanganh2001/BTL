@@ -36,9 +36,12 @@
                   <button
                     type="button"
                     class="btn btn-light overlay-button me-2"
-                    (click)="favoriteAction(heartIcon)"
+                    (click)="favoriteAction(event, item.id)"
                   >
-                    <i class="bi bi-heart-fill" #heartIcon></i>
+                    <i
+                      class="bi bi-heart-fill"
+                      [ngStyle]="{ color: item.isFavorite ? 'red' : null }"
+                    ></i>
                   </button>
                   <button
                     type="button"
@@ -252,9 +255,12 @@
               <button
                 type="button"
                 class="btn btn-light overlay-button me-2"
-                (click)="favoriteAction(heartIcon)"
+                (click)="favoriteAction($event, item.id)"
               >
-                <i class="bi bi-heart" #heartIcon></i>
+                <i
+                  class="bi bi-heart-fill"
+                  [ngStyle]="{ color: item.isFavorite ? 'red' : null }"
+                ></i>
               </button>
               <button
                 type="button"
