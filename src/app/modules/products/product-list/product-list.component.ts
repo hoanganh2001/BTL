@@ -14,7 +14,7 @@ import { productResponseData } from '../../home/home.types';
 })
 export class ProductListComponent implements OnInit {
   categoriesOption = {
-    type: Constant.TYPE_SORT_FILTER.FILTER_TYPE,
+    type: Constant.TYPE_SORT_FILTER.FILTER_CATEGORY,
     categories: [],
   };
 
@@ -89,6 +89,8 @@ export class ProductListComponent implements OnInit {
   }
 
   scroll(id: number) {
+    console.log(id);
+
     const el = document.getElementById(id.toString());
     el?.scrollIntoView(false);
   }
