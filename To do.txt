@@ -21,21 +21,21 @@
 - order x
 - responsive and add function
 - backend:
- + get list product
- + get brand
- + get news
- + get ads
- + search
- + add favorite
- + filter and sort product (pass param)
- + get detail product
- + get detail new
- + add to cart
+ + get list product x
+ + get brand x
+ + get news x
+ + get ads x
+ + search x
+ + add favorite x
+ + filter and sort product (pass param) x
+ + get detail product x
+ + get detail new x
+ + add to cart x
  + buy
- + update info + change password
- + favorite
- + history
- + log in + log out
+ + update info + change password x
+ + favorite x
+ + history x
+ + log in + log out x
 
 - use session/cookie for guest
 - admin page
