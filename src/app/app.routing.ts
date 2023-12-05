@@ -6,6 +6,23 @@ import { AuthGuard } from './core/auth/guards/auth.guard';
 
 export const appRoutes: Routes = [
   {
+    path: 'admin',
+    component: LayoutComponent,
+    data: {
+      layout: 'admin',
+    },
+    resolve: {
+      initialData: InitialDataResolver,
+    },
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./modules/admin/admin.module').then((m) => m.AdminModule),
+      },
+    ],
+  },
+  {
     path: '',
     component: LayoutComponent,
     data: {
