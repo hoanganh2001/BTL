@@ -158,7 +158,8 @@
       }
 
       &.active > a,
-      &.active > a i {
+      &.active > a i,
+      &.active > a p {
         color: $white-color;
       }
 

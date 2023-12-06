@@ -14,17 +14,15 @@
   <div class="main-panel">
     <app-navbar></app-navbar>
     <router-outlet></router-outlet>
-    <div *ngIf="isMaps('maps')">
-      <app-footer></app-footer>
-    </div>
+    <div *ngIf="isMaps('maps')"></div>
   </div>
   <div class="fixed-plugin">
-    <div class="dropdown show-dropdown open show">
-      <a href="#" data-toggle="dropdown" aria-expanded="true">
-        <i class="fa fa-cog fa-2x"> </i>
-      </a>
+    <div class="dropdown show-dropdown open">
+      <button href="" data-toggle="dropdown" aria-expanded="true">
+        <i class="bi bi-gear-fill"></i>
+      </button>
       <ul
-        class="dropdown-menu show"
+        class="dropdown-menu"
         x-placement="bottom-start"
         style="
           position: absolute;

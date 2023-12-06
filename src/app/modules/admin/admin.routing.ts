@@ -1,5 +1,7 @@
 import { Route } from '@angular/router';
-import { AdminComponent } from './admin.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProductManagementComponent } from './product-management/product.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 export const AdminRoutes: Route[] = [
   {
@@ -9,6 +11,14 @@ export const AdminRoutes: Route[] = [
   },
   {
     path: 'home',
-    component: AdminComponent,
+    component: DashboardComponent,
+  },
+  {
+    path: 'product',
+    component: ProductManagementComponent,
+  },
+  {
+    path: 'my-profile',
+    component: UserProfileComponent,
   },
 ];

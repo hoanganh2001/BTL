@@ -1,7 +1,7 @@
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { Layout } from './layout.types';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subject, filter, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
+import { Layout } from './layout.types';
 
 @Component({
   selector: 'app-layout',
