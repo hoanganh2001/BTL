@@ -1,6 +1,22 @@
 <div class="main-content">
   <div class="container-fluid">
     <div class="row">
+      <div class="col d-flex">
+        <button class="btn btn-success btn-add">
+          <i class="bi bi-plus"></i>
+        </button>
+        <div class="search-box">
+          <button class="btn-search"><i class="bi bi-search"></i></button>
+          <input
+            type="search"
+            class="input-search"
+            placeholder="Type to Search..."
+            [formControl]="searchControl"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-md-12">
         <div class="card card-plain">
           <div class="card-header card-header-danger">
@@ -10,12 +26,19 @@
           <div class="card-body">
             <div class="table-responsive">
               <table class="table table-hover">
-                <thead class="">
+                <thead
+                  class=""
+                  matSort
+                  (matSortChange)="handleSortItem($event)"
+                  matSortActive="{{ sort.active }}"
+                  matSortDirection="{{ sort.direction }}"
+                  matSortDisableClear
+                >
                   <th>ID</th>
                   <th>Image</th>
-                  <th>Name</th>
-                  <th>Price</th>
-                  <th>Category</th>
+                  <th mat-sort-header="name">Name</th>
+                  <th mat-sort-header="price">Price</th>
+                  <th mat-sort-header="category_name">Category</th>
                   <th></th>
                 </thead>
                 <tbody>
@@ -35,6 +58,9 @@
                       <td>
                         <button class="btn" (click)="deleteProduct(item.id)">
                           <i class="bi bi-trash-fill"></i>
+                        </button>
+                        <button class="btn">
+                          <i class="bi bi-pencil-square"></i>
                         </button>
                       </td>
                     </tr>

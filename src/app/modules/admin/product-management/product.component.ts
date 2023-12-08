@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductManagementSerivce } from './products.service';
 import { paginatorData } from 'app/shared/component/paginator/paginator.types';
-import { map } from 'rxjs';
+import { debounceTime, map } from 'rxjs';
 import { productManagementResponseData } from './products.type';
+import { SortHeader } from '../admin.types';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-product',
@@ -10,8 +12,13 @@ import { productManagementResponseData } from './products.type';
   styleUrls: ['./product.component.scss'],
 })
 export class ProductManagementComponent implements OnInit {
-  constructor(private _productManagementService: ProductManagementSerivce) {}
+  searchControl = new FormControl('');
 
+  constructor(private _productManagementService: ProductManagementSerivce) {}
+  sort: SortHeader = {
+    active: '',
+    direction: '',
+  };
   paginator: paginatorData = {
     length: 0,
     limit: 20,
@@ -26,6 +33,25 @@ export class ProductManagementComponent implements OnInit {
       offset: this.paginator.offset,
     };
     this.getProductList(this.productSearchBody);
+
+    this.searchControl.valueChanges
+      .pipe(
+        debounceTime(300),
+        map((value) => value.trim()),
+      )
+      .subscribe((value) => {
+        if (value) {
+          this.productSearchBody = {
+            ...this.productSearchBody,
+            offset: 0,
+            name: value,
+          };
+          this.getProductList(this.productSearchBody);
+        } else if (value === '' && !this.searchControl.pristine) {
+          delete this.productSearchBody['name'];
+          this.getProductList(this.productSearchBody);
+        }
+      });
   }
 
   getProductList(body: any) {
@@ -69,6 +95,18 @@ export class ProductManagementComponent implements OnInit {
       offset: pagging.pageIndex * pagging.pageSize,
     };
     // call api get list form
+    this.getProductList(this.productSearchBody);
+  }
+
+  handleSortItem(data) {
+    this.productSearchBody = {
+      ...this.productSearchBody,
+      limit: this.paginator.limit,
+      offset: 0,
+      sort_by: data.direction,
+      order_by: data.active,
+    };
+
     this.getProductList(this.productSearchBody);
   }
 

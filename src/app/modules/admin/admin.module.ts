@@ -13,6 +13,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ProductManagementComponent } from './product-management/product.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { MatSortModule } from '@angular/material/sort';
+
 @NgModule({
   imports: [
     RouterModule.forChild(AdminRoutes),
@@ -26,6 +28,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     MatSelectModule,
     MatTooltipModule,
     MatPaginatorModule,
+    MatSortModule,
   ],
   declarations: [
     DashboardComponent,
