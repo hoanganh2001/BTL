@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
-import { CanMatch, Route, Router, UrlSegment, UrlTree } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { AuthService } from 'app/core/auth/auth.service';
 import { environment } from 'enviroment/enviroment';
-import { Observable, of, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanMatch {
+export class AdminGuard {
   /**
    * Constructor
    */
@@ -25,17 +29,6 @@ export class AuthGuard implements CanMatch {
    */
   baseUrl: string = `${environment.endpointInternal}`;
 
-  canMatch(
-    route: Route,
-    segments: UrlSegment[],
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
-    return this._check(segments);
-  }
-
   // -----------------------------------------------------------------------------------------------------
   // @ Private methods
   // -----------------------------------------------------------------------------------------------------
@@ -46,24 +39,25 @@ export class AuthGuard implements CanMatch {
    * @param segments
    * @private
    */
-  private _check(segments: UrlSegment[]): Observable<boolean | UrlTree> {
+  private _check(): Observable<boolean> | Promise<boolean> | boolean {
     // Check the authentication status
-    return this._authService.check().pipe(
-      switchMap((authenticated) => {
-        // If the user is not authenticated...
-        if (!authenticated) {
-          // Redirect to the sign-in page with a redirectUrl param
-          const redirectURL = `/${segments.join('/')}`;
-          const urlTree = this._router.parseUrl(
-            `sign-in?redirectURL=${redirectURL}`,
-          );
+    return this._authService.checkAdmin().then((authenticated) => {
+      // If the user is not authenticated...
+      if (!authenticated) {
+        // Redirect to the sign-in page with a redirectUrl param
+        this._router.navigate(['/']);
+        return false;
+      }
 
-          return of(urlTree);
-        }
+      // Allow the access
+      return true;
+    });
+  }
 
-        // Allow the access
-        return of(true);
-      }),
-    );
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<boolean> | Promise<boolean> | boolean {
+    return this._check();
   }
 }

@@ -2,13 +2,24 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'enviroment/enviroment';
 import { CookieService } from 'ngx-cookie-service';
-import { Observable, of, switchMap } from 'rxjs';
+import {
+  Observable,
+  of,
+  switchMap,
+  map,
+  BehaviorSubject,
+  tap,
+  lastValueFrom,
+} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private _authenticated: boolean = false;
+  private _role: string = '';
+  test = new BehaviorSubject<any>('');
+
   get sessionId(): string {
     if (!this._cookieService.check('SessionID')) {
       return null;
@@ -25,6 +36,7 @@ export class AuthService {
     return this._httpClient.post(`${environment.endpoint}/login`, body).pipe(
       switchMap((response: any) => {
         this._authenticated = true;
+        this._role = response.role;
         // Return a new observable with the response
         return of(response);
       }),
@@ -38,6 +50,15 @@ export class AuthService {
         // Return a new observable with the response
         return of(response);
       }),
+    );
+  }
+
+  getRole(): Observable<any> {
+    return this._httpClient.get(`${environment.endpoint}/account-role`).pipe(
+      map((res: any) => res.data),
+      // Store the last postcode in a local property.
+      tap((value) => (this._role = value)),
+      // The postcode is outputted here to all subscribers
     );
   }
 
@@ -55,6 +76,20 @@ export class AuthService {
     if (!this.sessionId) {
       this._authenticated = false;
       return of(false);
+    }
+  }
+
+  async checkAdmin(): Promise<boolean> {
+    if (this.sessionId) {
+      if (this._role === '') {
+        const a = await lastValueFrom(this.getRole());
+        return a === 'admin';
+      } else if (this._role === 'admin') {
+        return true;
+      }
+    }
+    if (!this.sessionId) {
+      return false;
     }
   }
 }

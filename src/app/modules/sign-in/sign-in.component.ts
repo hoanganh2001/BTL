@@ -49,7 +49,11 @@ export class SignInComponent implements OnInit {
       password: model.password,
     };
     this._authService.logIn(body).subscribe((value) => {
-      window.location.href = `http://localhost:4200` + this.previousURL;
+      if (value.role === 'admin') {
+        this._router.navigateByUrl(RouterConfig.ADMIN_DASHBOARD);
+      } else {
+        window.location.href = `http://localhost:4200` + this.previousURL;
+      }
     });
   }
 
@@ -64,7 +68,10 @@ export class SignInComponent implements OnInit {
 
     this._authService.signUp(body).subscribe((value) => {
       if (value.message === 'success') this.isSignIn = false;
-      // window.location.href = `http://localhost:4200` + this.previousURL;
+      window.location.href =
+        `http://localhost:4200` + value.role === 'admin'
+          ? RouterConfig.ADMIN
+          : this.previousURL;
     });
   }
 

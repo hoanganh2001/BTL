@@ -3,10 +3,12 @@ import { LayoutComponent } from './layout/layout.component';
 import { InitialDataResolver } from './app.resolvers';
 import { NoAuthGuard } from './core/auth/guards/noAuth.guard';
 import { AuthGuard } from './core/auth/guards/auth.guard';
+import { AdminGuard } from './core/auth/guards/admin.guard';
 
 export const appRoutes: Routes = [
   {
     path: 'admin',
+    canActivate: [AdminGuard],
     component: LayoutComponent,
     data: {
       layout: 'admin',
