@@ -6,3 +6,14 @@
   font-size: 24px;
   font-weight: 500;
 }
+
+#ckeditor {
+  overflow: hidden;
+}
+
+:host ::ng-deep .ck-editor__editable_inline {
+  min-height: 400px;
+  figure {
+    width: -webkit-fill-available;
+  }
+}
