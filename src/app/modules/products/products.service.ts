@@ -18,6 +18,12 @@ export class ProductService {
     });
   }
 
+  getTypeAndFeature(body: any): Observable<any> {
+    return this._httpClient.get(`${environment.endpoint}/type-feature-list`, {
+      params: body,
+    });
+  }
+
   getCategoriesList(): Observable<any> {
     return this._httpClient.get(`${environment.endpoint}/categories-list`);
   }

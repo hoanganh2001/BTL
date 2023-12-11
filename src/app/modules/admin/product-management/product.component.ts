@@ -5,6 +5,8 @@ import { debounceTime, map } from 'rxjs';
 import { productManagementResponseData } from './products.type';
 import { SortHeader } from '../admin.types';
 import { FormControl } from '@angular/forms';
+import RouterConfig from 'app/core/config/router.config';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product',
@@ -13,8 +15,12 @@ import { FormControl } from '@angular/forms';
 })
 export class ProductManagementComponent implements OnInit {
   searchControl = new FormControl('');
+  readonly RouteConfig = RouterConfig;
 
-  constructor(private _productManagementService: ProductManagementSerivce) {}
+  constructor(
+    private _productManagementService: ProductManagementSerivce,
+    private _router: Router,
+  ) {}
   sort: SortHeader = {
     active: '',
     direction: '',
@@ -114,5 +120,9 @@ export class ProductManagementComponent implements OnInit {
     this._productManagementService.deleteItem(id).subscribe((res) => {
       this.getProductList(this.productSearchBody);
     });
+  }
+
+  routeTo(url: string) {
+    this._router.navigate([url]);
   }
 }

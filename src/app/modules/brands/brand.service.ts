@@ -16,7 +16,7 @@ export class BrandService {
     this.brandId.next(id);
   }
 
-  getBrands(body: any): Observable<any> {
+  getBrands(body?: any): Observable<any> {
     return this._httpClient.get(`${environment.endpoint}/brands`, {
       params: body,
     });

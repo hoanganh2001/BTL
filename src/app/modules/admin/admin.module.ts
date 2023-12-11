@@ -14,6 +14,9 @@ import { ProductManagementComponent } from './product-management/product.compone
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MatSortModule } from '@angular/material/sort';
+import { CreateProductComponent } from './product-management/create/create.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 @NgModule({
   imports: [
@@ -29,11 +32,14 @@ import { MatSortModule } from '@angular/material/sort';
     MatTooltipModule,
     MatPaginatorModule,
     MatSortModule,
+    MatTabsModule,
+    CKEditorModule,
   ],
   declarations: [
     DashboardComponent,
     ProductManagementComponent,
     UserProfileComponent,
+    CreateProductComponent,
   ],
 })
 export class AdminModule {}
