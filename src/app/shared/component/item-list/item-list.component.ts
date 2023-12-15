@@ -88,6 +88,6 @@ export class ItemListComponent implements OnInit {
   }
 
   redirectToDetail(id: any) {
-    this._router.navigateByUrl(this._router.url + '/detail');
+    this._router.navigateByUrl(this._router.url + '/detail/' + id);
   }
 }

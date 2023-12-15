@@ -20,17 +20,21 @@
         </div>
       </div>
     </div>
-    <div class="col-6 content-detail">
+    <div class="col-6 content-detail" *ngIf="productDetail">
       <div class="row mb-3">
-        <span class="name bold-text">HiFiMan HE1000 Stealth Magnet</span>
+        <span class="name bold-text">{{ productDetail.name }}</span>
       </div>
       <div class="row mb-3">
         <span class="brand">
-          Thương hiệu<a href="" class="ms-1 brand-name">HIFIMAN</a>
+          Thương hiệu<a href="" class="ms-1 brand-name">{{
+            productDetail.brand_name
+          }}</a>
         </span>
       </div>
       <div class="row mb-3">
-        <span class="cost bold-text">37.000.000 <span>₫</span></span>
+        <span class="cost bold-text">{{
+          productDetail.price | currencyFormat
+        }}</span>
       </div>
       <div class="row mb-3">
         <span class="guarente"
@@ -39,7 +43,7 @@
       </div>
       <div class="row mb-3">
         <div class="col-12 d-flex">
-          <button class="btn btn-buy">
+          <button class="btn btn-buy" (click)="addToCart(productDetail.id)">
             <span class="cart-icon"><i class="bi bi-cart-fill"></i></span>Mua
             hàng
           </button>
