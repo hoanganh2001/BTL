@@ -9,6 +9,7 @@ import { getErrorText, validateFormControls } from 'app/shared/constant';
 import * as dayjs from 'dayjs';
 import { ProductManagementSerivce } from '../products.service';
 import { typeData } from '../products.type';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-create',
@@ -32,12 +33,15 @@ export class CreateProductComponent implements OnInit {
   curIMG;
   selectedFiles?: File[] = [];
   imageInfos?: any = [];
+  isEdit: boolean = false;
+  productID?: number;
 
   constructor(
     private _brandService: BrandService,
     private _productService: ProductService,
     private _productManagementService: ProductManagementSerivce,
     private _formBuilder: FormBuilder,
+    private _activeRoute: ActivatedRoute,
   ) {
     // Validators.required
     this.createProductForm = this._formBuilder.group({
@@ -66,6 +70,13 @@ export class CreateProductComponent implements OnInit {
   }
 
   ngOnInit() {
+    this._activeRoute.queryParams.subscribe((params) => {
+      this.productID = params['product_id'];
+      this.isEdit = params['isEdit'];
+    });
+    if (this.isEdit) {
+      this.getProductDetail(this.productID);
+    }
     this.getListBrand();
     this.getCategoryList();
     this.categoryField.valueChanges.subscribe((value) => {
@@ -106,6 +117,7 @@ export class CreateProductComponent implements OnInit {
       return file.name === item.name;
     });
   }
+
   getListBrand() {
     this._brandService
       .getBrands()
@@ -142,6 +154,24 @@ export class CreateProductComponent implements OnInit {
       if (!this.typeList) this.typeField.disable();
       if (!this.featureList) this.featureField.disable();
     });
+  }
+
+  getProductDetail(id: number) {
+    this._productManagementService
+      .getProductDetail(id)
+      .pipe(map((res) => res.data))
+      .subscribe((res) => {
+        this.nameField?.setValue(res.name);
+        this.priceField?.setValue(res.price || 0);
+        this.quantityField?.setValue(res.quantity || 0);
+        this.discountField?.setValue(res.discount || 0);
+        this.brandField?.setValue(res.brand_id);
+        this.categoryField?.setValue(res.category_id || null);
+        this.typeField?.setValue(res.type_id || null);
+        this.featureField?.setValue(res.feature_id || null);
+        this.specificationField?.setValue(res.specification || null);
+        this.descriptionField?.setValue(res.description || null);
+      });
   }
 
   createProduct() {
@@ -186,12 +216,21 @@ export class CreateProductComponent implements OnInit {
         feature: model.feature,
       },
     };
-    this._productManagementService
-      .createItem(createProductBody)
-      .subscribe((res) => {
-        this.isClicked = false;
-        console.log(res.message);
-      });
+    if (this.isEdit) {
+      this._productManagementService
+        .editProduct(createProductBody, this.productID)
+        .subscribe((res) => {
+          this.isClicked = false;
+          console.log(res.message);
+        });
+    } else {
+      this._productManagementService
+        .createProduct(createProductBody)
+        .subscribe((res) => {
+          this.isClicked = false;
+          console.log(res.message);
+        });
+    }
   }
 
   get nameField() {

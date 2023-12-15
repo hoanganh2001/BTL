@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class ProductManagementSerivce {
   constructor(private _httpClient: HttpClient) {}
 
-  getItemsOnSearch(body: any): Observable<any> {
+  getProductsOnSearch(body: any): Observable<any> {
     return this._httpClient.get(`${environment.endpoint}/admin/products`, {
       params: body,
     });
@@ -21,13 +21,20 @@ export class ProductManagementSerivce {
       .pipe();
   }
 
-  deleteItem(id: number): Observable<any> {
+  deleteProduct(id: number): Observable<any> {
     return this._httpClient.delete(
       `${environment.endpoint}/admin/product/` + id,
     );
   }
 
-  createItem(body): Observable<any> {
+  createProduct(body): Observable<any> {
     return this._httpClient.post(`${environment.endpoint}/admin/product`, body);
+  }
+
+  editProduct(body, id: number): Observable<any> {
+    return this._httpClient.put(
+      `${environment.endpoint}/admin/product/` + id,
+      body,
+    );
   }
 }

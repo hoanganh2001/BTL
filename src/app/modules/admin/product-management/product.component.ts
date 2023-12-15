@@ -6,7 +6,7 @@ import { productManagementResponseData } from './products.type';
 import { SortHeader } from '../admin.types';
 import { FormControl } from '@angular/forms';
 import RouterConfig from 'app/core/config/router.config';
-import { Router } from '@angular/router';
+import { Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-product',
@@ -62,7 +62,7 @@ export class ProductManagementComponent implements OnInit {
 
   getProductList(body: any) {
     this._productManagementService
-      .getItemsOnSearch(body)
+      .getProductsOnSearch(body)
       .pipe(
         map((value: any) => {
           value.data = value.data.map((res: productManagementResponseData) => ({
@@ -117,12 +117,12 @@ export class ProductManagementComponent implements OnInit {
   }
 
   deleteProduct(id: number) {
-    this._productManagementService.deleteItem(id).subscribe((res) => {
+    this._productManagementService.deleteProduct(id).subscribe((res) => {
       this.getProductList(this.productSearchBody);
     });
   }
 
-  routeTo(url: string) {
-    this._router.navigate([url]);
+  routeTo(url: string, param?: Params) {
+    this._router.navigate([url], { queryParams: param });
   }
 }
