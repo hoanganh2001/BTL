@@ -21,10 +21,10 @@ export default class RouterConfig {
   public static SIGN_IN = this.HOME + 'sign-in';
 
   // admin route
-  public static ADMIN = '/admin/';
+  public static ADMIN = '/admin';
 
-  public static ADMIN_DASHBOARD = this.ADMIN + 'home';
-  public static ADMIN_PRODUCT = this.ADMIN + 'product';
+  public static ADMIN_DASHBOARD = this.ADMIN + '/home';
+  public static ADMIN_PRODUCT = this.ADMIN + '/product';
   public static ADMIN_CREATE_PRODUCT = this.ADMIN_PRODUCT + '/create';
-  public static ADMIN_USER_PROFILE = this.ADMIN + 'my-profile';
+  public static ADMIN_USER_PROFILE = this.ADMIN + '/my-profile';
 }

@@ -1,12 +1,29 @@
 <button
-  class="btn btn-user nav-btn rounded-circle d-flex align-items-center d-flex justify-content-center"
+  [ngClass]="
+    inAdminPage
+      ? 'nav-link'
+      : 'btn btn-user nav-btn rounded-circle d-flex align-items-center d-flex justify-content-center'
+  "
   type="submit"
   (click)="handleClickUser()"
   [matMenuTriggerFor]="this.isLogIn ? userMenu : null"
 >
-  <i class="bi bi-person" style="font-size: 14px"></i>
+  <i
+    class="bi bi-person"
+    [style]="{ 'font-size': inAdminPage ? '' : '14px' }"
+    [ngClass]="{ 'material-icons': inAdminPage }"
+  ></i>
 </button>
 <mat-menu #userMenu="matMenu" xPosition="before">
-  <button mat-menu-item (click)="redirectToMyProfile()">Thông tin</button>
+  <button
+    mat-menu-item
+    (click)="redirectTo(inAdminPage ? routerURL.Home : routerURL.ADMIN)"
+    *ngIf="isAdmin"
+  >
+    {{ inAdminPage ? 'To Home' : 'To Admin Page' }}
+  </button>
+  <button mat-menu-item (click)="redirectTo(routerURL.MY_PROFILE)">
+    Thông tin
+  </button>
   <button mat-menu-item (click)="signOut()">Đăng xuất</button>
 </mat-menu>
