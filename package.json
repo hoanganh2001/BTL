@@ -30,6 +30,7 @@
     "classlist.js": "1.1.20150312",
     "dayjs": "^1.11.10",
     "jquery": "3.6.0",
+    "lightgallery": "^2.7.2",
     "ngx-cookie-service": "^16.0.1",
     "perfect-scrollbar": "1.5.5",
     "rxjs": "~7.8.0",

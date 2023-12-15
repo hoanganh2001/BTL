@@ -17,6 +17,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { CreateProductComponent } from './product-management/create/create.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { LightgalleryModule } from 'lightgallery/angular';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     MatSortModule,
     MatTabsModule,
     CKEditorModule,
+    LightgalleryModule,
   ],
   declarations: [
     DashboardComponent,

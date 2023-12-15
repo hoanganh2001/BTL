@@ -16,3 +16,8 @@ export interface productManagementResponseData {
 export interface categoryResponse {
   data: { id: number; name: string }[];
 }
+
+export interface typeData {
+  id: number;
+  name: string;
+}

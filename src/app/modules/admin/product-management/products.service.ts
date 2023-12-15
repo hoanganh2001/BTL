@@ -16,12 +16,18 @@ export class ProductManagementSerivce {
   }
 
   getProductDetail(id: number): Observable<any> {
-    return this._httpClient.get(`${environment.endpoint}/product-detail/` + id);
+    return this._httpClient
+      .get(`${environment.endpoint}/product-detail/` + id)
+      .pipe();
   }
 
   deleteItem(id: number): Observable<any> {
     return this._httpClient.delete(
       `${environment.endpoint}/admin/product/` + id,
     );
+  }
+
+  createItem(body): Observable<any> {
+    return this._httpClient.post(`${environment.endpoint}/admin/product`, body);
   }
 }
