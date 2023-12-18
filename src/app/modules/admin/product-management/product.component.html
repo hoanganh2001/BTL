@@ -28,7 +28,7 @@
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table table-hover">
+              <table class="table table-hover" style="table-layout: fixed">
                 <thead
                   class=""
                   matSort
@@ -37,12 +37,16 @@
                   matSortDirection="{{ sort.direction }}"
                   matSortDisableClear
                 >
-                  <th>ID</th>
-                  <th>Image</th>
-                  <th mat-sort-header="name">Name</th>
-                  <th mat-sort-header="price">Price</th>
-                  <th mat-sort-header="category_name">Category</th>
-                  <th></th>
+                  <tr>
+                    <th class="col-1">ID</th>
+                    <th class="col-1">Image</th>
+                    <th class="col" mat-sort-header="name">Name</th>
+                    <th class="col-2" mat-sort-header="price">Price</th>
+                    <th class="col-2" mat-sort-header="category_name">
+                      Category
+                    </th>
+                    <th class="col-2"></th>
+                  </tr>
                 </thead>
                 <tbody>
                   <ng-container *ngFor="let item of productList">

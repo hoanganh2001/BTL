@@ -18,6 +18,7 @@ import { CreateProductComponent } from './product-management/create/create.compo
 import { MatTabsModule } from '@angular/material/tabs';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { LightgalleryModule } from 'lightgallery/angular';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import { LightgalleryModule } from 'lightgallery/angular';
     MatTabsModule,
     CKEditorModule,
     LightgalleryModule,
+    MatTableModule,
   ],
   declarations: [
     DashboardComponent,
