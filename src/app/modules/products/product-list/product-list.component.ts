@@ -89,8 +89,6 @@ export class ProductListComponent implements OnInit {
   }
 
   scroll(id: number) {
-    console.log(id);
-
     const el = document.getElementById(id.toString());
     el?.scrollIntoView(false);
   }

@@ -7,6 +7,7 @@ import { getErrorText, validateFormControls } from 'app/shared/constant';
 import { Router } from '@angular/router';
 import RouterConfig from 'app/core/config/router.config';
 import * as dayjs from 'dayjs';
+import { NotificationService } from 'app/core/service/notification';
 
 @Component({
   selector: 'app-order',
@@ -55,6 +56,7 @@ export class OrderComponent implements OnInit {
     private _orderService: OrderService,
     private _formBuilder: FormBuilder,
     private _router: Router,
+    private _notiService: NotificationService,
   ) {
     this.orderForm = this._formBuilder.group({
       name: ['hahaha', [Validators.required]],
@@ -152,7 +154,7 @@ export class OrderComponent implements OnInit {
     const validateResult = validateFormControls(this.orderForm, formValidate);
 
     if (!validateResult.isValidated) {
-      console.log(getErrorText(validateResult.errors[0]));
+      this._notiService.showError(getErrorText(validateResult.errors[0]));
       this.isClicked = false;
       return;
     }

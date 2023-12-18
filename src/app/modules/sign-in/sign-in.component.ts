@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../core/auth/auth.service';
 import { Router } from '@angular/router';
 import RouterConfig from 'app/core/config/router.config';
-import { environment } from 'enviroment/enviroment';
 import * as dayjs from 'dayjs';
 
 @Component({

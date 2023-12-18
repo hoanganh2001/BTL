@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NotificationService } from 'app/core/service/notification';
 import { OrderService } from 'app/modules/order/order.service';
 import { paginatorData } from 'app/shared/component/paginator/paginator.types';
 
@@ -17,7 +18,10 @@ export class OrderComponent implements OnInit {
   };
   orderPagging: any;
 
-  constructor(private _orderService: OrderService) {}
+  constructor(
+    private _orderService: OrderService,
+    private _notiService: NotificationService,
+  ) {}
 
   ngOnInit() {
     this.getOrderList();
@@ -54,7 +58,7 @@ export class OrderComponent implements OnInit {
   cancelOrder(id: number) {
     this._orderService.cancelOrder(id).subscribe((res) => {
       if (res.message) {
-        console.log(res.message);
+        this._notiService.showSuccess(res.message);
         this.getOrderList();
       }
     });

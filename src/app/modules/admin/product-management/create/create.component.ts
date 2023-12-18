@@ -10,6 +10,7 @@ import * as dayjs from 'dayjs';
 import { ProductManagementSerivce } from '../products.service';
 import { typeData } from '../products.type';
 import { ActivatedRoute } from '@angular/router';
+import { NotificationService } from 'app/core/service/notification';
 
 @Component({
   selector: 'app-create',
@@ -42,6 +43,7 @@ export class CreateProductComponent implements OnInit {
     private _productManagementService: ProductManagementSerivce,
     private _formBuilder: FormBuilder,
     private _activeRoute: ActivatedRoute,
+    private _notiService: NotificationService,
   ) {
     // Validators.required
     this.createProductForm = this._formBuilder.group({
@@ -193,7 +195,7 @@ export class CreateProductComponent implements OnInit {
     );
 
     if (!validateResult.isValidated) {
-      console.log(getErrorText(validateResult.errors[0]));
+      this._notiService.showError(getErrorText(validateResult.errors[0]));
       this.isClicked = false;
       return;
     }

@@ -9,6 +9,11 @@ export const ProductsDetailRoutes: Route[] = [
   },
   {
     path: 'detail',
-    component: ProductDetailComponent,
+    children: [
+      {
+        path: ':productId',
+        component: ProductDetailComponent,
+      },
+    ],
   },
 ];
