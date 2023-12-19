@@ -37,4 +37,11 @@ export class ProductManagementSerivce {
       body,
     );
   }
+
+  uploadFile(id: number, formData: any, thumbnail: number): Observable<any> {
+    return this._httpClient.post(
+      `${environment.endpoint}/admin/product/${id}/images/${thumbnail}`,
+      formData,
+    );
+  }
 }

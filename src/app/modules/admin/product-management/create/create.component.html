@@ -65,6 +65,17 @@
                           >
                             <i class="bi bi-trash-fill"></i>
                           </button>
+                          <button
+                            class="btn btn-star"
+                            (click)="addThumbnailFile(item)"
+                          >
+                            <i
+                              class="bi"
+                              [ngClass]="
+                                item.thumbnail ? 'bi-star-fill' : 'bi-star'
+                              "
+                            ></i>
+                          </button>
                         </div>
                       </a>
                     </ng-container>

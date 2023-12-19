@@ -47,7 +47,7 @@ export class CreateProductComponent implements OnInit {
   ) {
     // Validators.required
     this.createProductForm = this._formBuilder.group({
-      name: ['', [Validators.required]],
+      name: ['abc', [Validators.required]],
       price: ['', [Validators.pattern(/\d/)]],
       discount: ['', []],
       quantity: ['', []],
@@ -106,6 +106,7 @@ export class CreateProductComponent implements OnInit {
           this.imageInfos.push({
             name: file.name,
             url: e.target.result,
+            thumbnail: false,
           });
         };
 
@@ -115,8 +116,14 @@ export class CreateProductComponent implements OnInit {
   }
 
   removeFile(item) {
-    const index = Array.from(this.selectedFiles).findIndex((file) => {
-      return file.name === item.name;
+    this.imageInfos = this.imageInfos.filter((t) => t.name !== item.name);
+    this.selectedFiles = this.selectedFiles.filter((t) => t.name !== item.name);
+  }
+
+  addThumbnailFile(item) {
+    this.imageInfos = this.imageInfos.map((t) => {
+      t.thumbnail = JSON.stringify(t) === JSON.stringify(item);
+      return t;
     });
   }
 
@@ -176,7 +183,7 @@ export class CreateProductComponent implements OnInit {
       });
   }
 
-  createProduct() {
+  async createProduct() {
     if (this.isClicked) {
       return;
     }
@@ -218,19 +225,39 @@ export class CreateProductComponent implements OnInit {
         feature: model.feature,
       },
     };
+
     if (this.isEdit) {
       this._productManagementService
         .editProduct(createProductBody, this.productID)
         .subscribe((res) => {
           this.isClicked = false;
-          console.log(res.message);
+          if (this.selectedFiles.length) {
+            const formData = new FormData();
+            this.selectedFiles.forEach((file, i) => {
+              formData.append('ufile', file);
+            });
+          }
         });
     } else {
       this._productManagementService
         .createProduct(createProductBody)
         .subscribe((res) => {
           this.isClicked = false;
-          console.log(res.message);
+          if (this.selectedFiles.length) {
+            const formData = new FormData();
+            const thumbnailIndex =
+              this.imageInfos.findIndex((t) => t.thumbnail) >= 0
+                ? this.imageInfos.findIndex((t) => t.thumbnail)
+                : 0;
+            this.selectedFiles.forEach((file, i) => {
+              formData.append('ufile', file);
+            });
+            this._productManagementService
+              .uploadFile(res.product_id, formData, thumbnailIndex)
+              .subscribe((res) => {
+                this._notiService.showSuccess(res.message);
+              });
+          }
         });
     }
   }
