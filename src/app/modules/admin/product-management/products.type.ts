@@ -5,14 +5,13 @@ export interface productManagementResponseData {
   create_date: string;
   discount: number | null;
   quantity: number | null;
-  image: string;
+  thumbnail: string;
   view_number: number | null;
   gift_id: number;
   favorite: boolean;
   category_id: number;
   category_name: string;
 }
-
 export interface categoryResponse {
   data: { id: number; name: string }[];
 }

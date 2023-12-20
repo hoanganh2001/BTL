@@ -17,7 +17,7 @@ export class ProductManagementSerivce {
 
   getProductDetail(id: number): Observable<any> {
     return this._httpClient
-      .get(`${environment.endpoint}/product-detail/` + id)
+      .get(`${environment.endpoint}/admin/product/` + id)
       .pipe();
   }
 

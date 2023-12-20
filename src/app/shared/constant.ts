@@ -23,6 +23,10 @@ export class Constant {
     FILTER_CATEGORY: 'filter_category',
   };
 
+  public static IMG_DIR = {
+    SHOP: 'https://3kshop.vn/wp-content/uploads/fly-images/',
+  };
+
   public static FILTER_TYPE = {
     MULTI_CHECKBOX: 'multi_checkbox',
     RANGE_INPUT: 'range_input',

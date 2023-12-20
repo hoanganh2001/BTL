@@ -7,6 +7,7 @@ import { SortHeader } from '../admin.types';
 import { FormControl } from '@angular/forms';
 import RouterConfig from 'app/core/config/router.config';
 import { Params, Router } from '@angular/router';
+import { Constant } from 'app/shared/constant';
 
 @Component({
   selector: 'app-product',
@@ -70,7 +71,7 @@ export class ProductManagementComponent implements OnInit {
             price: res.price,
             create_date: res.create_date,
             discount: res.discount,
-            image: res.image,
+            image: Constant.IMG_DIR.SHOP + res.thumbnail,
             name: res.name,
             view: res.view_number,
             gift: res.gift_id,
