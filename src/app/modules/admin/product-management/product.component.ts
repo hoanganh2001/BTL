@@ -8,6 +8,12 @@ import { FormControl } from '@angular/forms';
 import RouterConfig from 'app/core/config/router.config';
 import { Params, Router } from '@angular/router';
 import { Constant } from 'app/shared/constant';
+import {
+  MatDialogRef,
+  MatDialogConfig,
+  MatDialog,
+} from '@angular/material/dialog';
+import { CreateProductComponent } from './create/create.component';
 
 @Component({
   selector: 'app-product',
@@ -16,11 +22,14 @@ import { Constant } from 'app/shared/constant';
 })
 export class ProductManagementComponent implements OnInit {
   searchControl = new FormControl('');
+  confirmDialogRef: MatDialogRef<CreateProductComponent>;
+
   readonly RouteConfig = RouterConfig;
 
   constructor(
     private _productManagementService: ProductManagementSerivce,
     private _router: Router,
+    public _dialog: MatDialog,
   ) {}
   sort: SortHeader = {
     active: '',
@@ -71,7 +80,7 @@ export class ProductManagementComponent implements OnInit {
             price: res.price,
             create_date: res.create_date,
             discount: res.discount,
-            image: Constant.IMG_DIR.SHOP + res.thumbnail,
+            image: Constant.IMG_DIR.SHOP + res.thumbnail_file,
             name: res.name,
             view: res.view_number,
             gift: res.gift_id,
@@ -117,13 +126,27 @@ export class ProductManagementComponent implements OnInit {
     this.getProductList(this.productSearchBody);
   }
 
-  deleteProduct(id: number) {
+  deleteProduct(e, id: number) {
+    e.stopPropagation();
     this._productManagementService.deleteProduct(id).subscribe((res) => {
       this.getProductList(this.productSearchBody);
     });
   }
 
-  routeTo(url: string, param?: Params) {
-    this._router.navigate([url], { queryParams: param });
+  openProductPopup(type: string, product_id?: number, e?) {
+    if (type === 'edit') e.stopPropagation();
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      type: type,
+      product_id: product_id,
+    };
+    dialogConfig.width = '100%';
+    dialogConfig.height = '80vh';
+
+    this.confirmDialogRef = this._dialog.open(
+      CreateProductComponent,
+      dialogConfig,
+    );
+    this.confirmDialogRef.afterClosed().subscribe((listID) => {});
   }
 }

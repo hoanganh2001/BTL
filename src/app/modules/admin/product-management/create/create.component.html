@@ -4,7 +4,9 @@
       <div class="col">
         <div class="card">
           <div class="card-header card-header-danger">
-            <h4 class="card-title">Create Product</h4>
+            <h4 class="card-title" style="text-transform: capitalize">
+              {{ type }} Product
+            </h4>
           </div>
           <div class="card-body">
             <form [formGroup]="createProductForm" *ngIf="createProductForm">
@@ -72,7 +74,7 @@
                             <i
                               class="bi"
                               [ngClass]="
-                                item.thumbnail ? 'bi-star-fill' : 'bi-star'
+                                item.isThumbnail ? 'bi-star-fill' : 'bi-star'
                               "
                             ></i>
                           </button>
@@ -164,7 +166,6 @@
                       formControlName="type"
                       class="text-capitalize"
                       multiple
-                      [disabled]="!typeList"
                     >
                       <mat-option
                         class="text-capitalize"
@@ -181,7 +182,6 @@
                       formControlName="feature"
                       class="text-capitalize"
                       multiple
-                      [disabled]="!featureList"
                     >
                       <mat-option
                         class="text-capitalize"
@@ -198,7 +198,7 @@
                 <mat-tab-group
                   mat-align-tabs="start"
                   mat-stretch-tabs="false"
-                  animationDuration="0ms"
+                  animationDuration="500ms"
                   #tabGroup
                 >
                   <mat-tab label="SPECIFICATION">

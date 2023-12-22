@@ -25,6 +25,7 @@ export class Constant {
 
   public static IMG_DIR = {
     SHOP: 'https://3kshop.vn/wp-content/uploads/fly-images/',
+    GOOGLE_DRIVE: 'https://drive.google.com/uc?export=view&id=',
   };
 
   public static FILTER_TYPE = {

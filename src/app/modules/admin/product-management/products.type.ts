@@ -5,7 +5,8 @@ export interface productManagementResponseData {
   create_date: string;
   discount: number | null;
   quantity: number | null;
-  thumbnail: string;
+  thumbnail: number;
+  thumbnail_file: string;
   view_number: number | null;
   gift_id: number;
   favorite: boolean;
@@ -19,4 +20,17 @@ export interface categoryResponse {
 export interface typeData {
   id: number;
   name: string;
+}
+
+export interface popUpData {
+  type: string;
+  product_id?: number;
+}
+
+export interface imageDetailList {
+  id?: number;
+  name?: string;
+  url: string | ArrayBuffer;
+  isThumbnail?: boolean;
+  isNew?: boolean;
 }

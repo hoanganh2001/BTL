@@ -1,16 +1,21 @@
 import { map } from 'rxjs';
 import { BrandService } from './../../../brands/brand.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ProductService } from 'app/modules/products/products.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as customBuild from '../../../../shared/component/ck-editor/build/ckeditor';
 import lgZoom from 'lightgallery/plugins/zoom';
-import { getErrorText, validateFormControls } from 'app/shared/constant';
+import {
+  Constant,
+  getErrorText,
+  validateFormControls,
+} from 'app/shared/constant';
 import * as dayjs from 'dayjs';
 import { ProductManagementSerivce } from '../products.service';
-import { typeData } from '../products.type';
+import { imageDetailList, popUpData, typeData } from '../products.type';
 import { ActivatedRoute } from '@angular/router';
 import { NotificationService } from 'app/core/service/notification';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create',
@@ -33,11 +38,16 @@ export class CreateProductComponent implements OnInit {
   isClicked: boolean = false;
   curIMG;
   selectedFiles?: File[] = [];
-  imageInfos?: any = [];
+  imageInfos?: imageDetailList[] = [];
+  fileUploaded?: imageDetailList[] = [];
   isEdit: boolean = false;
+  isDetail: boolean = false;
   productID?: number;
+  type: string;
 
   constructor(
+    public dialogRef: MatDialogRef<CreateProductComponent>,
+    @Inject(MAT_DIALOG_DATA) data: popUpData,
     private _brandService: BrandService,
     private _productService: ProductService,
     private _productManagementService: ProductManagementSerivce,
@@ -45,6 +55,14 @@ export class CreateProductComponent implements OnInit {
     private _activeRoute: ActivatedRoute,
     private _notiService: NotificationService,
   ) {
+    this.type = data.type;
+    if (this.type === 'edit') {
+      this.isEdit = true;
+      this.productID = data.product_id;
+    } else if (this.type === 'detail') {
+      this.isDetail = true;
+      this.productID = data.product_id;
+    }
     // Validators.required
     this.createProductForm = this._formBuilder.group({
       name: ['abc', [Validators.required]],
@@ -72,11 +90,12 @@ export class CreateProductComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._activeRoute.queryParams.subscribe((params) => {
-      this.productID = params['product_id'];
-      this.isEdit = params['isEdit'];
-    });
+    this.featureField.disable();
+    this.typeField.disable();
     if (this.isEdit) {
+      this.getProductDetail(this.productID);
+    } else if (this.isDetail) {
+      this.createProductForm.disable();
       this.getProductDetail(this.productID);
     }
     this.getListBrand();
@@ -106,7 +125,8 @@ export class CreateProductComponent implements OnInit {
           this.imageInfos.push({
             name: file.name,
             url: e.target.result,
-            thumbnail: false,
+            isThumbnail: false,
+            isNew: true,
           });
         };
 
@@ -116,13 +136,26 @@ export class CreateProductComponent implements OnInit {
   }
 
   removeFile(item) {
-    this.imageInfos = this.imageInfos.filter((t) => t.name !== item.name);
-    this.selectedFiles = this.selectedFiles.filter((t) => t.name !== item.name);
+    if (this.isEdit) {
+      if (item.isNew) {
+        this.imageInfos = this.imageInfos.filter((t) => t.name !== item.name);
+        this.selectedFiles = this.selectedFiles.filter(
+          (t) => t.name !== item.name,
+        );
+      } else {
+        this.imageInfos = this.imageInfos.filter((t) => t.id !== item.id);
+      }
+    } else {
+      this.imageInfos = this.imageInfos.filter((t) => t.name !== item.name);
+      this.selectedFiles = this.selectedFiles.filter(
+        (t) => t.name !== item.name,
+      );
+    }
   }
 
   addThumbnailFile(item) {
     this.imageInfos = this.imageInfos.map((t) => {
-      t.thumbnail = JSON.stringify(t) === JSON.stringify(item);
+      t.isThumbnail = JSON.stringify(t) === JSON.stringify(item);
       return t;
     });
   }
@@ -160,8 +193,10 @@ export class CreateProductComponent implements OnInit {
     this._productService.getTypeAndFeature(body).subscribe((res) => {
       this.typeList = res.data['type'];
       this.featureList = res.data['feature'];
-      if (!this.typeList) this.typeField.disable();
-      if (!this.featureList) this.featureField.disable();
+      if (!this.isDetail) {
+        this.typeField.enable();
+        this.featureField.enable();
+      }
     });
   }
 
@@ -175,11 +210,20 @@ export class CreateProductComponent implements OnInit {
         this.quantityField?.setValue(res.quantity || 0);
         this.discountField?.setValue(res.discount || 0);
         this.brandField?.setValue(res.brand_id);
-        this.categoryField?.setValue(res.category_id || null);
-        this.typeField?.setValue(res.type_id || null);
-        this.featureField?.setValue(res.feature_id || null);
+        this.categoryField?.setValue(res.category_id);
         this.specificationField?.setValue(res.specification || null);
         this.descriptionField?.setValue(res.description || null);
+        this.typeField?.setValue(res.type_id || null);
+        this.featureField?.setValue(res.feature_id || null);
+        if (res.file_id)
+          res.file_id?.forEach((t) => {
+            this.imageInfos.push({
+              id: t[0],
+              url: Constant.IMG_DIR.GOOGLE_DRIVE + t[1],
+              isThumbnail: res.thumbnail === t[0],
+            });
+          });
+        this.fileUploaded = structuredClone(this.imageInfos);
       });
   }
 
@@ -187,7 +231,7 @@ export class CreateProductComponent implements OnInit {
     if (this.isClicked) {
       return;
     }
-    this.isClicked = true;
+    // this.isClicked = true;
 
     let formValidate = {
       isValidated: true,
@@ -231,11 +275,47 @@ export class CreateProductComponent implements OnInit {
         .editProduct(createProductBody, this.productID)
         .subscribe((res) => {
           this.isClicked = false;
+          const fileDel = this.fileUploaded.filter((t) =>
+            this.imageInfos.every((d) => d.id !== t.id),
+          );
+          if (fileDel?.length > 0) {
+            const delFileBody = {
+              ids: fileDel.map((t) => t.id),
+            };
+            this._productManagementService
+              .delFile(delFileBody, this.productID)
+              .subscribe();
+          }
           if (this.selectedFiles.length) {
             const formData = new FormData();
             this.selectedFiles.forEach((file, i) => {
               formData.append('ufile', file);
             });
+            const thumbnailItem = this.imageInfos.find((t) => t.isThumbnail)
+              ? this.imageInfos.find((t) => t.isThumbnail)
+              : this.imageInfos[0];
+            if (thumbnailItem.isNew) {
+              const thumbnailIndex = this.selectedFiles.findIndex(
+                (t) => t.name === thumbnailItem.name,
+              );
+
+              this._productManagementService
+                .uploadFile(this.productID, formData, thumbnailIndex)
+                .subscribe((res) => {
+                  this._notiService.showSuccess(res.message);
+                });
+            } else {
+              this._productManagementService
+                .uploadThumbnailWithId(this.productID, thumbnailItem.id)
+                .subscribe();
+            }
+          } else {
+            const thumbnailItem = this.imageInfos.find((t) => t.isThumbnail)
+              ? this.imageInfos.find((t) => t.isThumbnail)
+              : this.imageInfos[0];
+            this._productManagementService
+              .uploadThumbnailWithId(this.productID, thumbnailItem.id)
+              .subscribe();
           }
         });
     } else {
@@ -246,8 +326,8 @@ export class CreateProductComponent implements OnInit {
           if (this.selectedFiles.length) {
             const formData = new FormData();
             const thumbnailIndex =
-              this.imageInfos.findIndex((t) => t.thumbnail) >= 0
-                ? this.imageInfos.findIndex((t) => t.thumbnail)
+              this.imageInfos.findIndex((t) => t.isThumbnail) >= 0
+                ? this.imageInfos.findIndex((t) => t.isThumbnail)
                 : 0;
             this.selectedFiles.forEach((file, i) => {
               formData.append('ufile', file);

@@ -44,4 +44,20 @@ export class ProductManagementSerivce {
       formData,
     );
   }
+
+  uploadThumbnailWithId(id: number, thumbnail: number): Observable<any> {
+    return this._httpClient.put(
+      `${environment.endpoint}/admin/product/${id}/thumbnail/${thumbnail}`,
+      {},
+    );
+  }
+
+  delFile(body, id: number): Observable<any> {
+    return this._httpClient.delete(
+      `${environment.endpoint}/admin/product/${id}/images`,
+      {
+        body: body,
+      },
+    );
+  }
 }

@@ -16,5 +16,7 @@
 
 ::ng-deep .cdk-overlay-container {
   z-index: 99999;
-  top: 15px;
+  .mat-mdc-menu-panel {
+    margin-top: 15px;
+  }
 }

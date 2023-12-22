@@ -19,6 +19,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { LightgalleryModule } from 'lightgallery/angular';
 import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { MatTableModule } from '@angular/material/table';
     CKEditorModule,
     LightgalleryModule,
     MatTableModule,
+    MatDialogModule,
   ],
   declarations: [
     DashboardComponent,
