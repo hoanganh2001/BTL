@@ -93,7 +93,7 @@
       </div>
       <div class="col-12 mt-5" id="{{ detail[1].id }}" #specifications>
         <h4 class="sub-title">{{ detail[1].name }}</h4>
-        <div [innerHTML]="safeHTML(detail[1].content)"></div>
+        <div id="ckeditor" [innerHTML]="safeHTML(detail[1].content)"></div>
       </div>
     </div>
     <div class="col-2">

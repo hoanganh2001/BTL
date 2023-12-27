@@ -101,13 +101,6 @@ export const appRoutes: Routes = [
             (m) => m.MyProfileModule,
           ),
       },
-      {
-        path: '**',
-        loadChildren: () =>
-          import(
-            './modules/products/product-detail/product-detail.module'
-          ).then((m) => m.ProductDetailModule),
-      },
     ],
   },
 ];

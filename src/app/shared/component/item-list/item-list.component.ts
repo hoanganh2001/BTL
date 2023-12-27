@@ -87,7 +87,7 @@ export class ItemListComponent implements OnInit {
     });
   }
 
-  redirectToDetail(id: any) {
-    this._router.navigateByUrl(this._router.url + '/detail/' + id);
+  redirectToDetail(id: number) {
+    this._router.navigateByUrl(this.RouterConfig.PRODUCT_DETAIL + id);
   }
 }
