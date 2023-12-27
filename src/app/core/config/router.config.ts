@@ -2,6 +2,7 @@ export default class RouterConfig {
   public static HOME = '/';
 
   public static PRODUCT_CATEGORY = this.HOME + 'products';
+  public static PRODUCT_DETAIL = this.PRODUCT_CATEGORY + '/detail/';
   public static BRANDS = this.HOME + 'brands';
   public static NEWS = this.HOME + 'news';
   public static PROMOTION = this.HOME + 'promotion';

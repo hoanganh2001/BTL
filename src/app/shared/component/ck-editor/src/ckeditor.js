@@ -7,7 +7,6 @@ import { ClassicEditor } from '@ckeditor/ckeditor5-editor-classic';
 
 import { UploadAdapter } from '@ckeditor/ckeditor5-adapter-ckfinder';
 import { Alignment } from '@ckeditor/ckeditor5-alignment';
-import { Autoformat } from '@ckeditor/ckeditor5-autoformat';
 import { Bold, Italic, Underline } from '@ckeditor/ckeditor5-basic-styles';
 import { CloudServices } from '@ckeditor/ckeditor5-cloud-services';
 import { Essentials } from '@ckeditor/ckeditor5-essentials';
@@ -19,7 +18,6 @@ import {
   FontSize,
 } from '@ckeditor/ckeditor5-font';
 import { Heading } from '@ckeditor/ckeditor5-heading';
-import { Highlight } from '@ckeditor/ckeditor5-highlight';
 import { HorizontalLine } from '@ckeditor/ckeditor5-horizontal-line';
 import { GeneralHtmlSupport } from '@ckeditor/ckeditor5-html-support';
 import {
@@ -33,10 +31,14 @@ import {
   ImageUpload,
 } from '@ckeditor/ckeditor5-image';
 import { Indent } from '@ckeditor/ckeditor5-indent';
-import { AutoLink, Link, LinkImage } from '@ckeditor/ckeditor5-link';
-import { DocumentList, DocumentListProperties } from '@ckeditor/ckeditor5-list';
+import { List, ListProperties } from '@ckeditor/ckeditor5-list';
 import { Paragraph } from '@ckeditor/ckeditor5-paragraph';
 import { PasteFromOffice } from '@ckeditor/ckeditor5-paste-from-office';
+import { SelectAll } from '@ckeditor/ckeditor5-select-all';
+import {
+  SpecialCharacters,
+  SpecialCharactersText,
+} from '@ckeditor/ckeditor5-special-characters';
 import { Style } from '@ckeditor/ckeditor5-style';
 import {
   Table,
@@ -46,7 +48,7 @@ import {
   TableProperties,
   TableToolbar,
 } from '@ckeditor/ckeditor5-table';
-import { TextTransformation } from '@ckeditor/ckeditor5-typing';
+import { Undo } from '@ckeditor/ckeditor5-undo';
 
 // You can read more about extending the build with additional plugins in the "Installing plugins" guide.
 // See https://ckeditor.com/docs/ckeditor5/latest/installation/plugins/installing-plugins.html for details.
@@ -55,12 +57,8 @@ class Editor extends ClassicEditor {}
 Editor.builtinPlugins = [
   Alignment,
   AutoImage,
-  AutoLink,
-  Autoformat,
   Bold,
   CloudServices,
-  DocumentList,
-  DocumentListProperties,
   Essentials,
   FindAndReplace,
   FontBackgroundColor,
@@ -69,7 +67,6 @@ Editor.builtinPlugins = [
   FontSize,
   GeneralHtmlSupport,
   Heading,
-  Highlight,
   HorizontalLine,
   Image,
   ImageCaption,
@@ -80,10 +77,13 @@ Editor.builtinPlugins = [
   ImageUpload,
   Indent,
   Italic,
-  Link,
-  LinkImage,
+  List,
+  ListProperties,
   Paragraph,
   PasteFromOffice,
+  SelectAll,
+  SpecialCharacters,
+  SpecialCharactersText,
   Style,
   Table,
   TableCaption,
@@ -91,17 +91,17 @@ Editor.builtinPlugins = [
   TableColumnResize,
   TableProperties,
   TableToolbar,
-  TextTransformation,
   Underline,
+  Undo,
   UploadAdapter,
 ];
 
-Editor.defaultConfig = {
+Editor.EditorConfig = {
+  plugins: [Table, TableToolbar],
+
   toolbar: {
     items: [
       'heading',
-      '|',
-      'style',
       '|',
       'bold',
       'italic',
@@ -114,25 +114,23 @@ Editor.defaultConfig = {
       '|',
       'alignment',
       'horizontalLine',
+      'bulletedList',
+      'numberedList',
+      '|',
       'outdent',
       'indent',
       '|',
-      'bulletedList',
-      'numberedList',
-      'link',
+      'insertTable',
       '|',
       'imageUpload',
       'imageInsert',
       '|',
-      'insertTable',
-      '|',
-      'importWord',
       'findAndReplace',
       'undo',
       'redo',
     ],
   },
-  language: 'en',
+  language: 'vi',
   ui: {
     poweredBy: {
       forceVisible: false,
