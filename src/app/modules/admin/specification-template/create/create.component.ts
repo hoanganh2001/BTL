@@ -11,8 +11,12 @@ import {
   validateFormControls,
 } from 'app/shared/constant';
 import * as dayjs from 'dayjs';
-import { ProductManagementSerivce } from '../products.service';
-import { imageDetailList, popUpData, typeData } from '../products.type';
+import { ProductManagementSerivce } from '../specification-template.service';
+import {
+  imageDetailList,
+  popUpData,
+  typeData,
+} from '../specification-template.type';
 import { ActivatedRoute } from '@angular/router';
 import { NotificationService } from 'app/core/service/notification';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';

@@ -20,6 +20,11 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { LightgalleryModule } from 'lightgallery/angular';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
+import { CategoryManagementComponent } from './category-management/category.component';
+import { NewsManagementComponent } from './news-management/news.component';
+import { OrderManagementComponent } from './order-management/order.component';
+import { SpecificationTemplateManagementComponent } from './specification-template/specification-template.component';
+import { UserManagementComponent } from './user-management/user-management.component';
 
 @NgModule({
   imports: [
@@ -46,6 +51,11 @@ import { MatDialogModule } from '@angular/material/dialog';
     ProductManagementComponent,
     UserProfileComponent,
     CreateProductComponent,
+    OrderManagementComponent,
+    CategoryManagementComponent,
+    NewsManagementComponent,
+    UserManagementComponent,
+    SpecificationTemplateManagementComponent,
   ],
 })
 export class AdminModule {}

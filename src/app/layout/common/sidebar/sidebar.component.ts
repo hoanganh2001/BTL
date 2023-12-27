@@ -10,9 +10,9 @@ export const ROUTES: RouteInfo[] = [
     class: '',
   },
   {
-    path: RouterConfig.ADMIN_PRODUCT,
+    path: RouterConfig.ADMIN_ORDER,
     title: 'Order Management',
-    icon: 'content_paste',
+    icon: 'shopping_cart',
     class: '',
   },
   {
@@ -22,28 +22,28 @@ export const ROUTES: RouteInfo[] = [
     class: '',
   },
   {
-    path: RouterConfig.ADMIN_PRODUCT,
+    path: RouterConfig.ADMIN_CATEGORY,
     title: 'Category Management',
-    icon: 'content_paste',
+    icon: 'category',
     class: '',
   },
   {
-    path: RouterConfig.ADMIN_PRODUCT,
+    path: RouterConfig.ADMIN_NEWS,
     title: 'New Management',
-    icon: 'content_paste',
+    icon: 'newspaper',
     class: '',
   },
 
   {
-    path: RouterConfig.ADMIN_PRODUCT,
+    path: RouterConfig.ADMIN_USER,
     title: 'User Management',
-    icon: 'content_paste',
+    icon: 'person',
     class: '',
   },
   {
-    path: RouterConfig.ADMIN_USER_PROFILE,
-    title: 'User Profile',
-    icon: 'person',
+    path: RouterConfig.ADMIN_PROFILE,
+    title: 'MY Profile',
+    icon: 'account_circle',
     class: '',
   },
 ];
