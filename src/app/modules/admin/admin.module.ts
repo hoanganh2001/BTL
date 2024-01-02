@@ -25,6 +25,8 @@ import { NewsManagementComponent } from './news-management/news.component';
 import { OrderManagementComponent } from './order-management/order.component';
 import { SpecificationTemplateManagementComponent } from './specification-template/specification-template.component';
 import { UserManagementComponent } from './user-management/user-management.component';
+import { MatTreeModule } from '@angular/material/tree';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   imports: [
@@ -45,6 +47,8 @@ import { UserManagementComponent } from './user-management/user-management.compo
     LightgalleryModule,
     MatTableModule,
     MatDialogModule,
+    MatTreeModule,
+    MatIconModule,
   ],
   declarations: [
     DashboardComponent,

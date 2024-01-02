@@ -6,58 +6,12 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class ProductManagementSerivce {
+export class CategoryManagementSerivce {
   constructor(private _httpClient: HttpClient) {}
 
-  getProductsOnSearch(body: any): Observable<any> {
-    return this._httpClient.get(`${environment.endpoint}/admin/products`, {
+  getCategories(body: any): Observable<any> {
+    return this._httpClient.get(`${environment.endpoint}/admin/categories`, {
       params: body,
     });
-  }
-
-  getProductDetail(id: number): Observable<any> {
-    return this._httpClient
-      .get(`${environment.endpoint}/admin/product/` + id)
-      .pipe();
-  }
-
-  deleteProduct(id: number): Observable<any> {
-    return this._httpClient.delete(
-      `${environment.endpoint}/admin/product/` + id,
-    );
-  }
-
-  createProduct(body): Observable<any> {
-    return this._httpClient.post(`${environment.endpoint}/admin/product`, body);
-  }
-
-  editProduct(body, id: number): Observable<any> {
-    return this._httpClient.put(
-      `${environment.endpoint}/admin/product/` + id,
-      body,
-    );
-  }
-
-  uploadFile(id: number, formData: any, thumbnail: number): Observable<any> {
-    return this._httpClient.post(
-      `${environment.endpoint}/admin/product/${id}/images/${thumbnail}`,
-      formData,
-    );
-  }
-
-  uploadThumbnailWithId(id: number, thumbnail: number): Observable<any> {
-    return this._httpClient.put(
-      `${environment.endpoint}/admin/product/${id}/thumbnail/${thumbnail}`,
-      {},
-    );
-  }
-
-  delFile(body, id: number): Observable<any> {
-    return this._httpClient.delete(
-      `${environment.endpoint}/admin/product/${id}/images`,
-      {
-        body: body,
-      },
-    );
   }
 }

@@ -5,17 +5,12 @@ import { ProductService } from 'app/modules/products/products.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as customBuild from '../../../../shared/component/ck-editor/build/ckeditor';
 import lgZoom from 'lightgallery/plugins/zoom';
-import {
-  Constant,
-  getErrorText,
-  validateFormControls,
-} from 'app/shared/constant';
-import * as dayjs from 'dayjs';
-import { ProductManagementSerivce } from '../category.service';
-import { imageDetailList, popUpData, typeData } from '../category.type';
 import { ActivatedRoute } from '@angular/router';
 import { NotificationService } from 'app/core/service/notification';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CategoryManagementSerivce } from '../category.service';
+import { popUpData, typeData } from '../category.type';
+import { imageDetailList } from '../../product-management/products.type';
 
 @Component({
   selector: 'app-create',
@@ -51,7 +46,7 @@ export class CreateProductComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data: popUpData,
     private _brandService: BrandService,
     private _productService: ProductService,
-    private _productManagementService: ProductManagementSerivce,
+    private _productManagementService: CategoryManagementSerivce,
     private _formBuilder: FormBuilder,
     private _activeRoute: ActivatedRoute,
     private _notiService: NotificationService,
@@ -93,12 +88,6 @@ export class CreateProductComponent implements OnInit {
   ngOnInit() {
     this.featureField.disable();
     this.typeField.disable();
-    if (this.isEdit) {
-      this.getProductDetail(this.productID);
-    } else if (this.isDetail) {
-      this.createProductForm.disable();
-      this.getProductDetail(this.productID);
-    }
     this.getListBrand();
     this.getCategoryList();
     this.categoryField.valueChanges.subscribe((value) => {
@@ -205,156 +194,6 @@ export class CreateProductComponent implements OnInit {
         this.featureField.enable();
       }
     });
-  }
-
-  getProductDetail(id: number) {
-    this._productManagementService
-      .getProductDetail(id)
-      .pipe(map((res) => res.data))
-      .subscribe((res) => {
-        this.nameField?.setValue(res.name);
-        this.priceField?.setValue(res.price || 0);
-        this.quantityField?.setValue(res.quantity || 0);
-        this.discountField?.setValue(res.discount || 0);
-        this.brandField?.setValue(res.brand_id);
-        this.categoryField?.setValue(res.category_id);
-        this.specificationField?.setValue(res.specification || null);
-        this.descriptionField?.setValue(res.description || null);
-        this.typeField?.setValue(res.type_id || null);
-        this.featureField?.setValue(res.feature_id || null);
-        if (res.file_id) {
-          res.file_id?.forEach((t) => {
-            this.imageInfos.push({
-              id: t[0],
-              url: Constant.IMG_DIR.GOOGLE_DRIVE + t[1],
-              isThumbnail: res.thumbnail === t[0],
-            });
-          });
-        }
-        if (this.type === 'detail') {
-          this.thumbnailImg = this.imageInfos.find((t) => t.isThumbnail);
-        }
-        this.fileUploaded = structuredClone(this.imageInfos);
-      });
-  }
-
-  async createProduct() {
-    if (this.isClicked) {
-      return;
-    }
-    // this.isClicked = true;
-
-    let formValidate = {
-      isValidated: true,
-      errors: [],
-    };
-
-    this.createProductForm.markAllAsTouched();
-
-    const validateResult = validateFormControls(
-      this.createProductForm,
-      formValidate,
-    );
-
-    if (!validateResult.isValidated) {
-      this._notiService.showError(getErrorText(validateResult.errors[0]));
-      this.isClicked = false;
-      return;
-    }
-
-    const model = this.createProductForm.getRawValue();
-    const createProductBody = {
-      detail: {
-        name: model.name,
-        price: model.price,
-        discount: model.discount,
-        quantity: model.quantity,
-        create_date: dayjs().toJSON(),
-        brand_id: model.brand,
-        specification: model.specification,
-        description: model.description,
-      },
-      type: {
-        category: model.category,
-        type: model.type,
-        feature: model.feature,
-      },
-    };
-
-    if (this.isEdit) {
-      this._productManagementService
-        .editProduct(createProductBody, this.productID)
-        .subscribe((res) => {
-          this.isClicked = false;
-          const fileDel = this.fileUploaded.filter((t) =>
-            this.imageInfos.every((d) => d.id !== t.id),
-          );
-          if (fileDel?.length > 0) {
-            const delFileBody = {
-              ids: fileDel.map((t) => t.id),
-            };
-            this._productManagementService
-              .delFile(delFileBody, this.productID)
-              .subscribe();
-          }
-          if (this.selectedFiles.length) {
-            const formData = new FormData();
-            this.selectedFiles.forEach((file, i) => {
-              formData.append('ufile', file);
-            });
-            const thumbnailItem = this.imageInfos.find((t) => t.isThumbnail)
-              ? this.imageInfos.find((t) => t.isThumbnail)
-              : this.imageInfos[0];
-            if (thumbnailItem.isNew) {
-              const thumbnailIndex = this.selectedFiles.findIndex(
-                (t) => t.name === thumbnailItem.name,
-              );
-
-              this._productManagementService
-                .uploadFile(this.productID, formData, thumbnailIndex)
-                .subscribe((res) => {
-                  this._notiService.showSuccess(res.message);
-                });
-            } else {
-              this._productManagementService
-                .uploadThumbnailWithId(this.productID, thumbnailItem.id)
-                .subscribe((res) => {
-                  this._notiService.showSuccess(res.message);
-                });
-            }
-          } else {
-            const thumbnailItem = this.imageInfos.find((t) => t.isThumbnail)
-              ? this.imageInfos.find((t) => t.isThumbnail)
-              : this.imageInfos[0];
-            this._productManagementService
-              .uploadThumbnailWithId(this.productID, thumbnailItem.id)
-              .subscribe((res) => {
-                this._notiService.showSuccess(res.message);
-              });
-          }
-        });
-    } else {
-      this._productManagementService
-        .createProduct(createProductBody)
-        .subscribe((res) => {
-          this.isClicked = false;
-          if (this.selectedFiles.length) {
-            const formData = new FormData();
-            const thumbnailIndex =
-              this.imageInfos.findIndex((t) => t.isThumbnail) >= 0
-                ? this.imageInfos.findIndex((t) => t.isThumbnail)
-                : 0;
-            this.selectedFiles.forEach((file, i) => {
-              formData.append('ufile', file);
-            });
-            this._productManagementService
-              .uploadFile(res.product_id, formData, thumbnailIndex)
-              .subscribe((res) => {
-                this._notiService.showSuccess(res.message);
-              });
-          }
-        });
-    }
   }
 
   get nameField() {

@@ -17,6 +17,23 @@ export interface categoryResponse {
   data: { id: number; name: string }[];
 }
 
+export interface TreeNode {
+  id: number;
+  name: string;
+  children?: TreeNode[];
+}
+
+export interface popUpData {
+  type: string;
+  product_id?: number;
+}
+
+export interface FlatNode {
+  expandable: boolean;
+  name: string;
+  level: number;
+}
+
 export interface typeData {
   id: number;
   name: string;
@@ -26,12 +43,4 @@ export interface typeData {
 export interface popUpData {
   type: string;
   product_id?: number;
-}
-
-export interface imageDetailList {
-  id?: number;
-  name?: string;
-  url: string | ArrayBuffer;
-  isThumbnail?: boolean;
-  isNew?: boolean;
 }

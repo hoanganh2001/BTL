@@ -1,19 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductManagementSerivce } from './category.service';
+import { CategoryManagementSerivce } from './category.service';
 import { paginatorData } from 'app/shared/component/paginator/paginator.types';
 import { debounceTime, map } from 'rxjs';
-import { productManagementResponseData } from './category.type';
 import { SortHeader } from '../admin.types';
 import { FormControl } from '@angular/forms';
 import RouterConfig from 'app/core/config/router.config';
 import { Params, Router } from '@angular/router';
-import { Constant } from 'app/shared/constant';
 import {
   MatDialogRef,
   MatDialogConfig,
   MatDialog,
 } from '@angular/material/dialog';
 import { CreateProductComponent } from './create/create.component';
+import { FlatNode, TreeNode } from './category.type';
+import { FlatTreeControl } from '@angular/cdk/tree';
+import {
+  MatTreeFlattener,
+  MatTreeFlatDataSource,
+} from '@angular/material/tree';
 
 @Component({
   selector: 'app-category',
@@ -27,7 +31,7 @@ export class CategoryManagementComponent implements OnInit {
   readonly RouteConfig = RouterConfig;
 
   constructor(
-    private _productManagementService: ProductManagementSerivce,
+    private _categoryManagementService: CategoryManagementSerivce,
     private _router: Router,
     public _dialog: MatDialog,
   ) {}
@@ -37,18 +41,42 @@ export class CategoryManagementComponent implements OnInit {
   };
   paginator: paginatorData = {
     length: 0,
-    limit: 20,
+    limit: 10,
     offset: 0,
     page: 0,
   };
   productSearchBody: any = {};
-  productList: any[];
+  categoryList: any[];
+
+  //tree  constructor
+  private _transformer = (node: TreeNode, level: number) => {
+    return {
+      expandable: !!node.children && node.children.length > 0,
+      name: node.name,
+      level: level,
+    };
+  };
+
+  treeControl = new FlatTreeControl<FlatNode>(
+    (node) => node.level,
+    (node) => node.expandable,
+  );
+
+  treeFlattener = new MatTreeFlattener(
+    this._transformer,
+    (node) => node.level,
+    (node) => node.expandable,
+    (node) => node.children,
+  );
+
+  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  hasChild = (_: number, node: FlatNode) => node.expandable;
+
   ngOnInit() {
     this.productSearchBody = {
       limit: this.paginator.limit,
       offset: this.paginator.offset,
     };
-    this.getProductList(this.productSearchBody);
 
     this.searchControl.valueChanges
       .pipe(
@@ -62,47 +90,40 @@ export class CategoryManagementComponent implements OnInit {
             offset: 0,
             name: value,
           };
-          this.getProductList(this.productSearchBody);
         } else if (value === '' && !this.searchControl.pristine) {
           delete this.productSearchBody['name'];
-          this.getProductList(this.productSearchBody);
         }
       });
+    this.getCategoriesList(this.productSearchBody);
   }
 
-  getProductList(body: any) {
-    this._productManagementService
-      .getProductsOnSearch(body)
-      .pipe(
-        map((value: any) => {
-          value.data = value.data.map((res: productManagementResponseData) => ({
-            id: res.id,
-            price: res.price,
-            create_date: res.create_date,
-            discount: res.discount,
-            image: Constant.IMG_DIR.SHOP + res.thumbnail_file,
-            name: res.name,
-            view: res.view_number,
-            gift: res.gift_id,
-            category_id: res.category_id,
-            category_name: res.category_name,
-          }));
-          return value;
-        }),
-      )
-      .subscribe({
-        next: (res) => {
-          if (res) {
-            this.productList = res.data;
-            this.paginator.length = res.meta.length;
-            this.paginator.offset = res.meta.offset ? res.meta.offset : 0;
-            this.paginator.limit = res.meta.limit;
-            this.paginator.page =
-              res.meta.offset === 0 ? 0 : res.meta.offset / res.meta.limit;
-          }
-        },
-      });
+  getCategoriesList(body: any) {
+    this._categoryManagementService.getCategories(body).subscribe({
+      next: (res) => {
+        this.categoryList = res.data.map((item) => ({
+          id: item.id,
+          name: item.name,
+          children: [
+            {
+              name: 'Type',
+              children: item.type,
+            },
+            {
+              name: 'Feature',
+              children: item.feature,
+            },
+          ],
+        }));
+        this.dataSource.data = this.categoryList;
+        this.paginator.length = res.meta.length;
+        this.paginator.offset = res.meta.offset ? res.meta.offset : 0;
+        this.paginator.limit = res.meta.limit;
+        this.paginator.page =
+          res.meta.offset === 0 ? 0 : res.meta.offset / res.meta.limit;
+      },
+    });
   }
+
   changePage(pagging) {
     // update payload body
     this.productSearchBody = {
@@ -111,7 +132,6 @@ export class CategoryManagementComponent implements OnInit {
       offset: pagging.pageIndex * pagging.pageSize,
     };
     // call api get list form
-    this.getProductList(this.productSearchBody);
   }
 
   handleSortItem(data) {
@@ -122,15 +142,6 @@ export class CategoryManagementComponent implements OnInit {
       sort_by: data.direction,
       order_by: data.active,
     };
-
-    this.getProductList(this.productSearchBody);
-  }
-
-  deleteProduct(e, id: number) {
-    e.stopPropagation();
-    this._productManagementService.deleteProduct(id).subscribe((res) => {
-      this.getProductList(this.productSearchBody);
-    });
   }
 
   openProductPopup(type: string, product_id?: number, e?) {
