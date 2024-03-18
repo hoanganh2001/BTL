@@ -72,7 +72,7 @@ export class OrderManagementComponent implements OnInit {
 
   getProductList(body: any) {
     this._productManagementService
-      .getProductsOnSearch(body)
+      .getOrderOnSearch(body)
       .pipe(
         map((value: any) => {
           value.data = value.data.map((res: productManagementResponseData) => ({

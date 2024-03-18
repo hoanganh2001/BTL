@@ -9,8 +9,8 @@ import { Observable } from 'rxjs';
 export class ProductManagementSerivce {
   constructor(private _httpClient: HttpClient) {}
 
-  getProductsOnSearch(body: any): Observable<any> {
-    return this._httpClient.get(`${environment.endpoint}/admin/products`, {
+  getOrderOnSearch(body: any): Observable<any> {
+    return this._httpClient.get(`${environment.endpoint}/admin/orders`, {
       params: body,
     });
   }
