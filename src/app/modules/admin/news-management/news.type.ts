@@ -1,20 +1,14 @@
-export interface productManagementResponseData {
+export interface NewsList {
   id: number;
   name: string;
-  price: number;
+  content: string;
   create_date: string;
-  discount: number | null;
-  quantity: number | null;
-  thumbnail: number;
-  thumbnail_file: string;
+  update_date: string;
   view_number: number | null;
-  gift_id: number;
-  favorite: boolean;
-  category_id: number;
-  category_name: string;
-}
-export interface categoryResponse {
-  data: { id: number; name: string }[];
+  thumbnail_id: number;
+  thumbnail_url: string;
+  author_id: number;
+  author: string;
 }
 
 export interface typeData {
@@ -25,13 +19,11 @@ export interface typeData {
 
 export interface popUpData {
   type: string;
-  product_id?: number;
+  item?: NewsList;
 }
 
 export interface imageDetailList {
   id?: number;
   name?: string;
   url: string | ArrayBuffer;
-  isThumbnail?: boolean;
-  isNew?: boolean;
 }

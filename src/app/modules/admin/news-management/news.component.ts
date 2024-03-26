@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductManagementSerivce } from './news.service';
 import { paginatorData } from 'app/shared/component/paginator/paginator.types';
 import { debounceTime, map } from 'rxjs';
-import { productManagementResponseData } from './news.type';
 import { SortHeader } from '../admin.types';
 import { FormControl } from '@angular/forms';
 import RouterConfig from 'app/core/config/router.config';
@@ -13,7 +11,10 @@ import {
   MatDialogConfig,
   MatDialog,
 } from '@angular/material/dialog';
-import { CreateProductComponent } from './create/create.component';
+import { CreateNewComponent } from './create/create.component';
+import { NewsList } from './news.type';
+import { BaseResponse } from 'app/core/models/base-response.model';
+import { NewManagementSerivce } from './news.service';
 
 @Component({
   selector: 'app-news',
@@ -22,12 +23,12 @@ import { CreateProductComponent } from './create/create.component';
 })
 export class NewsManagementComponent implements OnInit {
   searchControl = new FormControl('');
-  confirmDialogRef: MatDialogRef<CreateProductComponent>;
+  confirmDialogRef: MatDialogRef<CreateNewComponent>;
 
   readonly RouteConfig = RouterConfig;
 
   constructor(
-    private _productManagementService: ProductManagementSerivce,
+    private _newManagementService: NewManagementSerivce,
     private _router: Router,
     public _dialog: MatDialog,
   ) {}
@@ -41,14 +42,14 @@ export class NewsManagementComponent implements OnInit {
     offset: 0,
     page: 0,
   };
-  productSearchBody: any = {};
+  newSearchBody: any = {};
   productList: any[];
   ngOnInit() {
-    this.productSearchBody = {
+    this.newSearchBody = {
       limit: this.paginator.limit,
       offset: this.paginator.offset,
     };
-    this.getProductList(this.productSearchBody);
+    this.getNewList(this.newSearchBody);
 
     this.searchControl.valueChanges
       .pipe(
@@ -57,41 +58,44 @@ export class NewsManagementComponent implements OnInit {
       )
       .subscribe((value) => {
         if (value) {
-          this.productSearchBody = {
-            ...this.productSearchBody,
+          this.newSearchBody = {
+            ...this.newSearchBody,
             offset: 0,
             name: value,
           };
-          this.getProductList(this.productSearchBody);
+          this.getNewList(this.newSearchBody);
         } else if (value === '' && !this.searchControl.pristine) {
-          delete this.productSearchBody['name'];
-          this.getProductList(this.productSearchBody);
+          delete this.newSearchBody['name'];
+          this.getNewList(this.newSearchBody);
         }
       });
   }
 
-  getProductList(body: any) {
-    this._productManagementService
-      .getProductsOnSearch(body)
+  getNewList(body: any) {
+    this._newManagementService
+      .getNewsOnSearch(body)
       .pipe(
-        map((value: any) => {
-          value.data = value.data.map((res: productManagementResponseData) => ({
+        map((value: BaseResponse<NewsList>) => {
+          value.data = value.data.map((res) => ({
             id: res.id,
-            price: res.price,
-            create_date: res.create_date,
-            discount: res.discount,
-            image: Constant.IMG_DIR.SHOP + res.thumbnail_file,
             name: res.name,
-            view: res.view_number,
-            gift: res.gift_id,
-            category_id: res.category_id,
-            category_name: res.category_name,
+            content: res.content,
+            create_date: res.create_date,
+            update_date: res.update_date,
+            view_number: res.view_number,
+            thumbnail_id: res.thumbnail_id,
+            thumbnail_url:
+              (res.thumbnail_url.includes('/')
+                ? Constant.IMG_DIR.SHOP
+                : Constant.IMG_DIR.GOOGLE_DRIVE) + res.thumbnail_url,
+            author_id: res.author_id,
+            author: res.author,
           }));
           return value;
         }),
       )
       .subscribe({
-        next: (res) => {
+        next: (res: BaseResponse<NewsList>) => {
           if (res) {
             this.productList = res.data;
             this.paginator.length = res.meta.length;
@@ -105,48 +109,47 @@ export class NewsManagementComponent implements OnInit {
   }
   changePage(pagging) {
     // update payload body
-    this.productSearchBody = {
-      ...this.productSearchBody,
+    this.newSearchBody = {
+      ...this.newSearchBody,
       limit: pagging.pageSize,
       offset: pagging.pageIndex * pagging.pageSize,
     };
     // call api get list form
-    this.getProductList(this.productSearchBody);
+    this.getNewList(this.newSearchBody);
   }
 
   handleSortItem(data) {
-    this.productSearchBody = {
-      ...this.productSearchBody,
+    this.newSearchBody = {
+      ...this.newSearchBody,
       limit: this.paginator.limit,
       offset: 0,
       sort_by: data.direction,
       order_by: data.active,
     };
 
-    this.getProductList(this.productSearchBody);
+    this.getNewList(this.newSearchBody);
   }
 
-  deleteProduct(e, id: number) {
+  deleteNew(e, id: number) {
     e.stopPropagation();
-    this._productManagementService.deleteProduct(id).subscribe((res) => {
-      this.getProductList(this.productSearchBody);
+    this._newManagementService.deleteNew(id).subscribe((res) => {
+      this.getNewList(this.newSearchBody);
     });
   }
 
-  openProductPopup(type: string, product_id?: number, e?) {
+  openProductPopup(type: string, newItem?: NewsList, e?) {
     if (type === 'edit') e.stopPropagation();
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
       type: type,
-      product_id: product_id,
+      item: newItem,
     };
     dialogConfig.width = '100%';
     dialogConfig.height = '80vh';
 
-    this.confirmDialogRef = this._dialog.open(
-      CreateProductComponent,
-      dialogConfig,
-    );
-    this.confirmDialogRef.afterClosed().subscribe((listID) => {});
+    this.confirmDialogRef = this._dialog.open(CreateNewComponent, dialogConfig);
+    this.confirmDialogRef.afterClosed().subscribe((isChange) => {
+      if (isChange) this.getNewList(this.newSearchBody);
+    });
   }
 }

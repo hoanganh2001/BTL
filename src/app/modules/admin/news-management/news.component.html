@@ -2,20 +2,12 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col d-flex">
-        <button
-          class="btn btn-success btn-add"
-          (click)="openProductPopup('create')"
-        >
+        <button class="btn btn-success btn-add" (click)="openProductPopup('create')">
           <i class="bi bi-plus"></i>
         </button>
         <div class="search-box">
           <button class="btn-search"><i class="bi bi-search"></i></button>
-          <input
-            type="search"
-            class="input-search"
-            placeholder="Type to Search..."
-            [formControl]="searchControl"
-          />
+          <input type="search" class="input-search" placeholder="Type to Search..." [formControl]="searchControl" />
         </div>
       </div>
     </div>
@@ -28,51 +20,39 @@
           </div>
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table table-hover" style="table-layout: fixed">
-                <thead
-                  class=""
-                  matSort
-                  (matSortChange)="handleSortItem($event)"
-                  matSortActive="{{ sort.active }}"
-                  matSortDirection="{{ sort.direction }}"
-                  matSortDisableClear
-                >
+              <table class="table table-hover">
+                <thead class="" matSort (matSortChange)="handleSortItem($event)" matSortActive="{{ sort.active }}"
+                  matSortDirection="{{ sort.direction }}" matSortDisableClear>
                   <tr>
-                    <th class="col-1">ID</th>
-                    <th class="col-1">Image</th>
-                    <th class="col" mat-sort-header="name">Name</th>
-                    <th class="col-2" mat-sort-header="price">Price</th>
-                    <th class="col-2" mat-sort-header="category_name">
-                      Category
+                    <th class="">#</th>
+                    <th class="">Image</th>
+                    <th class="" mat-sort-header="name">Name</th>
+                    <th class="" mat-sort-header="author">Author</th>
+                    <th class="" mat-sort-header="view_number">
+                      View
                     </th>
-                    <th class="col-2"></th>
+                    <th class="" mat-sort-header="create_date">Create Date</th>
+                    <th class="">Update Date</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>
-                  <ng-container *ngFor="let item of productList">
-                    <tr (click)="openProductPopup('detail', item.id)">
-                      <td>{{ item.id }}</td>
+                  <ng-container *ngFor="let item of productList; index as i">
+                    <tr (click)="openProductPopup('detail', item)">
+                      <td>{{ i + 1 }}</td>
                       <td>
-                        <img
-                          [src]="item.image"
-                          [alt]="item.name"
-                          class="product-image"
-                        />
+                        <img [src]="item.thumbnail_url" [alt]="item.name" class="product-image" />
                       </td>
-                      <td>{{ item.name }}</td>
-                      <td>{{ item.price | currencyFormat }}</td>
-                      <td>{{ item.category_name }}</td>
+                      <td class="truncate">{{ item.name }}</td>
+                      <td>{{ item.author }}</td>
+                      <td>{{ item.view_number || '---' }}</td>
+                      <td>{{ (item.create_date | dateFormat) || '---' }}</td>
+                      <td>{{ (item.update_date | dateFormat) || '---' }}</td>
                       <td>
-                        <button
-                          class="btn"
-                          (click)="deleteProduct($event, item.id)"
-                        >
+                        <button class="btn" (click)="deleteNew($event, item.id)">
                           <i class="bi bi-trash-fill"></i>
                         </button>
-                        <button
-                          class="btn"
-                          (click)="openProductPopup('edit', item.id, $event)"
-                        >
+                        <button class="btn" (click)="openProductPopup('edit', item, $event)">
                           <i class="bi bi-pencil-square"></i>
                         </button>
                       </td>
@@ -82,15 +62,9 @@
               </table>
             </div>
           </div>
-          <mat-paginator
-            class="paginator"
-            [length]="paginator.length"
-            [pageSize]="paginator.limit"
-            [pageIndex]="paginator.page"
-            [pageSizeOptions]="[10, 20, 50, 100]"
-            (page)="changePage($event)"
-            [showFirstLastButtons]="true"
-          ></mat-paginator>
+          <mat-paginator class="paginator" [length]="paginator.length" [pageSize]="paginator.limit"
+            [pageIndex]="paginator.page" [pageSizeOptions]="[10, 20, 50, 100]" (page)="changePage($event)"
+            [showFirstLastButtons]="true"></mat-paginator>
         </div>
       </div>
     </div>

@@ -2,62 +2,40 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'enviroment/enviroment';
 import { Observable } from 'rxjs';
+import { NewsList } from './news.type';
+import { BaseResponse } from 'app/core/models/base-response.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProductManagementSerivce {
+export class NewManagementSerivce {
   constructor(private _httpClient: HttpClient) {}
 
-  getProductsOnSearch(body: any): Observable<any> {
-    return this._httpClient.get(`${environment.endpoint}/admin/products`, {
+  getNewsOnSearch(body: any): Observable<BaseResponse<NewsList>> {
+    return this._httpClient.get(`${environment.endpoint}/admin/news`, {
       params: body,
     });
   }
 
-  getProductDetail(id: number): Observable<any> {
-    return this._httpClient
-      .get(`${environment.endpoint}/admin/product/` + id)
-      .pipe();
+  deleteNew(id: number): Observable<any> {
+    return this._httpClient.delete(`${environment.endpoint}/admin/new/` + id);
   }
 
-  deleteProduct(id: number): Observable<any> {
-    return this._httpClient.delete(
-      `${environment.endpoint}/admin/product/` + id,
-    );
+  createNew(body): Observable<any> {
+    return this._httpClient.post(`${environment.endpoint}/admin/new`, body);
   }
 
-  createProduct(body): Observable<any> {
-    return this._httpClient.post(`${environment.endpoint}/admin/product`, body);
-  }
-
-  editProduct(body, id: number): Observable<any> {
+  editNew(body, id: number): Observable<any> {
     return this._httpClient.put(
-      `${environment.endpoint}/admin/product/` + id,
+      `${environment.endpoint}/admin/new/` + id,
       body,
     );
   }
 
-  uploadFile(id: number, formData: any, thumbnail: number): Observable<any> {
+  uploadFile(id: number, formData: any): Observable<any> {
     return this._httpClient.post(
-      `${environment.endpoint}/admin/product/${id}/images/${thumbnail}`,
+      `${environment.endpoint}/admin/new/${id}/images`,
       formData,
-    );
-  }
-
-  uploadThumbnailWithId(id: number, thumbnail: number): Observable<any> {
-    return this._httpClient.put(
-      `${environment.endpoint}/admin/product/${id}/thumbnail/${thumbnail}`,
-      {},
-    );
-  }
-
-  delFile(body, id: number): Observable<any> {
-    return this._httpClient.delete(
-      `${environment.endpoint}/admin/product/${id}/images`,
-      {
-        body: body,
-      },
     );
   }
 }

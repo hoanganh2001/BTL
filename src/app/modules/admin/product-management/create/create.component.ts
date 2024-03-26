@@ -103,7 +103,9 @@ export class CreateProductComponent implements OnInit {
     this.getCategoryList();
     this.categoryField.valueChanges.subscribe((value) => {
       if (value) {
-        const template = this.categoryList.find((t) => (t.id = value)).template;
+        const template = this.categoryList?.find(
+          (t) => (t.id = value),
+        ).template;
         this.specificationField.setValue(template);
         this.getTypeAndFeature(+value);
       }
@@ -217,15 +219,16 @@ export class CreateProductComponent implements OnInit {
         this.quantityField?.setValue(res.quantity || 0);
         this.discountField?.setValue(res.discount || 0);
         this.brandField?.setValue(res.brand_id);
-        this.categoryField?.setValue(res.category_id);
-        this.specificationField?.setValue(res.specification || null);
-        this.descriptionField?.setValue(res.description || null);
+        this.categoryField?.setValue(res.category_id || null);
+        this.specificationField?.setValue(res.specification || '');
+        this.descriptionField?.setValue(res.description || '');
         this.typeField?.setValue(res.type_id || null);
         this.featureField?.setValue(res.feature_id || null);
         if (res.file_id) {
           res.file_id?.forEach((t) => {
             this.imageInfos.push({
               id: t[0],
+              name: res.name,
               url: Constant.IMG_DIR.GOOGLE_DRIVE + t[1],
               isThumbnail: res.thumbnail === t[0],
             });
