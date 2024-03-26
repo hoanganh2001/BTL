@@ -37,6 +37,13 @@ export class Constant {
     LIST: 'list',
     CATEGORY: 'category',
   };
+
+  public static STATUS_COLOR_LIST = {
+    PENDING: '',
+    ONWAY: '#f07600',
+    SUCCESS: '#28A745',
+    DECLINE: '#DC3545',
+  };
 }
 export const ICON = {
   headphone: 'bi-headphones',

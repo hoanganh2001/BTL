@@ -1,19 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { ProductManagementSerivce } from './order.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { OrderManagementSerivce } from './order.service';
 import { paginatorData } from 'app/shared/component/paginator/paginator.types';
 import { debounceTime, map } from 'rxjs';
-import { productManagementResponseData } from './order.type';
+import { orderList } from './order.type';
 import { SortHeader } from '../admin.types';
 import { FormControl } from '@angular/forms';
 import RouterConfig from 'app/core/config/router.config';
-import { Params, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Constant } from 'app/shared/constant';
-import {
-  MatDialogRef,
-  MatDialogConfig,
-  MatDialog,
-} from '@angular/material/dialog';
-import { CreateProductComponent } from './create/create.component';
+import { MatAccordion } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-order',
@@ -22,14 +17,15 @@ import { CreateProductComponent } from './create/create.component';
 })
 export class OrderManagementComponent implements OnInit {
   searchControl = new FormControl('');
-  confirmDialogRef: MatDialogRef<CreateProductComponent>;
 
   readonly RouteConfig = RouterConfig;
+  readonly Constant = Constant;
+
+  @ViewChild(MatAccordion) accordion: MatAccordion;
 
   constructor(
-    private _productManagementService: ProductManagementSerivce,
+    private _orderManagementService: OrderManagementSerivce,
     private _router: Router,
-    public _dialog: MatDialog,
   ) {}
   sort: SortHeader = {
     active: '',
@@ -41,14 +37,14 @@ export class OrderManagementComponent implements OnInit {
     offset: 0,
     page: 0,
   };
-  productSearchBody: any = {};
-  productList: any[];
+  orderSearchBody: any = {};
+  orderList: orderList[];
   ngOnInit() {
-    this.productSearchBody = {
+    this.orderSearchBody = {
       limit: this.paginator.limit,
       offset: this.paginator.offset,
     };
-    this.getProductList(this.productSearchBody);
+    this.getOrderList(this.orderSearchBody);
 
     this.searchControl.valueChanges
       .pipe(
@@ -57,35 +53,43 @@ export class OrderManagementComponent implements OnInit {
       )
       .subscribe((value) => {
         if (value) {
-          this.productSearchBody = {
-            ...this.productSearchBody,
+          this.orderSearchBody = {
+            ...this.orderSearchBody,
             offset: 0,
             name: value,
           };
-          this.getProductList(this.productSearchBody);
+          this.getOrderList(this.orderSearchBody);
         } else if (value === '' && !this.searchControl.pristine) {
-          delete this.productSearchBody['name'];
-          this.getProductList(this.productSearchBody);
+          delete this.orderSearchBody['name'];
+          this.getOrderList(this.orderSearchBody);
         }
       });
   }
 
-  getProductList(body: any) {
-    this._productManagementService
+  getOrderList(body: any) {
+    this._orderManagementService
       .getOrderOnSearch(body)
       .pipe(
         map((value: any) => {
-          value.data = value.data.map((res: productManagementResponseData) => ({
+          value.data = value.data.map((res: orderList) => ({
             id: res.id,
-            price: res.price,
-            create_date: res.create_date,
-            discount: res.discount,
-            image: Constant.IMG_DIR.SHOP + res.thumbnail_file,
+            user_id: res.user_id,
             name: res.name,
-            view: res.view_number,
-            gift: res.gift_id,
-            category_id: res.category_id,
-            category_name: res.category_name,
+            address: res.address,
+            email: res.email,
+            phone_number: res.phone_number,
+            note: res.note,
+            coupon: res.coupon,
+            payment: res.payment,
+            create_date: res.create_date,
+            update_date: res.update_date,
+            status: res.status,
+            status_name: res.status_name,
+            product: res.product.map((t) => {
+              t.image = Constant.IMG_DIR.SHOP + t.image;
+              return t;
+            }),
+            isExpand: false,
           }));
           return value;
         }),
@@ -93,7 +97,7 @@ export class OrderManagementComponent implements OnInit {
       .subscribe({
         next: (res) => {
           if (res) {
-            this.productList = res.data;
+            this.orderList = res.data;
             this.paginator.length = res.meta.length;
             this.paginator.offset = res.meta.offset ? res.meta.offset : 0;
             this.paginator.limit = res.meta.limit;
@@ -105,48 +109,92 @@ export class OrderManagementComponent implements OnInit {
   }
   changePage(pagging) {
     // update payload body
-    this.productSearchBody = {
-      ...this.productSearchBody,
+    this.orderSearchBody = {
+      ...this.orderSearchBody,
       limit: pagging.pageSize,
       offset: pagging.pageIndex * pagging.pageSize,
     };
     // call api get list form
-    this.getProductList(this.productSearchBody);
+    this.getOrderList(this.orderSearchBody);
   }
 
   handleSortItem(data) {
-    this.productSearchBody = {
-      ...this.productSearchBody,
+    this.orderSearchBody = {
+      ...this.orderSearchBody,
       limit: this.paginator.limit,
       offset: 0,
       sort_by: data.direction,
       order_by: data.active,
     };
 
-    this.getProductList(this.productSearchBody);
+    this.getOrderList(this.orderSearchBody);
   }
 
   deleteProduct(e, id: number) {
     e.stopPropagation();
-    this._productManagementService.deleteProduct(id).subscribe((res) => {
-      this.getProductList(this.productSearchBody);
+    this._orderManagementService.deleteProduct(id).subscribe((res) => {
+      this.getOrderList(this.orderSearchBody);
     });
   }
 
-  openProductPopup(type: string, product_id?: number, e?) {
-    if (type === 'edit') e.stopPropagation();
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      type: type,
-      product_id: product_id,
-    };
-    dialogConfig.width = '100%';
-    dialogConfig.height = '80vh';
+  shippingOrder(id: number) {
+    this._orderManagementService.shippingOrder(id).subscribe({
+      next: (res) => {
+        this.getOrderList(this.orderSearchBody);
+      },
+      error: (err) => {},
+    });
+  }
+  successOrder(id: number) {
+    this._orderManagementService.successOrder(id).subscribe({
+      next: (res) => {
+        this.getOrderList(this.orderSearchBody);
+      },
+      error: (err) => {},
+    });
+  }
+  cancelOrder(id: number) {
+    this._orderManagementService.cancelOrder(id).subscribe({
+      next: (res) => {
+        this.getOrderList(this.orderSearchBody);
+      },
+      error: (err) => {},
+    });
+  }
 
-    this.confirmDialogRef = this._dialog.open(
-      CreateProductComponent,
-      dialogConfig,
-    );
-    this.confirmDialogRef.afterClosed().subscribe((listID) => {});
+  handleAction(type: string, id?: number) {
+    switch (type) {
+      case 'onway':
+        this.shippingOrder(id);
+        break;
+      case 'done':
+        this.successOrder(id);
+        break;
+      case 'cancel':
+        this.cancelOrder(id);
+        break;
+      default:
+        return;
+    }
+  }
+
+  toggleExpansion(id: number) {
+    this.orderList = this.orderList.map((i) => {
+      if (i.id === id) {
+        i.isExpand = !i.isExpand;
+      }
+      return i;
+    });
+  }
+
+  getDiscountPrice(cost: number, discount?: number): number {
+    return discount ? cost * (1 - discount / 100) : 1;
+  }
+
+  getTotalValue(id: number): number {
+    const list = this.orderList.find((t) => t.id === id).product;
+    return list.reduce((total, i) => {
+      return i.price * i.quantity * this.getDiscountPrice(i.price, i.discount);
+    }, 0);
   }
 }

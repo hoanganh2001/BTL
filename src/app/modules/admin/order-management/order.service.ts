@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import * as dayjs from 'dayjs';
 import { environment } from 'enviroment/enviroment';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProductManagementSerivce {
+export class OrderManagementSerivce {
   constructor(private _httpClient: HttpClient) {}
 
   getOrderOnSearch(body: any): Observable<any> {
@@ -15,49 +16,39 @@ export class ProductManagementSerivce {
     });
   }
 
-  getProductDetail(id: number): Observable<any> {
-    return this._httpClient
-      .get(`${environment.endpoint}/admin/product/` + id)
-      .pipe();
-  }
-
   deleteProduct(id: number): Observable<any> {
     return this._httpClient.delete(
       `${environment.endpoint}/admin/product/` + id,
     );
   }
 
-  createProduct(body): Observable<any> {
-    return this._httpClient.post(`${environment.endpoint}/admin/product`, body);
-  }
-
-  editProduct(body, id: number): Observable<any> {
+  shippingOrder(id: number): Observable<any> {
+    const params = {
+      date: dayjs().toJSON(),
+    };
     return this._httpClient.put(
-      `${environment.endpoint}/admin/product/` + id,
-      body,
+      `${environment.endpoint}/admin/order/${id}/onway`,
+      { params },
     );
   }
 
-  uploadFile(id: number, formData: any, thumbnail: number): Observable<any> {
-    return this._httpClient.post(
-      `${environment.endpoint}/admin/product/${id}/images/${thumbnail}`,
-      formData,
-    );
-  }
-
-  uploadThumbnailWithId(id: number, thumbnail: number): Observable<any> {
+  successOrder(id: number): Observable<any> {
+    const params = {
+      date: dayjs().toJSON(),
+    };
     return this._httpClient.put(
-      `${environment.endpoint}/admin/product/${id}/thumbnail/${thumbnail}`,
-      {},
+      `${environment.endpoint}/admin/order/${id}/success`,
+      { params },
     );
   }
 
-  delFile(body, id: number): Observable<any> {
-    return this._httpClient.delete(
-      `${environment.endpoint}/admin/product/${id}/images`,
-      {
-        body: body,
-      },
+  cancelOrder(id: number): Observable<any> {
+    const params = {
+      date: dayjs().toJSON(),
+    };
+    return this._httpClient.put(
+      `${environment.endpoint}/admin/order/${id}/cancel`,
+      { params },
     );
   }
 }

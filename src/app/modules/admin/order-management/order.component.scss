@@ -14,12 +14,15 @@
 }
 
 .btn {
-  font-size: 18px;
-  width: 48px;
-  height: 48px;
+  font-size: 16px;
+  width: 40px;
+  height: 40px;
   padding: 0;
   margin: 0 6px;
   border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn-add {
@@ -27,6 +30,28 @@
   width: 50px;
   height: 50px;
   margin-right: 8px;
+}
+
+.btn-delete,
+.btn-delete:hover {
+  background: #f00;
+}
+
+.btn-onway,
+.btn-onway:hover {
+  background: #3cb371;
+}
+
+.btn-done,
+.btn-done:hover {
+  background: #0196fa;
+}
+
+.btn:hover {
+  opacity: 0.6;
+}
+
+.btn-cancel {
 }
 
 .search-box {
@@ -86,4 +111,49 @@
   background-color: transparent;
   border-bottom: 1px solid black;
   transition: all 500ms cubic-bezier(0, 0.11, 0.35, 2);
+}
+
+.chips ::ng-deep {
+  text-transform: capitalize;
+
+  .mdc-evolution-chip__text-label {
+    color: white !important;
+  }
+}
+
+.product-container {
+  padding-top: 8px;
+  padding-bottom: 8px;
+
+  .product-item,
+  .product-header {
+    display: flex;
+    align-items: center;
+  }
+
+  .product-header {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .product-total {
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+
+    span {
+      width: 20%;
+      text-align: right;
+    }
+  }
+}
+
+.expand-icon {
+  display: inline-block;
+  transition: all 0.2s ease-out;
+  &.active {
+    transform: rotate(90deg);
+  }
 }

@@ -27,6 +27,9 @@ import { SpecificationTemplateManagementComponent } from './specification-templa
 import { UserManagementComponent } from './user-management/user-management.component';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { CreateNewComponent } from './news-management/create/create.component';
 
 @NgModule({
   imports: [
@@ -49,6 +52,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatDialogModule,
     MatTreeModule,
     MatIconModule,
+    MatChipsModule,
+    MatExpansionModule,
   ],
   declarations: [
     DashboardComponent,
@@ -60,6 +65,7 @@ import { MatIconModule } from '@angular/material/icon';
     NewsManagementComponent,
     UserManagementComponent,
     SpecificationTemplateManagementComponent,
+    CreateNewComponent,
   ],
 })
 export class AdminModule {}

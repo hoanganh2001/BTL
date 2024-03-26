@@ -1,37 +1,43 @@
-export interface productManagementResponseData {
+export interface orderManagementResponseData {
   id: number;
+  user_id: number;
   name: string;
-  price: number;
+  address: string;
+  email: string;
+  phone_number: string;
+  note?: string;
+  payment: string;
+  coupon?: string;
   create_date: string;
-  discount: number | null;
-  quantity: number | null;
-  thumbnail: number;
-  thumbnail_file: string;
-  view_number: number | null;
-  gift_id: number;
-  favorite: boolean;
-  category_id: number;
-  category_name: string;
-}
-export interface categoryResponse {
-  data: { id: number; name: string }[];
+  status: number;
+  status_name: string;
+  update_date?: string;
+  product: productDetail[];
 }
 
-export interface typeData {
+export interface orderList {
+  id: number;
+  user_id: number;
+  name: string;
+  address: string;
+  email: string;
+  phone_number: string;
+  note?: string;
+  payment: string;
+  coupon?: string;
+  create_date: string;
+  status: number;
+  status_name: string;
+  update_date?: string;
+  product: productDetail[];
+  isExpand: boolean;
+}
+
+export interface productDetail {
   id: number;
   name: string;
-  template?: string;
-}
-
-export interface popUpData {
-  type: string;
-  product_id?: number;
-}
-
-export interface imageDetailList {
-  id?: number;
-  name?: string;
-  url: string | ArrayBuffer;
-  isThumbnail?: boolean;
-  isNew?: boolean;
+  image: number | string;
+  discount?: number;
+  price?: number;
+  quantity: number;
 }
