@@ -55,7 +55,7 @@ export class CategoryComponent implements OnInit {
             price: res.price,
             create_date: res.create_date,
             discount: res.discount,
-            image: res.image,
+            image: res.thumbnail_url,
             name: res.name,
             view: res.view_number,
             gift: res.gift_id,

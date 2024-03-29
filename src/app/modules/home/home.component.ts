@@ -133,42 +133,42 @@ export class HomeComponent implements OnInit {
       header: 'Sản phẩm được xem nhiều nhất tháng',
       data: [
         {
-          img: 'https://3kshop.vn/wp-content/uploads/fly-images/51698/fiio-ff1-3-450x450-c.jpeg',
+          img: '51698/fiio-ff1-3-450x450-c.jpeg',
           name: 'FiiO FF1',
           view: 452,
         },
         {
-          img: 'https://3kshop.vn/wp-content/uploads/fly-images/31707/sennheiser-ie-100-pro-clear-1-450x450-c.jpg',
+          img: '31707/sennheiser-ie-100-pro-clear-1-450x450-c.jpg',
           name: 'Sennheiser IE 100 PRO',
           view: 210,
         },
         {
-          img: 'https://3kshop.vn/wp-content/uploads/fly-images/52379/Screen-Shot-2023-10-04-at-17.06.00-450x450-c.png',
+          img: '52379/Screen-Shot-2023-10-04-at-17.06.00-450x450-c.png',
           name: 'ddHiFi TC01C',
           view: 197,
         },
         {
-          img: 'https://3kshop.vn/wp-content/uploads/fly-images/46341/3kshop-audeze-maxwell-3-1-450x450-c.png',
+          img: '46341/3kshop-audeze-maxwell-3-1-450x450-c.png',
           name: 'Audeze Maxwell (PlayStation/PC)',
           view: 187,
         },
         {
-          img: 'https://3kshop.vn/wp-content/uploads/fly-images/10042/loa-bookshelf-audioengine-a2-red-3kshop-2-450x450-c.jpg',
+          img: '10042/loa-bookshelf-audioengine-a2-red-3kshop-2-450x450-c.jpg',
           name: 'Audioengine A2+',
           view: 181,
         },
         {
-          img: 'https://3kshop.vn/wp-content/uploads/fly-images/42534/DSC9263-1-450x450-c.jpg',
+          img: '42534/DSC9263-1-450x450-c.jpg',
           name: 'iFi Go Bar',
           view: 180,
         },
         {
-          img: 'https://3kshop.vn/wp-content/uploads/fly-images/48433/spinfit-superfine-2-450x450-c.jpeg',
+          img: '48433/spinfit-superfine-2-450x450-c.jpeg',
           name: 'SpinFit SuperFine',
           view: 173,
         },
         {
-          img: 'https://3kshop.vn/wp-content/uploads/fly-images/52429/ddhifi-tc35-pro-mountain-2-450x450-c.jpg',
+          img: '52429/ddhifi-tc35-pro-mountain-2-450x450-c.jpg',
           name: 'HiFi TC35 Pro Mountain 2 USB-C',
           view: 158,
         },
@@ -188,28 +188,28 @@ export class HomeComponent implements OnInit {
     type: Constant.TYPE_LIST.NEW,
     data: [
       {
-        img: 'https://3kshop.vn/wp-content/uploads/fly-images/52539/3kshop-ferrum-wandla-hypsosDSC-7459-500x309-c.jpg',
+        img: '52539/3kshop-ferrum-wandla-hypsosDSC-7459-500x309-c.jpg',
         title:
           'FERRUM WANDLA – DAC VÀ PREAMPLIFIER TUYỆT VỜI CHO NGƯỜI CHƠI LOA ACTIVE',
         description:
           'Gần Đây Loa Chính Mình Dùng Để Nghe Nhạc Và Xem Phim Là Neumann KH',
       },
       {
-        img: 'https://3kshop.vn/wp-content/uploads/fly-images/52524/3kshop-fiio-fx15-tai-nghe-iem-in-ear_13-500x309-c.jpg',
+        img: '52524/3kshop-fiio-fx15-tai-nghe-iem-in-ear_13-500x309-c.jpg',
         title:
           'TRÊN TAY TAI NGHE FIIO FX15: THIẾT KẾ ÂM THANH TRIBRID, GIÁ ~20TR',
         description:
           'FX15 Là Tai Nghe Có Thiết Kế Tribrid Đầu Tiên Của FiiO, Ứng Dụng Ba Loại Driver Gồm: Một Dynamic, Một',
       },
       {
-        img: 'https://3kshop.vn/wp-content/uploads/fly-images/52520/3kshop-ifi-hip-dac-3_3-scaled-500x309-c.jpg',
+        img: '52520/3kshop-ifi-hip-dac-3_3-scaled-500x309-c.jpg',
         title:
           'IFI HIP DAC 3: MÀU MỚI, DÙNG USB-C, NÂNG CẤP MẠCH TẠO XUNG, CÓ IEMATCH, GIÁ $199',
         description:
           'Sau Thành Công Của Hip Dac 1 Và 2, Hip Dac 3 Được Ra Mắt Với Một',
       },
       {
-        img: 'https://3kshop.vn/wp-content/uploads/fly-images/52487/3kshop-shure-sm7db-audio-500x309-c.jpg',
+        img: '52487/3kshop-shure-sm7db-audio-500x309-c.jpg',
         title:
           'SHURE RA MẮT SM7DB: VOCAL MICROPHONE CHO NHU CẦU THU ÂM CA HÁT, LÀM PODCAST, CÓ TÍCH HỢP PREAMP',
         description:
@@ -277,7 +277,7 @@ export class HomeComponent implements OnInit {
     const body = {
       limit: 11,
       offset: 0,
-      sort_by: 'view_number',
+      order_by: 'view_number',
     };
     this._homeService.getItemsOnSearch(body).subscribe({
       next: (res) => {

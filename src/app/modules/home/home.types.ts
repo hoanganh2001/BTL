@@ -5,7 +5,7 @@ export interface productResponseData {
   create_date: string;
   discount: number | null;
   quantity: number | null;
-  image: string;
+  thumbnail_url: string;
   view_number: number | null;
   gift_id: number;
   favorite: boolean;

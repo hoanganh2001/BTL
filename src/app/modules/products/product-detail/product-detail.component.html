@@ -5,18 +5,14 @@
         <div class="col-2">
           <div class="list-image">
             <ng-container *ngFor="let item of listImage">
-              <button
-                class="image"
-                [ngClass]="item.active ? 'active' : ''"
-                (click)="updateImage(item.id)"
-              >
+              <button class="image" [ngClass]="item.active ? 'active' : ''" (click)="updateImage(item.id)">
                 <img [src]="item.src" alt="" class="p-2" />
               </button>
             </ng-container>
           </div>
         </div>
-        <div class="col-10">
-          <img [src]="selectedImage" alt="" />
+        <div class="col-10 ">
+          <img [src]="selectedImage" alt="" class="big-img" />
         </div>
       </div>
     </div>
@@ -28,18 +24,16 @@
         <span class="brand">
           Thương hiệu<a href="" class="ms-1 brand-name">{{
             productDetail.brand_name
-          }}</a>
+            }}</a>
         </span>
       </div>
       <div class="row mb-3">
         <span class="cost bold-text">{{
           productDetail.price | currencyFormat
-        }}</span>
+          }}</span>
       </div>
       <div class="row mb-3">
-        <span class="guarente"
-          ><i class="bi bi-shield me-2"></i>Bảo hành 12 tháng</span
-        >
+        <span class="guarente"><i class="bi bi-shield me-2"></i>Bảo hành 12 tháng</span>
       </div>
       <div class="row mb-3">
         <div class="col-12 d-flex">
@@ -70,24 +64,16 @@
   </div>
   <div class="row detail-product">
     <div class="col-10">
-      <div
-        class="col-12"
-        [ngStyle]="{
+      <div class="col-12" [ngStyle]="{
           'max-height': showMore ? '' : '100vh',
           overflow: showMore ? 'unset' : 'hidden'
-        }"
-        id="{{ detail[0].id }}"
-        #description
-      >
+        }" id="{{ detail[0].id }}" #description>
         <h4 class="sub-title">{{ detail[0].name }}</h4>
         <div [innerHTML]="safeHTML(detail[0].content)"></div>
       </div>
       <div class="col-12">
-        <button
-          class="btn btn-showmore btn--animation-hover-in"
-          (click)="showmore()"
-          [ngClass]="hideShowMoreBtn(description) ? 'd-none' : ''"
-        >
+        <button class="btn btn-showmore btn--animation-hover-in" (click)="showmore()"
+          [ngClass]="hideShowMoreBtn(description) ? 'd-none' : ''">
           Xem thêm
         </button>
       </div>
@@ -105,10 +91,7 @@
             </button>
           </li>
           <li [ngClass]="{ active: detail[1].active }">
-            <button
-              class="btn"
-              (click)="scrollTo(specifications, detail[1].id)"
-            >
+            <button class="btn" (click)="scrollTo(specifications, detail[1].id)">
               {{ detail[1].name }}
             </button>
           </li>

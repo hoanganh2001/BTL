@@ -8,6 +8,7 @@ import {
   paginatorParams,
 } from './news.types';
 import { BaseResponse } from 'app/core/models/base-response.model';
+import { formatCKContent, getImgUrl } from 'app/shared/constant';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,7 @@ export class NewsService {
           return res.data.map((item: NewListResponseData) => ({
             id: item.id,
             create_date: item.create_date,
-            img: item.image,
+            img: getImgUrl(item.image),
             name: item.name,
             view: item.view,
             author: item.author,
@@ -46,7 +47,7 @@ export class NewsService {
               data: res.data.map((item: NewListResponseData) => ({
                 id: item.id,
                 create_date: item.create_date,
-                img: item.image,
+                img: getImgUrl(item.image),
                 name: item.name,
                 view: item.view,
                 author: item.author,
@@ -64,11 +65,11 @@ export class NewsService {
           return {
             id: res.data[0].id,
             create_date: res.data[0].create_date,
-            img: res.data[0].image,
+            img: getImgUrl(res.data[0].image),
             name: res.data[0].name,
             view: res.data[0].view,
             author: res.data[0].author,
-            content: res.data[0].content,
+            content: formatCKContent(res.data[0].content),
           };
         }
       }),

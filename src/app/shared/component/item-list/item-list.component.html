@@ -4,11 +4,7 @@
       <div class="d-flex my-4 justify-content-between main-title">
         <p class="title pe-3">{{ section.header }}</p>
         <div class="title-btn py-1 ps-3">
-          <button
-            type="button"
-            class="btn btn-all btn--animation-hover-in"
-            (click)="clickAllBtn(section.link)"
-          >
+          <button type="button" class="btn btn-all btn--animation-hover-in" (click)="clickAllBtn(section.link)">
             Xem tất cả
           </button>
         </div>
@@ -18,36 +14,19 @@
   <ng-container *ngIf="section.type === TYPE_LIST.PRODUCT">
     <div class="row">
       <ng-container *ngFor="let item of section.data; first as isFirst">
-        <div
-          class="col-lg-6 mb-4"
-          *ngIf="section.isFirst && isFirst; else smallCard"
-        >
+        <div class="col-lg-6 mb-4" *ngIf="section.isFirst && isFirst; else smallCard">
           <div class="card card-main text-bg-dark">
             <div class="card-discount" *ngIf="item.discount">
               {{ '-' + item.discount + '%' }}
             </div>
-            <div
-              [ngStyle]="{ 'background-image': 'url(' + item.image + ')' }"
-              class="card-img"
-              alt="..."
-            >
+            <div [ngStyle]="{ 'background-image': 'url(' + getImgUrl(item.image) + ')' }" class="card-img" alt="...">
               <div class="overlay">
                 <div class="overlay-action">
-                  <button
-                    type="button"
-                    class="btn btn-light overlay-button me-2"
-                    (click)="favoriteAction(event, item.id)"
-                  >
-                    <i
-                      class="bi bi-heart-fill"
-                      [ngStyle]="{ color: item.isFavorite ? 'red' : null }"
-                    ></i>
+                  <button type="button" class="btn btn-light overlay-button me-2"
+                    (click)="favoriteAction(event, item.id)">
+                    <i class="bi bi-heart-fill" [ngStyle]="{ color: item.isFavorite ? 'red' : null }"></i>
                   </button>
-                  <button
-                    type="button"
-                    class="btn btn-light overlay-button"
-                    (click)="addToCart($event, item.id)"
-                  >
+                  <button type="button" class="btn btn-light overlay-button" (click)="addToCart($event, item.id)">
                     <i class="bi bi-cart-fill"></i>
                   </button>
                 </div>
@@ -59,10 +38,10 @@
                 <div class="card-currency">
                   <p class="card-price">
                     {{
-                      (item.discount
-                        ? getDiscountPrice(item.price, item.discount)
-                        : item.price
-                      ) | currencyFormat
+                    (item.discount
+                    ? getDiscountPrice(item.price, item.discount)
+                    : item.price
+                    ) | currencyFormat
                     }}
                   </p>
                   <p class="card-old-price">
@@ -74,10 +53,7 @@
           </div>
         </div>
         <ng-template #smallCard>
-          <ng-container
-            [ngTemplateOutlet]="card"
-            [ngTemplateOutletContext]="{ item: item, column: 6 }"
-          ></ng-container>
+          <ng-container [ngTemplateOutlet]="card" [ngTemplateOutletContext]="{ item: item, column: 6 }"></ng-container>
         </ng-template>
       </ng-container>
       <div class="col-2 mb-4">
@@ -92,10 +68,8 @@
   <ng-container *ngIf="section.type === TYPE_LIST.PRODUCT_ONLY">
     <div class="row">
       <ng-container *ngFor="let item of section.data">
-        <ng-container
-          [ngTemplateOutlet]="card"
-          [ngTemplateOutletContext]="{ item: item, column: column }"
-        ></ng-container>
+        <ng-container [ngTemplateOutlet]="card"
+          [ngTemplateOutletContext]="{ item: item, column: column }"></ng-container>
       </ng-container>
     </div>
   </ng-container>
@@ -105,10 +79,8 @@
       <div class="col-12 position-relative">
         <div class="d-flex flex-nowrap overflow-hidden mx-5" #slideList>
           <ng-container *ngFor="let item of section.data">
-            <ng-container
-              [ngTemplateOutlet]="card"
-              [ngTemplateOutletContext]="{ item: item, column: 6, row: true }"
-            ></ng-container>
+            <ng-container [ngTemplateOutlet]="card"
+              [ngTemplateOutletContext]="{ item: item, column: 6, row: true }"></ng-container>
           </ng-container>
         </div>
         <button class="btn slick slick-prev" (click)="scroll(slideList, -1)">
@@ -128,11 +100,7 @@
           <div class="card new mb-3">
             <div class="row g-0">
               <div class="col-md-4">
-                <img
-                  [src]="item.img"
-                  class="img-fluid new-img rounded-start"
-                  alt="item.title"
-                />
+                <img [src]="getImgUrl(item.img)" class="img-fluid new-img rounded-start" alt="item.title" />
               </div>
               <div class="col-md-8">
                 <div class="card-body">
@@ -154,30 +122,20 @@
     </div>
   </ng-container>
 
-  <ng-container
-    *ngIf="section.type === TYPE_LIST.VIDEO_NEW && section.mostViewProduct"
-  >
+  <ng-container *ngIf="section.type === TYPE_LIST.VIDEO_NEW && section.mostViewProduct">
     <div class="row mb-4">
       <div class="col-6">
-        <iframe
-          width="105%"
-          height="370px"
-          [src]="videoSrc"
-          title="[UNBOXING] iFi Zen CAN Studio - Amplifier dành cho tai nghe phòng thu | 3Kshop.vn"
-          frameborder="0"
+        <iframe width="105%" height="370px" [src]="videoSrc"
+          title="[UNBOXING] iFi Zen CAN Studio - Amplifier dành cho tai nghe phòng thu | 3Kshop.vn" frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen
-        ></iframe>
+          allowfullscreen></iframe>
       </div>
       <div class="col-6">
         <div class="playlist">
           <ng-container *ngFor="let item of section.data; index as i">
             <button class="playlist-item" (click)="playSelectedVideo(item.id)">
               <div class="playlist-img">
-                <img
-                  [src]="'https://i.ytimg.com/vi/' + item.id + '/mqdefault.jpg'"
-                  alt=""
-                />
+                <img [src]="'https://i.ytimg.com/vi/' + item.id + '/mqdefault.jpg'" alt="" />
               </div>
               <div class="d-flex flex-column align-items-start ms-3">
                 <span class="title">{{ item.title }}</span>
@@ -201,28 +159,18 @@
           </div>
           <div class="rank">
             <div class="row">
-              <ng-container
-                *ngFor="let item of section.mostViewProduct.data; index as i"
-              >
+              <ng-container *ngFor="let item of section.mostViewProduct.data; index as i">
                 <div class="col-6">
                   <button class="rank-item">
                     <div class="d-flex">
                       <div class="rank-item-img">
-                        <img [src]="item.img" alt="" />
+                        <img [src]="getImgUrl(item.img)" alt="" />
                         <div class="overlay">#{{ i + 1 }}</div>
                       </div>
-                      <div
-                        class="d-flex flex-grow-1 flex-column justify-content-between align-items-start ms-3"
-                      >
+                      <div class="d-flex flex-grow-1 flex-column justify-content-between align-items-start ms-3">
                         <span class="title text-truncate">{{ item.name }}</span>
-                        <div
-                          class="progress"
-                          role="progressbar"
-                          aria-label="Basic example"
-                          aria-valuenow="0"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        >
+                        <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="0"
+                          aria-valuemin="0" aria-valuemax="100">
                           <div class="progress-bar" style="width: 100%"></div>
                         </div>
                         <span>{{ item.view }} LƯỢT XEM</span>
@@ -239,34 +187,20 @@
   </ng-container>
 </ng-container>
 <ng-template #card let-item="item" let-column="column" let-row="row">
-  <div
-    class="mb-4 {{ row ? 'me-5' : '' }}"
-    [ngClass]="column ? 'col-' + (12 / column).toString() : ''"
-  >
+  <div class="mb-4 {{ row ? 'me-5' : '' }}" [ngClass]="column ? 'col-' + (12 / column).toString() : ''">
     <button (click)="redirectToDetail(item.id)" class="product-item">
       <div class="card card-normal">
         <div class="card-discount" *ngIf="item.discount">
           {{ '-' + item.discount + '%' }}
         </div>
         <div class="card-img">
-          <img [src]="item.image" class="card-img-top" [alt]="item.name" />
+          <img [src]="getImgUrl(item.image || item.img)" class="card-img-top" [alt]="item.name" />
           <div class="overlay">
             <div class="overlay-action">
-              <button
-                type="button"
-                class="btn btn-light overlay-button me-2"
-                (click)="favoriteAction($event, item.id)"
-              >
-                <i
-                  class="bi bi-heart-fill"
-                  [ngStyle]="{ color: item.isFavorite ? 'red' : null }"
-                ></i>
+              <button type="button" class="btn btn-light overlay-button me-2" (click)="favoriteAction($event, item.id)">
+                <i class="bi bi-heart-fill" [ngStyle]="{ color: item.isFavorite ? 'red' : null }"></i>
               </button>
-              <button
-                type="button"
-                class="btn btn-light overlay-button"
-                (click)="addToCart($event, item.id)"
-              >
+              <button type="button" class="btn btn-light overlay-button" (click)="addToCart($event, item.id)">
                 <i class="bi bi-cart-fill"></i>
               </button>
             </div>
@@ -278,10 +212,10 @@
           </p>
           <p class="card-price">
             {{
-              (item.discount
-                ? getDiscountPrice(item.price, item.discount)
-                : item.price
-              ) | currencyFormat
+            (item.discount
+            ? getDiscountPrice(item.price, item.discount)
+            : item.price
+            ) | currencyFormat
             }}
           </p>
           <p class="card-old-price" hidden>

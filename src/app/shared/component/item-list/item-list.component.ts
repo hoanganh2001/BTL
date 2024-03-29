@@ -16,7 +16,6 @@ export class ItemListComponent implements OnInit {
   @Input() section?: SectionData;
   @Input() column?: number;
   @Output() handelBtnAction = new EventEmitter();
-
   videoSrc?: SafeResourceUrl;
   currItemSlide?: number;
   firstPrv: boolean = true;
@@ -89,5 +88,13 @@ export class ItemListComponent implements OnInit {
 
   redirectToDetail(id: number) {
     this._router.navigateByUrl(this.RouterConfig.PRODUCT_DETAIL + id);
+  }
+
+  getImgUrl(id: string): string {
+    return (
+      (id?.includes('/')
+        ? Constant.IMG_DIR.SHOP
+        : Constant.IMG_DIR.GOOGLE_DRIVE) + id
+    );
   }
 }

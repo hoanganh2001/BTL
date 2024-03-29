@@ -1,10 +1,18 @@
 .top-content {
   border-bottom: 1px solid #e0e0e0;
   margin-bottom: 32px;
+
+  .big-img {
+    aspect-ratio: 1 / 1;
+  }
 }
 .list-image {
+  display: flex;
+  flex-direction: column;
   button {
     background-color: transparent !important;
+    width: 60px;
+    height: 60px;
   }
 
   .image {

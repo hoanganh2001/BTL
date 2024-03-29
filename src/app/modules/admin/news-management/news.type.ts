@@ -25,5 +25,5 @@ export interface popUpData {
 export interface imageDetailList {
   id?: number;
   name?: string;
-  url: string | ArrayBuffer;
+  url?: string | ArrayBuffer;
 }
