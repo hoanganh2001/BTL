@@ -6,6 +6,8 @@ import { CurrencyFormatPipe } from './pipe/currencyFormat.pipe';
 import { DateFormatPipe, DateToNowPipe } from './pipe/dateToNow.pipe';
 import { NotificationModule } from 'app/core/service/notification';
 import { ToastrModule } from 'ngx-toastr';
+import { DialogConfirmModule } from './component/dialog-confirm/dialog-confirm.module';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -19,6 +21,8 @@ import { ToastrModule } from 'ngx-toastr';
       positionClass: 'toast-top-right',
       preventDuplicates: true,
     }),
+    DialogConfirmModule,
+    MatDialogModule,
   ],
   exports: [
     CommonModule,
@@ -29,6 +33,7 @@ import { ToastrModule } from 'ngx-toastr';
     DateToNowPipe,
     DateFormatPipe,
     NotificationModule,
+    ToastrModule,
   ],
   declarations: [CurrencyFormatPipe, DateToNowPipe, DateFormatPipe],
 })

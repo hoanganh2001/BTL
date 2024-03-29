@@ -1,0 +1,23 @@
+<div class="dialog-confirm">
+  <div class="dialog-confirm-content text-center">
+    <p class="dialog-confirm-content-value">{{ title.message }}</p>
+  </div>
+  <form *ngIf="title.input">
+    <mat-label class="text-capitalize mb-2">Lý do*:</mat-label>
+    <mat-form-field class="mb-3 w-100" appearance="fill">
+      <input matInput [formControl]="reasonControl" type="text" />
+      <mat-error *ngIf="reasonControl.hasError('required')">required</mat-error>
+    </mat-form-field>
+  </form>
+  <div class="dialog-confirm-btn" [ngClass]="{
+      'flex-row-reverse justify-start': title.message.includes('submit')
+    }">
+    <button class="btn dialog-confirm-btn-cancel btn--animation-hover-in" (click)="handleCloseAction()">
+      Hủy
+    </button>
+    <button class="btn dialog-confirm-btn-submit btn--animation-hover-out"
+      [disabled]="title.input && !reasonControl.value" (click)="handleConfirmAction()">
+      Đồng ý
+    </button>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+.dialog-confirm {
+  padding: 24px;
+
+  &-content {
+    text-align: left;
+    &-value {
+      padding-top: 1.7rem;
+      padding-bottom: 1rem;
+      font-size: 16px;
+      font-weight: 500;
+      display: -webkit-box !important;
+      -webkit-box-orient: vertical !important;
+      -webkit-line-clamp: 2 !important;
+      white-space: normal !important;
+      hyphens: auto !important;
+    }
+  }
+
+  &-btn {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+
+    &-submit {
+      padding: 4px 10px 5px 10px;
+      color: white;
+      border-radius: 8px;
+      border: 1px solid #6b757f;
+      transition: all 0.5s;
+      background-color: black;
+      font-size: 14px !important;
+      text-transform: none;
+      font-weight: 500 !important;
+    }
+
+    &-cancel {
+      padding: 4px 10px 5px 10px;
+      color: black;
+      border-radius: 8px;
+      border: 1px solid #6b757f;
+      transition: all 0.5s;
+      font-size: 14px !important;
+      text-transform: none;
+      font-weight: 500 !important;
+    }
+  }
+}
