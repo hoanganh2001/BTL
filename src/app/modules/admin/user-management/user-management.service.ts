@@ -6,58 +6,43 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class ProductManagementSerivce {
+export class UserManagementSerivce {
   constructor(private _httpClient: HttpClient) {}
 
-  getProductsOnSearch(body: any): Observable<any> {
-    return this._httpClient.get(`${environment.endpoint}/admin/products`, {
+  getUsersOnSearch(body: any): Observable<any> {
+    return this._httpClient.get(`${environment.endpoint}/admin/users`, {
       params: body,
     });
   }
 
-  getProductDetail(id: number): Observable<any> {
+  getUserDetail(id: number): Observable<any> {
     return this._httpClient
-      .get(`${environment.endpoint}/admin/product/` + id)
+      .get(`${environment.endpoint}/admin/user/` + id)
       .pipe();
   }
 
-  deleteProduct(id: number): Observable<any> {
-    return this._httpClient.delete(
-      `${environment.endpoint}/admin/product/` + id,
-    );
+  createUser(body): Observable<any> {
+    return this._httpClient.post(`${environment.endpoint}/admin/user`, body);
   }
 
-  createProduct(body): Observable<any> {
-    return this._httpClient.post(`${environment.endpoint}/admin/product`, body);
-  }
-
-  editProduct(body, id: number): Observable<any> {
+  editUser(body, id: number): Observable<any> {
     return this._httpClient.put(
-      `${environment.endpoint}/admin/product/` + id,
+      `${environment.endpoint}/admin/user/` + id,
       body,
     );
   }
 
-  uploadFile(id: number, formData: any, thumbnail: number): Observable<any> {
-    return this._httpClient.post(
-      `${environment.endpoint}/admin/product/${id}/images/${thumbnail}`,
-      formData,
-    );
-  }
-
-  uploadThumbnailWithId(id: number, thumbnail: number): Observable<any> {
+  updateUserStatus(body, id: number): Observable<any> {
     return this._httpClient.put(
-      `${environment.endpoint}/admin/product/${id}/thumbnail/${thumbnail}`,
-      {},
+      `${environment.endpoint}/admin/user/status/` + id,
+      body,
     );
   }
 
-  delFile(body, id: number): Observable<any> {
-    return this._httpClient.delete(
-      `${environment.endpoint}/admin/product/${id}/images`,
-      {
-        body: body,
-      },
+  changePassword(body, id: number): Observable<any> {
+    return this._httpClient.put(
+      `${environment.endpoint}/admin/user/change-password/` + id,
+      body,
     );
   }
 }

@@ -12,7 +12,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ProductManagementComponent } from './product-management/product.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { UserProfileComponent } from './user-profile/user-profile.component';
 import { MatSortModule } from '@angular/material/sort';
 import { CreateProductComponent } from './product-management/create/create.component';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -30,6 +29,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CreateNewComponent } from './news-management/create/create.component';
+import { CreateUserComponent } from './user-management/create/create.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { ChangePasswordModule } from 'app/shared/component/change-password/change-password.module';
 
 @NgModule({
   imports: [
@@ -54,11 +56,12 @@ import { CreateNewComponent } from './news-management/create/create.component';
     MatIconModule,
     MatChipsModule,
     MatExpansionModule,
+    MatSlideToggleModule,
+    ChangePasswordModule,
   ],
   declarations: [
     DashboardComponent,
     ProductManagementComponent,
-    UserProfileComponent,
     CreateProductComponent,
     OrderManagementComponent,
     CategoryManagementComponent,
@@ -66,6 +69,7 @@ import { CreateNewComponent } from './news-management/create/create.component';
     UserManagementComponent,
     SpecificationTemplateManagementComponent,
     CreateNewComponent,
+    CreateUserComponent,
   ],
 })
 export class AdminModule {}

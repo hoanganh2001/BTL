@@ -1,7 +1,6 @@
 import { Route } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProductManagementComponent } from './product-management/product.component';
-import { UserProfileComponent } from './user-profile/user-profile.component';
 import { CreateProductComponent } from './product-management/create/create.component';
 import { OrderManagementComponent } from './order-management/order.component';
 import { CategoryManagementComponent } from './category-management/category.component';
@@ -66,9 +65,5 @@ export const AdminRoutes: Route[] = [
   {
     path: 'template',
     children: [{ path: 'create', component: CreateProductComponent }],
-  },
-  {
-    path: 'my-profile',
-    component: UserProfileComponent,
   },
 ];

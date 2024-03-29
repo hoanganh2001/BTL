@@ -4,6 +4,7 @@ import {
   FormControl,
   ValidationErrors,
 } from '@angular/forms';
+import { titleFormat } from './component/dialog-confirm/dialog-confirm.types';
 
 export class Constant {
   public static TYPE_LIST = {
@@ -25,7 +26,7 @@ export class Constant {
 
   public static IMG_DIR = {
     SHOP: 'https://3kshop.vn/wp-content/uploads/fly-images/',
-    GOOGLE_DRIVE: 'https://drive.google.com/uc?export=view&id=',
+    GOOGLE_DRIVE: 'https://drive.google.com/thumbnail?id=',
   };
 
   public static FILTER_TYPE = {
@@ -106,4 +107,48 @@ export const getErrorText = (error: {
   if (error.error.includes('required')) return error.key + ' is required';
   if (error.error.includes('pattern') || error.error.includes('email'))
     return error.key + ' is wrong format';
+};
+
+export const formatCKContent = (content: string): string => {
+  return content?.replaceAll('\\n', '<br>');
+};
+
+export const getImgUrl = (id: string): string => {
+  return (
+    (id?.includes('/')
+      ? Constant.IMG_DIR.SHOP
+      : Constant.IMG_DIR.GOOGLE_DRIVE) + id
+  );
+};
+
+export const confirmData = {
+  CANCEL: {
+    icon: 'mat_solid:send',
+    title: 'Hủy Đơn',
+    message: 'Bạn có chắc chắn muốn hủy đơn?',
+    color: '#659CF5',
+    input: true,
+  },
+  DELETE: {
+    icon: 'mat_solid:send',
+    title: 'Hủy Đơn',
+    message: 'Are you sure to delete?',
+    color: '#659CF5',
+  },
+  SUCCESS: {
+    icon: 'mat_solid:send',
+    title: 'Hủy Đơn',
+    message: 'Is this order be delivered?',
+    color: '#659CF5',
+  },
+  SHIPPING: {
+    icon: 'mat_solid:send',
+    title: 'Hủy Đơn',
+    message: 'Is this order on the way?',
+    color: '#659CF5',
+  },
+};
+
+export const getConfirmData = (action: string): titleFormat => {
+  return confirmData[action.toUpperCase()];
 };

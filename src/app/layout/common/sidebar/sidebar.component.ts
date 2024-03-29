@@ -40,12 +40,6 @@ export const ROUTES: RouteInfo[] = [
     icon: 'person',
     class: '',
   },
-  {
-    path: RouterConfig.ADMIN_PROFILE,
-    title: 'MY Profile',
-    icon: 'account_circle',
-    class: '',
-  },
 ];
 
 @Component({
