@@ -37,5 +37,10 @@
  + history x
  + log in + log out x
 
-- use session/cookie for guest
-- admin page
+- use session/cookie for guest x
+- user management: detail, create, edit, change password, deactive x
+- change password
+- admin page x
+- validate upload file x
+- img google x
+- confirm popup

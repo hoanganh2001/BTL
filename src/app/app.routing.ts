@@ -89,6 +89,14 @@ export const appRoutes: Routes = [
         path: '',
         canMatch: [NoAuthGuard],
         loadChildren: () =>
+          import('./modules/reset-password/reset-password.module').then(
+            (m) => m.ResetPasswordModule,
+          ),
+      },
+      {
+        path: '',
+        canMatch: [NoAuthGuard],
+        loadChildren: () =>
           import('./modules/sign-in/sign-in.module').then(
             (m) => m.SignInModule,
           ),
