@@ -7,8 +7,12 @@ import { SortHeader } from '../admin.types';
 import { FormControl } from '@angular/forms';
 import RouterConfig from 'app/core/config/router.config';
 import { Router } from '@angular/router';
-import { Constant } from 'app/shared/constant';
+import { Constant, getConfirmData } from 'app/shared/constant';
 import { MatAccordion } from '@angular/material/expansion';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
+import { DialogConfirmComponent } from 'app/shared/component/dialog-confirm/dialog-confirm.component';
+import * as dayjs from 'dayjs';
+import { NotificationService } from 'app/core/service/notification';
 
 @Component({
   selector: 'app-order',
@@ -16,6 +20,8 @@ import { MatAccordion } from '@angular/material/expansion';
   styleUrls: ['./order.component.scss'],
 })
 export class OrderManagementComponent implements OnInit {
+  dialogRef: MatDialogRef<DialogConfirmComponent>;
+
   searchControl = new FormControl('');
 
   readonly RouteConfig = RouterConfig;
@@ -25,7 +31,8 @@ export class OrderManagementComponent implements OnInit {
 
   constructor(
     private _orderManagementService: OrderManagementSerivce,
-    private _router: Router,
+    private _notiService: NotificationService,
+    public _dialog: MatDialog,
   ) {}
   sort: SortHeader = {
     active: '',
@@ -132,37 +139,121 @@ export class OrderManagementComponent implements OnInit {
 
   deleteProduct(e, id: number) {
     e.stopPropagation();
-    this._orderManagementService.deleteProduct(id).subscribe((res) => {
-      this.getOrderList(this.orderSearchBody);
+    const confirmData = getConfirmData('delete');
+    this.dialogRef = this._dialog.open(DialogConfirmComponent, {
+      data: {
+        order_id: id,
+        title: confirmData,
+      },
+      autoFocus: false,
+      restoreFocus: false,
+      width: '500px',
+      minHeight: confirmData.input ? '200px' : '150px',
+    });
+    this.dialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        this._orderManagementService.deleteProduct(data.id).subscribe({
+          next: (res) => {
+            if (res.message) {
+              this._notiService.showSuccess(res.message);
+              this.getOrderList(this.orderSearchBody);
+            }
+          },
+          error(err) {
+            this._notiService?.showError(err.error.message);
+          },
+        });
+      }
     });
   }
 
   shippingOrder(id: number) {
-    this._orderManagementService.shippingOrder(id).subscribe({
-      next: (res) => {
-        this.getOrderList(this.orderSearchBody);
+    const confirmData = getConfirmData('shipping');
+    this.dialogRef = this._dialog.open(DialogConfirmComponent, {
+      data: {
+        order_id: id,
+        title: confirmData,
       },
-      error: (err) => {},
+      autoFocus: false,
+      restoreFocus: false,
+      width: '500px',
+      minHeight: confirmData.input ? '200px' : '150px',
+    });
+    this.dialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        this._orderManagementService.shippingOrder(data.id).subscribe({
+          next: (res) => {
+            if (res.message) {
+              this._notiService.showSuccess(res.message);
+              this.getOrderList(this.orderSearchBody);
+            }
+          },
+          error(err) {
+            this._notiService?.showError(err.error.message);
+          },
+        });
+      }
     });
   }
   successOrder(id: number) {
-    this._orderManagementService.successOrder(id).subscribe({
-      next: (res) => {
-        this.getOrderList(this.orderSearchBody);
+    const confirmData = getConfirmData('success');
+    this.dialogRef = this._dialog.open(DialogConfirmComponent, {
+      data: {
+        order_id: id,
+        title: confirmData,
       },
-      error: (err) => {},
+      autoFocus: false,
+      restoreFocus: false,
+      width: '500px',
+      minHeight: confirmData.input ? '200px' : '150px',
+    });
+    this.dialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        this._orderManagementService.successOrder(data.id).subscribe({
+          next: (res) => {
+            if (res.message) {
+              this._notiService.showSuccess(res.message);
+              this.getOrderList(this.orderSearchBody);
+            }
+          },
+          error(err) {
+            this._notiService?.showError(err.error.message);
+          },
+        });
+      }
     });
   }
   cancelOrder(id: number) {
-    this._orderManagementService.cancelOrder(id).subscribe({
-      next: (res) => {
-        this.getOrderList(this.orderSearchBody);
+    const confirmData = getConfirmData('cancel');
+    this.dialogRef = this._dialog.open(DialogConfirmComponent, {
+      data: {
+        order_id: id,
+        title: confirmData,
       },
-      error: (err) => {},
+      autoFocus: false,
+      restoreFocus: false,
+      width: '500px',
+      minHeight: '200px',
+    });
+    this.dialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        this._orderManagementService.cancelOrder(data.id).subscribe({
+          next: (res) => {
+            if (res.message) {
+              this._notiService.showSuccess(res.message);
+              this.getOrderList(this.orderSearchBody);
+            }
+          },
+          error(err) {
+            this._notiService?.showError(err.error.message);
+          },
+        });
+      }
     });
   }
 
-  handleAction(type: string, id?: number) {
+  handleAction(type: string, id?: number, e?: any) {
+    e.stopPropagation();
     switch (type) {
       case 'onway':
         this.shippingOrder(id);

@@ -5,7 +5,7 @@ import { SortHeader } from '../admin.types';
 import { FormControl } from '@angular/forms';
 import RouterConfig from 'app/core/config/router.config';
 import { Params, Router } from '@angular/router';
-import { Constant } from 'app/shared/constant';
+import { Constant, getConfirmData } from 'app/shared/constant';
 import {
   MatDialogRef,
   MatDialogConfig,
@@ -15,6 +15,8 @@ import { CreateNewComponent } from './create/create.component';
 import { NewsList } from './news.type';
 import { BaseResponse } from 'app/core/models/base-response.model';
 import { NewManagementSerivce } from './news.service';
+import { DialogConfirmComponent } from 'app/shared/component/dialog-confirm/dialog-confirm.component';
+import { NotificationService } from 'app/core/service/notification';
 
 @Component({
   selector: 'app-news',
@@ -24,12 +26,13 @@ import { NewManagementSerivce } from './news.service';
 export class NewsManagementComponent implements OnInit {
   searchControl = new FormControl('');
   confirmDialogRef: MatDialogRef<CreateNewComponent>;
+  dialogRef: MatDialogRef<DialogConfirmComponent>;
 
   readonly RouteConfig = RouterConfig;
 
   constructor(
     private _newManagementService: NewManagementSerivce,
-    private _router: Router,
+    private _notiService: NotificationService,
     public _dialog: MatDialog,
   ) {}
   sort: SortHeader = {
@@ -132,8 +135,31 @@ export class NewsManagementComponent implements OnInit {
 
   deleteNew(e, id: number) {
     e.stopPropagation();
-    this._newManagementService.deleteNew(id).subscribe((res) => {
-      this.getNewList(this.newSearchBody);
+    const confirmData = getConfirmData('delete');
+    this.dialogRef = this._dialog.open(DialogConfirmComponent, {
+      data: {
+        order_id: id,
+        title: confirmData,
+      },
+      autoFocus: false,
+      restoreFocus: false,
+      width: '500px',
+      minHeight: confirmData.input ? '200px' : '150px',
+    });
+    this.dialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        this._newManagementService.deleteNew(data.id).subscribe({
+          next: (res) => {
+            if (res.message) {
+              this._notiService.showSuccess(res.message);
+              this.getNewList(this.newSearchBody);
+            }
+          },
+          error(err) {
+            this._notiService?.showError(err.error.message);
+          },
+        });
+      }
     });
   }
 

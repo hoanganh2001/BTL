@@ -7,13 +7,15 @@ import { SortHeader } from '../admin.types';
 import { FormControl } from '@angular/forms';
 import RouterConfig from 'app/core/config/router.config';
 import { Params, Router } from '@angular/router';
-import { Constant } from 'app/shared/constant';
+import { Constant, getConfirmData } from 'app/shared/constant';
 import {
   MatDialogRef,
   MatDialogConfig,
   MatDialog,
 } from '@angular/material/dialog';
 import { CreateProductComponent } from './create/create.component';
+import { DialogConfirmComponent } from 'app/shared/component/dialog-confirm/dialog-confirm.component';
+import { NotificationService } from 'app/core/service/notification';
 
 @Component({
   selector: 'app-product',
@@ -23,12 +25,13 @@ import { CreateProductComponent } from './create/create.component';
 export class ProductManagementComponent implements OnInit {
   searchControl = new FormControl('');
   confirmDialogRef: MatDialogRef<CreateProductComponent>;
+  dialogRef: MatDialogRef<DialogConfirmComponent>;
 
   readonly RouteConfig = RouterConfig;
 
   constructor(
     private _productManagementService: ProductManagementSerivce,
-    private _router: Router,
+    private _notiService: NotificationService,
     public _dialog: MatDialog,
   ) {}
   sort: SortHeader = {
@@ -80,7 +83,10 @@ export class ProductManagementComponent implements OnInit {
             price: res.price,
             create_date: res.create_date,
             discount: res.discount,
-            image: Constant.IMG_DIR.SHOP + res.thumbnail_file,
+            image:
+              (res.thumbnail_file?.includes('/')
+                ? Constant.IMG_DIR.SHOP
+                : Constant.IMG_DIR.GOOGLE_DRIVE) + res.thumbnail_file,
             name: res.name,
             view: res.view_number,
             gift: res.gift_id,
@@ -128,8 +134,31 @@ export class ProductManagementComponent implements OnInit {
 
   deleteProduct(e, id: number) {
     e.stopPropagation();
-    this._productManagementService.deleteProduct(id).subscribe((res) => {
-      this.getProductList(this.productSearchBody);
+    const confirmData = getConfirmData('delete');
+    this.dialogRef = this._dialog.open(DialogConfirmComponent, {
+      data: {
+        order_id: id,
+        title: confirmData,
+      },
+      autoFocus: false,
+      restoreFocus: false,
+      width: '500px',
+      minHeight: confirmData.input ? '200px' : '150px',
+    });
+    this.dialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        this._productManagementService.deleteProduct(data.id).subscribe({
+          next: (res) => {
+            if (res.message) {
+              this._notiService.showSuccess(res.message);
+              this.getProductList(this.productSearchBody);
+            }
+          },
+          error(err) {
+            this._notiService?.showError(err.error.message);
+          },
+        });
+      }
     });
   }
 
@@ -147,6 +176,8 @@ export class ProductManagementComponent implements OnInit {
       CreateProductComponent,
       dialogConfig,
     );
-    this.confirmDialogRef.afterClosed().subscribe((listID) => {});
+    this.confirmDialogRef.afterClosed().subscribe((isChange) => {
+      if (isChange) this.getProductList(this.productSearchBody);
+    });
   }
 }

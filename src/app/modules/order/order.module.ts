@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { OrderRoutes } from './order.routing';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -12,7 +13,14 @@ import { MatRadioModule } from '@angular/material/radio';
     SharedModule,
     MatInputModule,
     MatRadioModule,
+    MatDialogModule,
   ],
   declarations: [OrderComponent],
+  providers: [
+    {
+      provide: MatDialogRef,
+      useValue: {},
+    },
+  ],
 })
 export class OrderModule {}

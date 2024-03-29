@@ -68,9 +68,7 @@ export class OrderService {
     return this._httpClient.get(`${environment.endpoint}/order`);
   }
 
-  cancelOrder(id: number): Observable<any> {
-    return this._httpClient.post(`${environment.endpoint}/order/cancel`, {
-      id: id,
-    });
+  cancelOrder(body): Observable<any> {
+    return this._httpClient.post(`${environment.endpoint}/order/cancel`, body);
   }
 }

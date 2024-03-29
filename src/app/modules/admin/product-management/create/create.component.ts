@@ -66,7 +66,7 @@ export class CreateProductComponent implements OnInit {
     }
     // Validators.required
     this.createProductForm = this._formBuilder.group({
-      name: ['abc', [Validators.required]],
+      name: ['', [Validators.required]],
       price: ['', [Validators.pattern(/\d/)]],
       discount: ['', []],
       quantity: ['', []],
@@ -225,14 +225,29 @@ export class CreateProductComponent implements OnInit {
         this.typeField?.setValue(res.type_id || null);
         this.featureField?.setValue(res.feature_id || null);
         if (res.file_id) {
-          res.file_id?.forEach((t) => {
-            this.imageInfos.push({
-              id: t[0],
-              name: res.name,
-              url: Constant.IMG_DIR.GOOGLE_DRIVE + t[1],
-              isThumbnail: res.thumbnail === t[0],
+          if (Array.isArray(res.file_id[0])) {
+            res.file_id?.forEach((t) => {
+              this.imageInfos.push({
+                id: t[0],
+                name: res.name,
+                url:
+                  (t[1]?.includes('/')
+                    ? Constant.IMG_DIR.SHOP
+                    : Constant.IMG_DIR.GOOGLE_DRIVE) + t[1],
+                isThumbnail: res.thumbnail === t[0],
+              });
             });
-          });
+          } else {
+            this.imageInfos.push({
+              id: res.file_id[0],
+              name: res.name,
+              url:
+                (res.file_id[1]?.includes('/')
+                  ? Constant.IMG_DIR.SHOP
+                  : Constant.IMG_DIR.GOOGLE_DRIVE) + res.file_id[1],
+              isThumbnail: res.thumbnail === res.file_id[0],
+            });
+          }
         }
         if (this.type === 'detail') {
           this.thumbnailImg = this.imageInfos.find((t) => t.isThumbnail);
@@ -253,7 +268,11 @@ export class CreateProductComponent implements OnInit {
     };
 
     this.createProductForm.markAllAsTouched();
-
+    if (this.selectedFiles.length < 1 && !this.imageInfos) {
+      this._notiService.showError('Must have at least 1 image!');
+      this.isClicked = false;
+      return;
+    }
     const validateResult = validateFormControls(
       this.createProductForm,
       formValidate,
@@ -317,12 +336,14 @@ export class CreateProductComponent implements OnInit {
                 .uploadFile(this.productID, formData, thumbnailIndex)
                 .subscribe((res) => {
                   this._notiService.showSuccess(res.message);
+                  this.dialogRef.close(true);
                 });
             } else {
               this._productManagementService
                 .uploadThumbnailWithId(this.productID, thumbnailItem.id)
                 .subscribe((res) => {
                   this._notiService.showSuccess(res.message);
+                  this.dialogRef.close(true);
                 });
             }
           } else {
@@ -333,6 +354,7 @@ export class CreateProductComponent implements OnInit {
               .uploadThumbnailWithId(this.productID, thumbnailItem.id)
               .subscribe((res) => {
                 this._notiService.showSuccess(res.message);
+                this.dialogRef.close(true);
               });
           }
         });
@@ -354,6 +376,7 @@ export class CreateProductComponent implements OnInit {
               .uploadFile(res.product_id, formData, thumbnailIndex)
               .subscribe((res) => {
                 this._notiService.showSuccess(res.message);
+                this.dialogRef.close(true);
               });
           }
         });

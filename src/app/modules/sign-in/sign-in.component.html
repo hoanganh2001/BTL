@@ -1,24 +1,10 @@
-<div
-  class="container my-5"
-  id="container"
-  [ngClass]="{ 'right-panel-active': isSignIn }"
->
+<div class="container my-5" id="container" [ngClass]="{ 'right-panel-active': isSignIn }">
   <div class="form-container sign-up-container">
     <form [formGroup]="SignUpForm">
-      <h1>Create Account</h1>
-      <div class="social-container">
-        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-      </div>
-      <span>or use your email for registration</span>
+      <h1 class="mb-5">Create Account</h1>
       <input type="text" formControlName="name" placeholder="Name" />
       <input type="email" formControlName="email" placeholder="Email" />
-      <input
-        type="password"
-        formControlName="new_password"
-        placeholder="Password"
-      />
+      <input type="password" formControlName="new_password" placeholder="Password" />
       <button class="btn--animation-hover-in" (click)="signUp()">
         Sign Up
       </button>
@@ -26,31 +12,15 @@
   </div>
   <div class="form-container sign-in-container">
     <form [formGroup]="SignInForm">
-      <h1>Sign in</h1>
-      <div class="social-container">
-        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-      </div>
-      <span>or use your account</span>
+      <h1 class="mb-5">Sign in</h1>
       <mat-form-field class="mb-3 w-100" appearance="fill">
-        <input
-          matInput
-          type="email"
-          formControlName="username"
-          placeholder="Email"
-        />
+        <input matInput type="email" formControlName="username" placeholder="Email" />
       </mat-form-field>
       <mat-form-field class="mb-3 w-100" appearance="fill">
-        <input
-          matInput
-          type="password"
-          formControlName="password"
-          placeholder="Password"
-        />
+        <input matInput type="password" formControlName="password" placeholder="Password" />
       </mat-form-field>
 
-      <a href="#">Forgot your password?</a>
+      <a routerLink="/reset-password">Forgot your password?</a>
       <button class="btn--animation-hover-in" (click)="signIn()">
         Sign In
       </button>
@@ -63,11 +33,7 @@
         <p class="my-3">
           To keep connected with us please login with your personal info
         </p>
-        <button
-          class="ghost btn--animation-hover-out"
-          id="signIn"
-          (click)="changeState(false)"
-        >
+        <button class="ghost btn--animation-hover-out" id="signIn" (click)="changeState(false)">
           Sign In
         </button>
       </div>
@@ -76,11 +42,7 @@
         <p class="my-3">
           Enter your personal details and start journey with us
         </p>
-        <button
-          class="ghost btn--animation-hover-out"
-          id="signUp"
-          (click)="changeState(true)"
-        >
+        <button class="ghost btn--animation-hover-out" id="signUp" (click)="changeState(true)">
           Sign Up
         </button>
       </div>

@@ -19,8 +19,8 @@
             <p class="card-category">Here is a subtitle for this table</p>
           </div>
           <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-hover">
+            <div class="table-container position-relative">
+              <table class="table table-striped table-hover">
                 <thead class="" matSort (matSortChange)="handleSortItem($event)" matSortActive="{{ sort.active }}"
                   matSortDirection="{{ sort.direction }}" matSortDisableClear>
                   <tr>

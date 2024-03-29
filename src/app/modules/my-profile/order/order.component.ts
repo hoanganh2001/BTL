@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ResponseCodeEnum } from 'app/core/enums/response-code.enums';
 import { NotificationService } from 'app/core/service/notification';
 import { OrderService } from 'app/modules/order/order.service';
+import { DialogConfirmComponent } from 'app/shared/component/dialog-confirm/dialog-confirm.component';
 import { paginatorData } from 'app/shared/component/paginator/paginator.types';
+import { Constant, getConfirmData } from 'app/shared/constant';
+import * as dayjs from 'dayjs';
 
 @Component({
   selector: 'app-order',
@@ -9,6 +14,7 @@ import { paginatorData } from 'app/shared/component/paginator/paginator.types';
   styleUrls: ['./order.component.scss'],
 })
 export class OrderComponent implements OnInit {
+  dialogRef: MatDialogRef<DialogConfirmComponent>;
   orderList: any;
   panelOpenState = false;
   paginator: paginatorData = {
@@ -21,6 +27,7 @@ export class OrderComponent implements OnInit {
   constructor(
     private _orderService: OrderService,
     private _notiService: NotificationService,
+    public _dialog: MatDialog,
   ) {}
 
   ngOnInit() {
@@ -56,11 +63,40 @@ export class OrderComponent implements OnInit {
   }
 
   cancelOrder(id: number) {
-    this._orderService.cancelOrder(id).subscribe((res) => {
-      if (res.message) {
-        this._notiService.showSuccess(res.message);
-        this.getOrderList();
+    const confirmData = getConfirmData('cancel');
+    this.dialogRef = this._dialog.open(DialogConfirmComponent, {
+      data: {
+        order_id: id,
+        title: confirmData,
+      },
+      autoFocus: false,
+      restoreFocus: false,
+      width: '500px',
+      minHeight: '200px',
+    });
+    this.dialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        data['date'] = dayjs().toISOString();
+        this._orderService.cancelOrder(data).subscribe({
+          next: (res) => {
+            if (res.message) {
+              this._notiService.showSuccess(res.message);
+              this.getOrderList();
+            }
+          },
+          error(err) {
+            this._notiService?.showError(err.error.message);
+          },
+        });
       }
     });
+  }
+
+  getImgUrl(id: string): string {
+    return (
+      (id?.includes('/')
+        ? Constant.IMG_DIR.SHOP
+        : Constant.IMG_DIR.GOOGLE_DRIVE) + id
+    );
   }
 }

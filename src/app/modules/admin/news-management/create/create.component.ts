@@ -2,7 +2,11 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as customBuild from '../../../../shared/component/ck-editor/build/ckeditor';
 import lgZoom from 'lightgallery/plugins/zoom';
-import { getErrorText, validateFormControls } from 'app/shared/constant';
+import {
+  formatCKContent,
+  getErrorText,
+  validateFormControls,
+} from 'app/shared/constant';
 import * as dayjs from 'dayjs';
 import { NewsList, imageDetailList, popUpData, typeData } from '../news.type';
 import { NotificationService } from 'app/core/service/notification';
@@ -119,7 +123,8 @@ export class CreateNewComponent implements OnInit {
     this.viewField?.setValue(item?.view_number || 0);
     this.createDateField?.setValue(item?.create_date || null);
     this.updateDateField?.setValue(item?.update_date);
-    this.contentField?.setValue(item?.content || '');
+    item.content = formatCKContent(item.content);
+    this.contentField?.setValue(item.content || '');
     this.imageInfos = {
       id: item?.thumbnail_id,
       name: item?.name,
@@ -139,9 +144,13 @@ export class CreateNewComponent implements OnInit {
     };
 
     this.NewsForm.markAllAsTouched();
+    if (this.selectedFiles.length < 1 && !this.imageInfos) {
+      this._notiService.showError('Must have at least 1 image!');
+      this.isClicked = false;
+      return;
+    }
 
     const validateResult = validateFormControls(this.NewsForm, formValidate);
-
     if (!validateResult.isValidated) {
       this._notiService.showError(getErrorText(validateResult.errors[0]));
       this.isClicked = false;
