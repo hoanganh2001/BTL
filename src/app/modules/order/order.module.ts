@@ -6,6 +6,7 @@ import { OrderRoutes } from './order.routing';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { PaymentModule } from './payment/payment.module';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
     MatInputModule,
     MatRadioModule,
     MatDialogModule,
+    PaymentModule,
   ],
   declarations: [OrderComponent],
   providers: [

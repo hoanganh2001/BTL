@@ -5,28 +5,20 @@
         <div class="order-item cart">
           <div class="row">
             <h2 class="col-8 order-item-header cart-header">
-              Giỏ hàng<span class="cart-header-count"
-                >({{ cartList?.length || 0 }} sản phẩm)</span
-              >
+              Giỏ hàng<span class="cart-header-count">({{ cartList?.length || 0 }} sản phẩm)</span>
             </h2>
             <span class="cart-header-label col-2">giá tiền</span>
             <span class="cart-header-label col-2">số lượng</span>
           </div>
           <div class="cart-item">
             <div class="row my-4" *ngFor="let item of cartList">
-              <div
-                class="col-1 d-flex justify-content-center align-items-center"
-              >
+              <div class="col-1 d-flex justify-content-center align-items-center">
                 <button class="cart-item-btn" (click)="remove(item.id)">
                   <i class="bi bi-trash-fill"></i>
                 </button>
               </div>
               <div class="col-2 d-flex align-items-center">
-                <img
-                  [src]="item.image"
-                  [alt]="item.name"
-                  class="cart-item-img"
-                />
+                <img [src]="item.image" [alt]="item.name" class="cart-item-img" />
               </div>
               <div class="col d-flex align-items-center">
                 <span class="cart-item-name">{{ item.name }}</span>
@@ -34,28 +26,20 @@
               <div class="col-2 d-flex flex-column justify-content-evenly">
                 <span class="cart-item-price">{{
                   (item.discount
-                    ? getDiscountPrice(item.price, item.discount)
-                    : item.price
+                  ? getDiscountPrice(item.price, item.discount)
+                  : item.price
                   ) | currencyFormat
-                }}</span>
+                  }}</span>
                 <span class="cart-item-old-price" *ngIf="item.discount">{{
                   item.discount ? (item.price | currencyFormat) : ''
-                }}</span>
-                <span class="cart-item-discount" *ngIf="item.discount"
-                  >-{{ item.discount }}%</span
-                >
+                  }}</span>
+                <span class="cart-item-discount" *ngIf="item.discount">-{{ item.discount }}%</span>
               </div>
               <div class="col-2 d-flex align-items-center">
                 <mat-form-field class="cart-item-quantity">
-                  <input
-                    matInput
-                    type="number"
-                    class="cart-item-quantity"
-                    min="0"
-                    (ngModelChange)="updateQuantity($event, item.id)"
-                    [(ngModel)]="item.quantity"
-                    [ngModelOptions]="{ standalone: true }"
-                  />
+                  <input matInput type="number" class="cart-item-quantity" min="0" [max]="item.remainQuantity"
+                    (ngModelChange)="updateQuantity($event, item.id,item.remainQuantity)" [(ngModel)]="item.quantity"
+                    [ngModelOptions]="{ standalone: true }" />
                 </mat-form-field>
               </div>
             </div>
@@ -72,9 +56,7 @@
               </div>
               <mat-form-field class="col">
                 <input matInput formControlName="name" />
-                <mat-error *ngIf="orderForm.get('name').hasError('required')"
-                  >required</mat-error
-                >
+                <mat-error *ngIf="orderForm.get('name').hasError('required')">required</mat-error>
               </mat-form-field>
             </div>
             <div class="row user-info-content-row align-items-center">
@@ -85,9 +67,7 @@
               </div>
               <mat-form-field class="col">
                 <input matInput formControlName="address" />
-                <mat-error *ngIf="orderForm.get('address').hasError('required')"
-                  >required</mat-error
-                >
+                <mat-error *ngIf="orderForm.get('address').hasError('required')">required</mat-error>
               </mat-form-field>
             </div>
             <div class="row user-info-content-row align-items-center">
@@ -98,12 +78,9 @@
               </div>
               <mat-form-field class="col">
                 <input matInput formControlName="email" />
-                <mat-error *ngIf="orderForm.get('email').hasError('required')"
-                  >required</mat-error
-                >
-                <mat-error *ngIf="orderForm.get('email').hasError('email')"
-                  >Wrong format. Email must be exp: abc@abc.com</mat-error
-                >
+                <mat-error *ngIf="orderForm.get('email').hasError('required')">required</mat-error>
+                <mat-error *ngIf="orderForm.get('email').hasError('email')">Wrong format. Email must be exp:
+                  abc@abc.com</mat-error>
               </mat-form-field>
             </div>
             <div class="row user-info-content-row align-items-center">
@@ -114,12 +91,8 @@
               </div>
               <mat-form-field class="col">
                 <input matInput formControlName="phone" />
-                <mat-error *ngIf="orderForm.get('phone').hasError('required')"
-                  >required</mat-error
-                >
-                <mat-error *ngIf="orderForm.get('phone').hasError('pattern')"
-                  >Wrong format</mat-error
-                >
+                <mat-error *ngIf="orderForm.get('phone').hasError('required')">required</mat-error>
+                <mat-error *ngIf="orderForm.get('phone').hasError('pattern')">Wrong format</mat-error>
               </mat-form-field>
             </div>
             <div class="row user-info-content-row align-items-center">
@@ -140,12 +113,7 @@
                 <mat-radio-button class="example-margin" value="{{ item.id }}">
                   {{ item.name }}
                 </mat-radio-button>
-                <mat-hint
-                  class="payment-content-hint"
-                  [ngClass]="{ 'd-block': item.value }"
-                >
-                  {{ item.hint }}
-                </mat-hint>
+
               </div>
             </mat-radio-group>
           </div>
@@ -179,10 +147,7 @@
             </button>
           </div>
         </div>
-        <button
-          class="btn btn-buy btn--animation-hover-out"
-          (click)="checkOut()"
-        >
+        <button class="btn btn-buy btn--animation-hover-out" (click)="checkOut()">
           Thanh toán ngay
         </button>
         <button class="btn btn-return btn--animation-hover-in">

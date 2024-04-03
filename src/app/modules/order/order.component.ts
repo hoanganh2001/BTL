@@ -8,6 +8,12 @@ import { Router } from '@angular/router';
 import RouterConfig from 'app/core/config/router.config';
 import * as dayjs from 'dayjs';
 import { NotificationService } from 'app/core/service/notification';
+import {
+  MatDialogRef,
+  MatDialog,
+  MatDialogConfig,
+} from '@angular/material/dialog';
+import { PaymentComponent } from './payment/payment.component';
 
 @Component({
   selector: 'app-order',
@@ -15,6 +21,8 @@ import { NotificationService } from 'app/core/service/notification';
   styleUrls: ['./order.component.scss'],
 })
 export class OrderComponent implements OnInit {
+  passwordDialogRef: MatDialogRef<PaymentComponent>;
+
   allComplete: boolean = false;
   orderForm?: FormGroup;
   isClicked: boolean = false;
@@ -30,22 +38,13 @@ export class OrderComponent implements OnInit {
     {
       id: 'COD',
       name: 'Trả tiền mặt khi nhận hàng',
-      hint: `Trả tiền mặt khi giao hàng (Chỉ áp dụng cho khu vực nội thành
-        TP. Hồ Chí Minh)`,
+      hint: `Trả tiền mặt khi giao hàng (Chỉ áp dụng cho khu vực Hà Nội và Hồ Chí Minh)`,
       value: false,
     },
     {
-      id: 'atm',
-      name: 'Thanh toán cổng nội địa',
-      hint: `Bạn có thể thanh toán thông qua các thẻ ATM nội địa của hầu hết
-      các ngân hàng`,
-      value: false,
-    },
-    {
-      id: 'visa',
-      name: 'Thanh toán cổng quốc tế',
-      hint: `Bạn có thể thanh toán thông qua các thẻ quốc tế (Visa, Master,
-        JCB,…)`,
+      id: 'momo',
+      name: 'Thanh toán bằng Momo',
+      hint: `Bạn có thể thanh toán bằng ứng dụng momo`,
       value: false,
     },
   ];
@@ -56,6 +55,7 @@ export class OrderComponent implements OnInit {
     private _orderService: OrderService,
     private _formBuilder: FormBuilder,
     private _router: Router,
+    public _dialog: MatDialog,
     private _notiService: NotificationService,
   ) {
     this.orderForm = this._formBuilder.group({
@@ -85,6 +85,10 @@ export class OrderComponent implements OnInit {
 
   getCartList() {
     this.cartList = this._orderService.getCartItems();
+    if (!this.cartList || this.cartList.length === 0) {
+      this._router.navigateByUrl(RouterConfig.HOME);
+      return;
+    }
     const body = { id: this.cartList.map((t) => t.id) };
     this._orderService
       .getItemsOnCart(body)
@@ -96,6 +100,7 @@ export class OrderComponent implements OnInit {
             image: item.image,
             price: item.price,
             discount: item.discount,
+            remainQuantity: item.quantity,
           }));
         }),
       )
@@ -123,19 +128,22 @@ export class OrderComponent implements OnInit {
     });
   }
 
-  updateQuantity(quantity: number, id: number) {
+  updateQuantity(quantity: number, id: number, remainQuantity: number) {
+    if (quantity > remainQuantity) {
+      quantity = remainQuantity;
+    }
     if (quantity <= 0) {
       this.remove(id);
     } else {
       this._orderService.updateQuantity(id, quantity);
     }
-    this.getTotal(this.cartList);
+    this.getCartList();
   }
 
   remove(id?: number) {
     this._orderService.removeFromCart(id);
     this.cartList = id ? this.cartList.filter((t) => t.id !== id) : [];
-    this.getTotal(this.cartList);
+    this.getCartList();
   }
 
   checkOut() {
@@ -175,12 +183,45 @@ export class OrderComponent implements OnInit {
         discount: item.discount,
       })),
     };
-    this._orderService.checkOut(body).subscribe((value) => {
-      this.isClicked = false;
-      if (value?.isLogIn) {
-        this.remove();
-        this._router.navigateByUrl(RouterConfig.HISTORY);
-      }
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = {
+      // id: id,
+      total: this.totalPrice,
+    };
+    dialogConfig.width = '600px';
+    dialogConfig.minHeight = '280px';
+
+    this.passwordDialogRef = this._dialog.open(PaymentComponent, dialogConfig);
+    this.passwordDialogRef.afterClosed().subscribe((id) => {
+      // if (id) this.getuserList(this.userSearchBody);
     });
+    // this._orderService.checkOut(body).subscribe({
+    //   next: (res) => {
+    //     this.isClicked = false;
+    //     if (res?.isLogIn) {
+    //     }
+    //     if (res?.isSuccess) {
+    //       this.remove();
+    //       const dialogConfig = new MatDialogConfig();
+    //       // dialogConfig.data = {
+    //       //   id: id,
+    //       // };
+    //       dialogConfig.width = '600px';
+    //       dialogConfig.minHeight = '280px';
+
+    //       this.passwordDialogRef = this._dialog.open(
+    //         PaymentComponent,
+    //         dialogConfig,
+    //       );
+    //       this.passwordDialogRef.afterClosed().subscribe((id) => {
+    //         // if (id) this.getuserList(this.userSearchBody);
+    //       });
+    //       this._router.navigateByUrl(RouterConfig.HISTORY);
+    //     }
+    //   },
+    //   error(err) {
+    //     this._notiService?.showError(err.error.message);
+    //   },
+    // });
   }
 }

@@ -2,12 +2,16 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, filter } from 'rxjs';
 import { environment } from 'enviroment/enviroment';
+import { NotificationService } from 'app/core/service/notification';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrderService {
-  constructor(private _httpClient: HttpClient) {}
+  constructor(
+    private _httpClient: HttpClient,
+    private _notiService: NotificationService,
+  ) {}
 
   private cart: BehaviorSubject<string> = new BehaviorSubject<string>(
     localStorage['cart'] || null,
@@ -27,13 +31,18 @@ export class OrderService {
     } else {
       localStorage.setItem('cart', JSON.stringify([{ id: id, quantity: 1 }]));
     }
+    this._notiService.showSuccess('Thêm vào giỏ hàng thành công!');
     this.getCart(localStorage['cart']);
   }
 
   removeFromCart(id?: number) {
     if (id) {
       const cart = JSON.parse(localStorage['cart']).filter((t) => t.id !== id);
-      localStorage['cart'] = JSON.stringify(cart);
+      if (cart?.length <= 0) {
+        localStorage.removeItem('cart');
+      } else {
+        localStorage['cart'] = JSON.stringify(cart);
+      }
     } else {
       localStorage.removeItem('cart');
     }
@@ -42,16 +51,18 @@ export class OrderService {
 
   updateQuantity(id: number, quantity: number) {
     const cart = JSON.parse(localStorage['cart']);
-    cart.map((item) => {
-      item.quantity = item.id === id ? quantity : item.quantity;
-      return item;
-    });
-    localStorage['cart'] = JSON.stringify(cart);
+    cart
+      .map((item) => {
+        item.quantity = item.id === id ? quantity : item.quantity;
+        return item.quantity > 0 ? item : null;
+      })
+      .filter((t) => t);
+    localStorage['cart'] = JSON.stringify(cart || null);
     this.getCart(localStorage['cart']);
   }
 
   getCartItems() {
-    return JSON.parse(localStorage['cart']);
+    return JSON.parse(localStorage['cart'] || null);
   }
 
   getItemsOnCart(body: any): Observable<any> {

@@ -22,6 +22,16 @@ export class OrderManagementSerivce {
     );
   }
 
+  confirmOrder(id: number): Observable<any> {
+    const params = {
+      date: dayjs().toJSON(),
+    };
+    return this._httpClient.put(
+      `${environment.endpoint}/admin/order/${id}/confirm`,
+      { params },
+    );
+  }
+
   shippingOrder(id: number): Observable<any> {
     const params = {
       date: dayjs().toJSON(),
@@ -48,6 +58,16 @@ export class OrderManagementSerivce {
     };
     return this._httpClient.put(
       `${environment.endpoint}/admin/order/${id}/cancel`,
+      { params },
+    );
+  }
+
+  createInvoice(id: number): Observable<any> {
+    const params = {
+      date: dayjs().toJSON(),
+    };
+    return this._httpClient.put(
+      `${environment.endpoint}/admin/order/${id}/invoice`,
       { params },
     );
   }

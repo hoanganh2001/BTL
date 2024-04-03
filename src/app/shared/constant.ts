@@ -45,6 +45,11 @@ export class Constant {
     SUCCESS: '#28A745',
     DECLINE: '#DC3545',
   };
+
+  public static BANKING_DETAIL = {
+    BANK: 'TCB',
+    ACCOUNT: '629666688888',
+  };
 }
 export const ICON = {
   headphone: 'bi-headphones',
@@ -145,6 +150,12 @@ export const confirmData = {
     icon: 'mat_solid:send',
     title: 'Hủy Đơn',
     message: 'Is this order on the way?',
+    color: '#659CF5',
+  },
+  CONFIRM: {
+    icon: 'mat_solid:send',
+    title: 'Hủy Đơn',
+    message: 'Is this order confirmed by client?',
     color: '#659CF5',
   },
 };
