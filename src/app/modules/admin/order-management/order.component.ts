@@ -167,6 +167,37 @@ export class OrderManagementComponent implements OnInit {
     });
   }
 
+  confirmOrder(id: number) {
+    const confirmData = getConfirmData('confirm');
+    this.dialogRef = this._dialog.open(DialogConfirmComponent, {
+      data: {
+        order_id: id,
+        title: confirmData,
+      },
+      autoFocus: false,
+      restoreFocus: false,
+      width: '500px',
+      minHeight: confirmData.input ? '200px' : '150px',
+    });
+    this.dialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        this._orderManagementService.confirmOrder(data.id).subscribe({
+          next: (res) => {
+            if (res.message) {
+              if (res.isSuccess) {
+                this._orderManagementService.createInvoice(data.id).subscribe();
+              }
+              this._notiService.showSuccess(res.message);
+              this.getOrderList(this.orderSearchBody);
+            }
+          },
+          error(err) {
+            this._notiService?.showError(err.error.message);
+          },
+        });
+      }
+    });
+  }
   shippingOrder(id: number) {
     const confirmData = getConfirmData('shipping');
     this.dialogRef = this._dialog.open(DialogConfirmComponent, {
@@ -263,6 +294,9 @@ export class OrderManagementComponent implements OnInit {
         break;
       case 'cancel':
         this.cancelOrder(id);
+        break;
+      case 'confirm':
+        this.confirmOrder(id);
         break;
       default:
         return;
