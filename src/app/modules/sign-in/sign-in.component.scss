@@ -32,7 +32,7 @@ a {
   margin: 15px 0;
 }
 
-button {
+button:not(.btn-show-pass) {
   border-radius: 20px;
   border: 1px solid #ff4b2b;
   background-color: #ff4b2b;
@@ -72,7 +72,6 @@ form {
 input {
   background-color: #eee;
   border: none;
-  padding: 12px 15px;
   margin: 8px 0;
   width: 100%;
 }
@@ -89,9 +88,7 @@ input {
 
   ::ng-deep {
     .mdc-text-field {
-      padding: 0 !important;
       .mat-mdc-form-field-infix {
-        padding: 0 !important;
         input {
           background-color: unset !important;
           margin: 0 !important;
@@ -226,4 +223,8 @@ input {
   margin: 0 5px;
   height: 40px;
   width: 40px;
+}
+
+.w-full {
+  width: 100%;
 }

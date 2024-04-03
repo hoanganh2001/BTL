@@ -1,10 +1,42 @@
 <div class="container my-5" id="container" [ngClass]="{ 'right-panel-active': isSignIn }">
   <div class="form-container sign-up-container">
     <form [formGroup]="SignUpForm">
-      <h1 class="mb-5">Create Account</h1>
-      <input type="text" formControlName="name" placeholder="Name" />
-      <input type="email" formControlName="email" placeholder="Email" />
-      <input type="password" formControlName="new_password" placeholder="Password" />
+      <h1 class="mb-4">Create Account</h1>
+      <mat-form-field class="w-full">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" formControlName="name" placeholder="Name" />
+        <mat-error *ngIf="SignUpForm.get('name').hasError('required')">
+          Required
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" placeholder="Email" />
+        <mat-error *ngIf="SignUpForm.get('email').hasError('required')">
+          Required
+        </mat-error>
+        <mat-error *ngIf="SignUpForm.get('email').hasError('email')">
+          Sai format email.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-full">
+        <mat-label>Password</mat-label>
+        <input id="newPassword" matInput type="password" [formControlName]="'new_password'" #newPassword />
+        <button class="btn btn-show-pass" mat-icon-button type="button" (click)="
+              newPassword.type === 'password'
+                ? (newPassword.type = 'text')
+                : (newPassword.type = 'password')
+            " matSuffix>
+          <i class="bi bi-eye" *ngIf="newPassword.type === 'password'"></i>
+          <i class="bi bi-eye-slash" *ngIf="newPassword.type === 'text'"></i>
+        </button>
+        <mat-error *ngIf="SignUpForm.get('new_password').hasError('required')">
+          Required
+        </mat-error>
+        <mat-error *ngIf="SignUpForm.get('new_password').hasError('pattern')">
+          Mật khẩu phải có ít nhất 6 kí tự
+        </mat-error>
+      </mat-form-field>
       <button class="btn--animation-hover-in" (click)="signUp()">
         Sign Up
       </button>

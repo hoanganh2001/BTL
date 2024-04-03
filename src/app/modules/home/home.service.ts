@@ -26,6 +26,7 @@ export class HomeService {
             id: item.id,
             price: item.price,
             create_date: item.create_date,
+            quantity: item.quantity,
             discount: item.discount,
             image: item.thumbnail_url,
             name: item.name,

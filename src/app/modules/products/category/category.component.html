@@ -1,53 +1,30 @@
 <div class="banner mb-5">
-  <img
-    src="https://3kshop.vn/wp-content/uploads/2019/09/beyerdynamic-dt-240-pro-3skhop-scaled.jpg"
-    alt=""
-  />
+  <img src="https://3kshop.vn/wp-content/uploads/2019/09/beyerdynamic-dt-240-pro-3skhop-scaled.jpg" alt="" />
 </div>
 <div class="container mb-5">
   <!-- Button filter feature  -->
   <div class="row category" *ngIf="categories.options.length > 1">
-    <filter-and-sort
-      [data]="categories"
-      (handelFilterTypeAction)="filterTypeFeature($event)"
-    ></filter-and-sort>
+    <filter-and-sort [data]="categories" (handelFilterTypeAction)="filterTypeFeature($event)"></filter-and-sort>
   </div>
   <!-- Sort options  -->
   <div class="row mb-5">
-    <filter-and-sort
-      [data]="sortOption"
-      (handelSortAction)="sortData($event)"
-    ></filter-and-sort>
+    <filter-and-sort [data]="sortOption" (handelSortAction)="sortData($event)"></filter-and-sort>
   </div>
 
   <!-- Filter options  -->
   <div class="row">
     <div class="col-3">
       <ng-container *ngFor="let item of filters">
-        <filter-and-sort
-          [data]="item"
-          (handelFilterTypeAction)="filterTypeFeature($event)"
-          (handelFilterRangeAction)="filterRange($event)"
-        ></filter-and-sort>
+        <filter-and-sort [data]="item" (handelFilterTypeAction)="filterTypeFeature($event)"
+          (handelFilterRangeAction)="filterRange($event)"></filter-and-sort>
       </ng-container>
     </div>
     <div class="col-9">
       <div class="container">
         <item-list [section]="productList" [column]="4"></item-list>
-        <paginator
-          *ngIf="paginator.length > paginator.limit"
-          [length]="paginator.length"
-          [offset]="paginator.offset"
-          [limit]="paginator.limit"
-          (handelPaggingEvent)="handelPagging($event)"
-        ></paginator>
+        <paginator *ngIf="paginator.length > paginator.limit" [length]="paginator.length" [offset]="paginator.offset"
+          [limit]="paginator.limit" (handelPaggingEvent)="handelPagging($event)"></paginator>
       </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-12">
-      <item-list [section]="history"></item-list>
     </div>
   </div>
 </div>

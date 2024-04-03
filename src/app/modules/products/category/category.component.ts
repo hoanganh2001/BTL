@@ -55,6 +55,7 @@ export class CategoryComponent implements OnInit {
             price: res.price,
             create_date: res.create_date,
             discount: res.discount,
+            quantity: res.quantity,
             image: res.thumbnail_url,
             name: res.name,
             view: res.view_number,
@@ -206,12 +207,6 @@ export class CategoryComponent implements OnInit {
 
   productList = {
     type: Constant.TYPE_LIST.PRODUCT_ONLY,
-    data: [],
-  };
-
-  history = {
-    header: 'Sản phẩm đã xem',
-    type: Constant.TYPE_LIST.PRODUCT_SLIDE,
     data: [],
   };
 

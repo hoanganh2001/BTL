@@ -26,8 +26,9 @@
                     (click)="favoriteAction(event, item.id)">
                     <i class="bi bi-heart-fill" [ngStyle]="{ color: item.isFavorite ? 'red' : null }"></i>
                   </button>
-                  <button type="button" class="btn btn-light overlay-button" (click)="addToCart($event, item.id)">
-                    <i class="bi bi-cart-fill"></i>
+                  <button type="button" class="btn btn-light overlay-button" (click)="addToCart($event, item.id)"
+                    *ngIf="item.quantity > 0 && item.price > 0">
+                    <i class=" bi bi-cart-fill"></i>
                   </button>
                 </div>
               </div>
@@ -193,6 +194,7 @@
         <div class="card-discount" *ngIf="item.discount">
           {{ '-' + item.discount + '%' }}
         </div>
+        <div class="card-soldout" *ngIf="!item.quantity">Hết hàng</div>
         <div class="card-img">
           <img [src]="getImgUrl(item.image || item.img)" class="card-img-top" [alt]="item.name" />
           <div class="overlay">
@@ -200,7 +202,8 @@
               <button type="button" class="btn btn-light overlay-button me-2" (click)="favoriteAction($event, item.id)">
                 <i class="bi bi-heart-fill" [ngStyle]="{ color: item.isFavorite ? 'red' : null }"></i>
               </button>
-              <button type="button" class="btn btn-light overlay-button" (click)="addToCart($event, item.id)">
+              <button type="button" class="btn btn-light overlay-button" (click)="addToCart($event, item.id)"
+                *ngIf="item.quantity > 0 && item.price > 0">
                 <i class="bi bi-cart-fill"></i>
               </button>
             </div>

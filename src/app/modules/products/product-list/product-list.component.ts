@@ -72,6 +72,7 @@ export class ProductListComponent implements OnInit {
               price: res.price,
               create_date: res.create_date,
               discount: res.discount,
+              quantity: res.quantity,
               image: res.thumbnail_url,
               name: res.name,
               view: res.view_number,

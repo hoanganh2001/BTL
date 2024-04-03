@@ -4,6 +4,7 @@ import { AuthService } from '../../core/auth/auth.service';
 import { Router } from '@angular/router';
 import RouterConfig from 'app/core/config/router.config';
 import * as dayjs from 'dayjs';
+import { NotificationService } from 'app/core/service/notification';
 
 @Component({
   selector: 'app-sign-in',
@@ -18,6 +19,7 @@ export class SignInComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private _authService: AuthService,
+    private _notiService: NotificationService,
     private _router: Router,
   ) {
     this.SignInForm = this._formBuilder.group({
@@ -27,7 +29,7 @@ export class SignInComponent implements OnInit {
     this.SignUpForm = this._formBuilder.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      new_password: ['', [Validators.required]],
+      new_password: ['', [Validators.required, Validators.pattern('.{6,}')]],
     });
   }
 
@@ -65,12 +67,18 @@ export class SignInComponent implements OnInit {
       create_date: dayjs().toJSON(),
     };
 
-    this._authService.signUp(body).subscribe((value) => {
-      if (value.message === 'success') this.isSignIn = false;
-      window.location.href =
-        `http://localhost:4200` + value.role === 'admin'
-          ? RouterConfig.ADMIN
-          : this.previousURL;
+    this._authService.signUp(body).subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.isSignIn = false;
+          this._notiService.showSuccess(res.message);
+        } else {
+          this._notiService.showError(res.message);
+        }
+      },
+      error: (err) => {
+        this._notiService.showError(err.error.message);
+      },
     });
   }
 

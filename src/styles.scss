@@ -96,6 +96,11 @@ body {
 .toast-container {
   position: fixed !important;
 }
+
+input[type='password']::-ms-reveal,
+input[type='password']::-ms-clear {
+  display: none !important;
+}
 .btn--animation-hover-out,
 .btn--animation-hover-in {
   position: relative;
