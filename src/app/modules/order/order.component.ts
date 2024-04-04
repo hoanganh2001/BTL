@@ -216,6 +216,12 @@ export class OrderComponent implements OnInit {
                 this._router.navigateByUrl(RouterConfig.HOME);
               }
             });
+          } else {
+            if (res?.isLogIn) {
+              this._router.navigateByUrl(RouterConfig.HISTORY);
+            } else {
+              this._router.navigateByUrl(RouterConfig.HOME);
+            }
           }
         }
       },
