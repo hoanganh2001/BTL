@@ -1,3 +1,30 @@
 .wrapper {
   padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .text-hint {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  .btn-over {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: end;
+    width: fit-content;
+    padding: 10px 20px;
+  }
+
+  .btn-over {
+    color: white;
+    border: 1px solid #f7a333 !important;
+
+    &::after {
+      background-color: #f7a333;
+    }
+  }
 }

@@ -9,7 +9,7 @@
       <span class="text-start col">Địa chỉ</span>
       <span class="text-center col-2">Thanh Toán</span>
       <span class="text-center col-2">Ngày đặt hàng</span>
-      <span class="text-center col-2">Ngày đặt hàng</span>
+      <span class="text-center col-2">Ngày cập nhật</span>
       <span class="text-center col-2">Trạng thái</span>
     </div>
     <span class="" style="width: 8px"></span>
@@ -76,9 +76,13 @@
           </div>
         </div>
         <div class="note" *ngIf="item.status === 'decline'">Note: {{item.note}}</div>
-        <div class="px-5 my-4 d-flex justify-content-end"
-          *ngIf="item.status !== 'decline' || item.status === 'success'">
-          <button (click)="cancelOrder(item.id)" class="btn btn-decline btn--animation-hover-in">
+        <div class="px-5 my-4 d-flex justify-content-end" *ngIf="item.status !== 'decline'">
+          <button (click)="cancelOrder(item.id)" class="btn me-2 btn-invoice btn--animation-hover-out"
+            *ngIf="item.status !== 'pending'">
+            Xem hóa đơn
+          </button>
+          <button (click)=" cancelOrder(item.id)" class="btn btn-decline btn--animation-hover-in"
+            *ngIf="item.status !== 'success'">
             Hủy đơn
           </button>
         </div>

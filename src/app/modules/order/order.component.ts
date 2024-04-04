@@ -3,7 +3,11 @@ import { OrderService } from './order.service';
 import { cartData } from './order.types';
 import { map } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { getErrorText, validateFormControls } from 'app/shared/constant';
+import {
+  getErrorText,
+  getImgUrl,
+  validateFormControls,
+} from 'app/shared/constant';
 import { Router } from '@angular/router';
 import RouterConfig from 'app/core/config/router.config';
 import * as dayjs from 'dayjs';
@@ -21,7 +25,7 @@ import { PaymentComponent } from './payment/payment.component';
   styleUrls: ['./order.component.scss'],
 })
 export class OrderComponent implements OnInit {
-  passwordDialogRef: MatDialogRef<PaymentComponent>;
+  paymentDialogRef: MatDialogRef<PaymentComponent>;
 
   allComplete: boolean = false;
   orderForm?: FormGroup;
@@ -97,7 +101,7 @@ export class OrderComponent implements OnInit {
           return res.data.map((item) => ({
             id: item.id,
             name: item.name,
-            image: item.image,
+            image: getImgUrl(item.thumbnail_url),
             price: item.price,
             discount: item.discount,
             remainQuantity: item.quantity,
@@ -140,10 +144,10 @@ export class OrderComponent implements OnInit {
     this.getCartList();
   }
 
-  remove(id?: number) {
+  remove(id?: number, action?: string) {
     this._orderService.removeFromCart(id);
     this.cartList = id ? this.cartList.filter((t) => t.id !== id) : [];
-    this.getCartList();
+    if (action !== 'checkout') this.getCartList();
   }
 
   checkOut() {
@@ -183,45 +187,42 @@ export class OrderComponent implements OnInit {
         discount: item.discount,
       })),
     };
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = {
-      // id: id,
-      total: this.totalPrice,
-    };
-    dialogConfig.width = '600px';
-    dialogConfig.minHeight = '280px';
 
-    this.passwordDialogRef = this._dialog.open(PaymentComponent, dialogConfig);
-    this.passwordDialogRef.afterClosed().subscribe((id) => {
-      // if (id) this.getuserList(this.userSearchBody);
+    this._orderService.checkOut(body).subscribe({
+      next: (res) => {
+        this.isClicked = false;
+        this._notiService.showSuccess(res.message);
+        if (res?.isSuccess) {
+          if (model.payment !== 'COD') {
+            const dialogConfig = new MatDialogConfig();
+            dialogConfig.data = {
+              id: res.orderId,
+              payment: model.payment,
+              total: this.totalPrice,
+            };
+            dialogConfig.width = '600px';
+            dialogConfig.height = 'fit-content';
+            dialogConfig.maxHeight = '800px';
+
+            this.paymentDialogRef = this._dialog.open(
+              PaymentComponent,
+              dialogConfig,
+            );
+            this.paymentDialogRef.afterClosed().subscribe((id) => {
+              this.remove(null, 'checkout');
+              if (res?.isLogIn) {
+                this._router.navigateByUrl(RouterConfig.HISTORY);
+              } else {
+                this._router.navigateByUrl(RouterConfig.HOME);
+              }
+            });
+          }
+        }
+      },
+      error(err) {
+        this.isClicked = false;
+        this._notiService?.showError(err.error.message);
+      },
     });
-    // this._orderService.checkOut(body).subscribe({
-    //   next: (res) => {
-    //     this.isClicked = false;
-    //     if (res?.isLogIn) {
-    //     }
-    //     if (res?.isSuccess) {
-    //       this.remove();
-    //       const dialogConfig = new MatDialogConfig();
-    //       // dialogConfig.data = {
-    //       //   id: id,
-    //       // };
-    //       dialogConfig.width = '600px';
-    //       dialogConfig.minHeight = '280px';
-
-    //       this.passwordDialogRef = this._dialog.open(
-    //         PaymentComponent,
-    //         dialogConfig,
-    //       );
-    //       this.passwordDialogRef.afterClosed().subscribe((id) => {
-    //         // if (id) this.getuserList(this.userSearchBody);
-    //       });
-    //       this._router.navigateByUrl(RouterConfig.HISTORY);
-    //     }
-    //   },
-    //   error(err) {
-    //     this._notiService?.showError(err.error.message);
-    //   },
-    // });
   }
 }

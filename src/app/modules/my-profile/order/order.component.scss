@@ -16,6 +16,11 @@
   border: 1px solid black !important;
 }
 
+.btn-invoice {
+  color: white;
+  border: 1px solid black !important;
+}
+
 .note {
   margin: 16px 0;
   font-size: 16px;
@@ -27,13 +32,13 @@
   padding: 4px 8px;
   font-size: 14px;
   color: white;
-  &.new {
+  &.pending {
     background-color: #b4afaf;
   }
   &.onway {
     background: #f07600;
   }
-  &.success {
+  &.confirm {
     background: #28a745;
   }
   &.decline {
