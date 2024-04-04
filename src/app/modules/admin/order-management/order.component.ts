@@ -13,6 +13,7 @@ import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { DialogConfirmComponent } from 'app/shared/component/dialog-confirm/dialog-confirm.component';
 import * as dayjs from 'dayjs';
 import { NotificationService } from 'app/core/service/notification';
+import { OrderService } from 'app/modules/order/order.service';
 
 @Component({
   selector: 'app-order',
@@ -33,6 +34,7 @@ export class OrderManagementComponent implements OnInit {
     private _orderManagementService: OrderManagementSerivce,
     private _notiService: NotificationService,
     public _dialog: MatDialog,
+    private _orderService: OrderService,
   ) {}
   sort: SortHeader = {
     active: '',
@@ -92,6 +94,7 @@ export class OrderManagementComponent implements OnInit {
             update_date: res.update_date,
             status: res.status,
             status_name: res.status_name,
+            invoice: res.invoice,
             product: res.product.map((t) => {
               t.image = Constant.IMG_DIR.SHOP + t.image;
               return t;
@@ -283,7 +286,7 @@ export class OrderManagementComponent implements OnInit {
     });
   }
 
-  handleAction(type: string, id?: number, e?: any) {
+  handleAction(type: string, id?: number, e?: any, invoiceId?: number) {
     e.stopPropagation();
     switch (type) {
       case 'onway':
@@ -297,6 +300,9 @@ export class OrderManagementComponent implements OnInit {
         break;
       case 'confirm':
         this.confirmOrder(id);
+        break;
+      case 'invoice':
+        this.openInvoice(invoiceId, id);
         break;
       default:
         return;
@@ -321,5 +327,27 @@ export class OrderManagementComponent implements OnInit {
     return list.reduce((total, i) => {
       return i.price * i.quantity * this.getDiscountPrice(i.price, i.discount);
     }, 0);
+  }
+  openInvoice(invoiceId?: number, orderId?: number) {
+    if (!invoiceId) {
+      this._orderManagementService.createInvoice(orderId).subscribe({
+        next: (res) => {
+          this._notiService?.showSuccess(res.message);
+          this.getOrderList(this.orderSearchBody);
+        },
+        error(err) {
+          this._notiService?.showError(err.error.message);
+        },
+      });
+      return;
+    }
+    this._orderService.getInvoice(invoiceId).subscribe({
+      next: (res) => {
+        window.open('/', '_blank').document.write(res.data);
+      },
+      error(err) {
+        this._notiService?.showError(err.error.message);
+      },
+    });
   }
 }

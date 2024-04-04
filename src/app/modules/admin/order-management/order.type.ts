@@ -31,6 +31,7 @@ export interface orderList {
   update_date?: string;
   product: productDetail[];
   isExpand: boolean;
+  invoice: number;
 }
 
 export interface productDetail {

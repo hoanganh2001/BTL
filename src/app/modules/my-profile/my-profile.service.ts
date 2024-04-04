@@ -22,4 +22,8 @@ export class MyProfileService {
       body,
     );
   }
+
+  getInvoice(id): Observable<any> {
+    return this._httpClient.get(`${environment.endpoint}/order/invoice/` + id);
+  }
 }

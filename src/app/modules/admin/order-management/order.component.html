@@ -53,7 +53,7 @@
                       <td>{{ (item.create_date | dateFormat) || '---'}}</td>
                       <td>{{ (item.update_date | dateFormat) || '---'}}</td>
                       <td>{{ item.note }} abcaaaaaaa</td>
-                      <td style="max-width: 94px;">
+                      <td>
                         <div class="d-flex" style=" min-height: 40px;">
                           <button class="btn btn-delete" (click)="deleteProduct($event, item.id)"
                             *ngIf="item.status === 4">
@@ -74,6 +74,11 @@
                           <button class="btn btn-cancel" (click)="handleAction('cancel', item.id, $event)"
                             *ngIf="item.status !== 3 && item.status !== 4">
                             <i class="bi bi-bag-x"></i>
+                          </button>
+                          <button class="btn btn-cancel"
+                            (click)="handleAction('invoice', item.id, $event, item.invoice)"
+                            *ngIf="item.status !== 1 && item.status !== 4">
+                            <i class="bi bi-receipt"></i>
                           </button>
                         </div>
                       </td>

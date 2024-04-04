@@ -77,7 +77,7 @@
         </div>
         <div class="note" *ngIf="item.status === 'decline'">Note: {{item.note}}</div>
         <div class="px-5 my-4 d-flex justify-content-end" *ngIf="item.status !== 'decline'">
-          <button (click)="cancelOrder(item.id)" class="btn me-2 btn-invoice btn--animation-hover-out"
+          <button (click)="getInvoice(item.invoice)" class="btn me-2 btn-invoice btn--animation-hover-out"
             *ngIf="item.status !== 'pending'">
             Xem hóa đơn
           </button>
