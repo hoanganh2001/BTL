@@ -93,7 +93,6 @@ export class ProductDetailComponent implements OnInit {
   ngOnInit() {
     this.productID = +this._activeRoute.snapshot.paramMap.get('productId');
     this.getProductDetail(this.productID);
-    this.selectedImage = this.listImage[0].bigSrc;
   }
 
   getProductDetail(id: number) {
@@ -102,8 +101,23 @@ export class ProductDetailComponent implements OnInit {
       .pipe(map((res) => res.data))
       .subscribe((res) => {
         if (res) {
+          console.log(res);
           this.productDetail = res;
-          this.productDetail.image = getImgUrl(this.productDetail.image);
+          // {
+          //   id: 1,
+          //   title: '',
+          //   src: '50835/hifiman-he1000-stealth-magnet-2-100x100-c.jpg',
+          //   bigSrc:
+          //     'https://3kshop.vn/wp-content/uploads/2023/07/hifiman-he1000-stealth-magnet-2.jpg',
+          //   active: false,
+          // },
+          this.listImage = res.image.map((i) => ({
+            id: i.id,
+            title: this.productDetail.name,
+            src: getImgUrl(i.file_id),
+            active: false,
+          }));
+          this.selectedImage = this.listImage[0].src;
           this.detail = this.detail.map((item) => {
             item.content = this.productDetail[item.id];
             return item;
@@ -115,7 +129,7 @@ export class ProductDetailComponent implements OnInit {
   updateImage(selectImage: any) {
     this.listImage.forEach((item) => {
       if (item.id === selectImage) {
-        this.selectedImage = item.bigSrc;
+        this.selectedImage = item.src;
         item.active = true;
       } else {
         item.active = false;

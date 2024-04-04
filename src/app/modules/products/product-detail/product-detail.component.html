@@ -6,7 +6,7 @@
           <div class="list-image">
             <ng-container *ngFor="let item of listImage">
               <button class="image" [ngClass]="item.active ? 'active' : ''" (click)="updateImage(item.id)">
-                <img [src]="item.src" alt="" class="p-2" />
+                <img [src]="item.src" [alt]="item.name" />
               </button>
             </ng-container>
           </div>
@@ -41,25 +41,12 @@
             <span class="cart-icon"><i class="bi bi-cart-fill"></i></span>Mua
             hàng
           </button>
-          <button class="btn btn-installment">Trả góp</button>
           <button class="btn btn-like">
             <i class="bi bi-heart" #heartIcon></i>
           </button>
         </div>
       </div>
-      <div class="row mb-3">
-        <ul class="feature">
-          <li>
-            Cấu trúc kim loại được tạo ra thông qua phay CNC và được đánh bóng
-            bằng tay.
-          </li>
-          <li>
-            Bao gồm hai loại phích cắm khác nhau: ¼” (mini 6,35mm) và đầu nối
-            XLR 4 chân
-          </li>
-          <li>Màng ngăn đầu tiên trên thế giới có độ dày nanomet</li>
-        </ul>
-      </div>
+
     </div>
   </div>
   <div class="row detail-product">
@@ -67,31 +54,31 @@
       <div class="col-12" [ngStyle]="{
           'max-height': showMore ? '' : '100vh',
           overflow: showMore ? 'unset' : 'hidden'
-        }" id="{{ detail[0].id }}" #description>
+        }" id="{{ detail[0].id }}" #description *ngIf="detail[0].content">
         <h4 class="sub-title">{{ detail[0].name }}</h4>
-        <div [innerHTML]="safeHTML(detail[0].content)"></div>
+        <div [innerHTML]="safeHTML(detail[0].content || '')"></div>
       </div>
-      <div class="col-12">
+      <div class="col-12" *ngIf="detail[0].content">
         <button class="btn btn-showmore btn--animation-hover-in" (click)="showmore()"
           [ngClass]="hideShowMoreBtn(description) ? 'd-none' : ''">
           Xem thêm
         </button>
       </div>
-      <div class="col-12 mt-5" id="{{ detail[1].id }}" #specifications>
+      <div class="col-12 mt-5" id="{{ detail[1].id }}" #specifications *ngIf="detail[1].content">
         <h4 class="sub-title">{{ detail[1].name }}</h4>
-        <div id="ckeditor" [innerHTML]="safeHTML(detail[1].content)"></div>
+        <div id="ckeditor" [innerHTML]="safeHTML(detail[1].content || '')"></div>
       </div>
     </div>
-    <div class="col-2">
+    <div class="col-2" *ngIf="detail[0].content || detail[1].content">
       <div class="menu">
         <ul>
           <li [ngClass]="{ active: detail[0].active }">
-            <button class="btn" (click)="scrollTo(description, detail[0].id)">
+            <button class="btn" (click)="scrollTo(description, detail[0].id)" *ngIf="detail[0].content">
               {{ detail[0].name }}
             </button>
           </li>
           <li [ngClass]="{ active: detail[1].active }">
-            <button class="btn" (click)="scrollTo(specifications, detail[1].id)">
+            <button class="btn" (click)="scrollTo(specifications, detail[1].id)" *ngIf="detail[1].content">
               {{ detail[1].name }}
             </button>
           </li>
