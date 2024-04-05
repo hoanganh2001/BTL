@@ -52,9 +52,10 @@ export class OrderManagementSerivce {
     );
   }
 
-  cancelOrder(id: number): Observable<any> {
+  cancelOrder(id: number, note: string): Observable<any> {
     const params = {
       date: dayjs().toJSON(),
+      note: note
     };
     return this._httpClient.put(
       `${environment.endpoint}/admin/order/${id}/cancel`,
