@@ -271,7 +271,7 @@ export class OrderManagementComponent implements OnInit {
     });
     this.dialogRef.afterClosed().subscribe((data) => {
       if (data) {
-        this._orderManagementService.cancelOrder(data.id).subscribe({
+        this._orderManagementService.cancelOrder(data.id, data.message).subscribe({
           next: (res) => {
             if (res.message) {
               this._notiService.showSuccess(res.message);
