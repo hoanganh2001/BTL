@@ -49,12 +49,21 @@ export class SignInComponent implements OnInit {
       username: model.username,
       password: model.password,
     };
-    this._authService.logIn(body).subscribe((value) => {
-      if (value.role === 'admin') {
-        this._router.navigateByUrl(RouterConfig.ADMIN_DASHBOARD);
-      } else {
-        window.location.href = `http://localhost:4200` + this.previousURL;
-      }
+    this._authService.logIn(body).subscribe({
+      next: (res) => {
+        if (res?.isSuccess) {
+          if (res.role === 'admin') {
+            this._router.navigateByUrl(RouterConfig.ADMIN_DASHBOARD);
+          } else {
+            window.location.href = `http://localhost:4200` + this.previousURL;
+          }
+        } else {
+          this._notiService.showError(res.message);
+        }
+      },
+      error: (err) => {
+        this._notiService.showError(err.error.message);
+      },
     });
   }
 

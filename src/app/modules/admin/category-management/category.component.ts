@@ -90,8 +90,10 @@ export class CategoryManagementComponent implements OnInit {
             offset: 0,
             name: value,
           };
+          this.getCategoriesList(this.productSearchBody);
         } else if (value === '' && !this.searchControl.pristine) {
           delete this.productSearchBody['name'];
+          this.getCategoriesList(this.productSearchBody);
         }
       });
     this.getCategoriesList(this.productSearchBody);

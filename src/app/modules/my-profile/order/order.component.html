@@ -1,8 +1,8 @@
-<div class="col d-flex flex-column align-items-center" *ngIf="!orderList">
+<div class="col d-flex flex-column align-items-center" *ngIf="orderList">
   <img src="./assets/images/no-order.png" alt="" class="no-order-img mb-2" />
   <h2>No order yet. Buy more!</h2>
 </div>
-<ng-container *ngIf="orderList">
+<ng-container *ngIf="!orderList">
   <div class="p-4 d-flex">
     <div class="flex-fill row me-3 header-text">
       <span class="text-center col-1">Id</span>

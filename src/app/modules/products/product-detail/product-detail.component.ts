@@ -14,7 +14,7 @@ import { productData } from '../products.type';
 import { OrderService } from '../../order/order.service';
 import { ActivatedRoute } from '@angular/router';
 
-const areas = 'description,specifications';
+const areas = 'description,specification';
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
@@ -28,9 +28,10 @@ export class ProductDetailComponent implements OnInit {
     const activeSection = this.sections
       ?.toArray()
       .findIndex((section) => this.isElementInViewport(section));
-
     this.detail.forEach((item) => {
-      item.active = areas.split(',')[activeSection!] === item.id;
+      item.active =
+        areas.split(',')[activeSection]?.toLowerCase() ===
+        item.id?.toLowerCase();
     });
   }
 
@@ -42,8 +43,8 @@ export class ProductDetailComponent implements OnInit {
       rect.top <=
         (window.innerHeight || document.documentElement.clientHeight) &&
       rect.bottom >=
-        (window.innerHeight * 0.5 ||
-          document.documentElement.clientHeight * 0.5)
+        (window.innerHeight * 0.3 ||
+          document.documentElement.clientHeight * 0.3)
     );
   }
   listImage = [
@@ -101,16 +102,7 @@ export class ProductDetailComponent implements OnInit {
       .pipe(map((res) => res.data))
       .subscribe((res) => {
         if (res) {
-          console.log(res);
           this.productDetail = res;
-          // {
-          //   id: 1,
-          //   title: '',
-          //   src: '50835/hifiman-he1000-stealth-magnet-2-100x100-c.jpg',
-          //   bigSrc:
-          //     'https://3kshop.vn/wp-content/uploads/2023/07/hifiman-he1000-stealth-magnet-2.jpg',
-          //   active: false,
-          // },
           this.listImage = res.image.map((i) => ({
             id: i.id,
             title: this.productDetail.name,
@@ -138,10 +130,11 @@ export class ProductDetailComponent implements OnInit {
   }
 
   scrollTo(el: HTMLElement, id: string) {
-    el.scrollIntoView({ behavior: 'smooth' });
+    el?.scrollIntoView({ behavior: 'smooth' });
     this.detail.forEach((item) => {
       item.active = item.id === id;
     });
+    console.log(this.detail);
   }
 
   safeHTML(content: string): SafeHtml {
@@ -153,7 +146,7 @@ export class ProductDetailComponent implements OnInit {
   }
   hideShowMoreBtn(el: HTMLElement): boolean {
     return (
-      this.showMore || (!this.showMore && el.offsetHeight === el.scrollHeight)
+      this.showMore || (!this.showMore && el?.offsetHeight === el?.scrollHeight)
     );
   }
 

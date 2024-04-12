@@ -54,17 +54,17 @@
       <div class="col-12" [ngStyle]="{
           'max-height': showMore ? '' : '100vh',
           overflow: showMore ? 'unset' : 'hidden'
-        }" id="{{ detail[0].id }}" #description *ngIf="detail[0].content">
+        }" id="{{ detail[0].id }}" #description>
         <h4 class="sub-title">{{ detail[0].name }}</h4>
         <div [innerHTML]="safeHTML(detail[0].content || '')"></div>
       </div>
-      <div class="col-12" *ngIf="detail[0].content">
+      <div class="col-12">
         <button class="btn btn-showmore btn--animation-hover-in" (click)="showmore()"
           [ngClass]="hideShowMoreBtn(description) ? 'd-none' : ''">
           Xem thêm
         </button>
       </div>
-      <div class="col-12 mt-5" id="{{ detail[1].id }}" #specifications *ngIf="detail[1].content">
+      <div class="col-12 mt-5" id="{{ detail[1].id }}" #specification>
         <h4 class="sub-title">{{ detail[1].name }}</h4>
         <div id="ckeditor" [innerHTML]="safeHTML(detail[1].content || '')"></div>
       </div>
@@ -72,13 +72,13 @@
     <div class="col-2" *ngIf="detail[0].content || detail[1].content">
       <div class="menu">
         <ul>
-          <li [ngClass]="{ active: detail[0].active }">
-            <button class="btn" (click)="scrollTo(description, detail[0].id)" *ngIf="detail[0].content">
+          <li [ngClass]="detail[0].active && 'active'">
+            <button class="btn" (click)="scrollTo(description, detail[0].id)">
               {{ detail[0].name }}
             </button>
           </li>
-          <li [ngClass]="{ active: detail[1].active }">
-            <button class="btn" (click)="scrollTo(specifications, detail[1].id)" *ngIf="detail[1].content">
+          <li [ngClass]="detail[1].active && 'active'">
+            <button class="btn" (click)="scrollTo(specification, detail[1].id)">
               {{ detail[1].name }}
             </button>
           </li>

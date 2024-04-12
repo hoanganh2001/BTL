@@ -203,16 +203,18 @@
       border-radius: 50%;
     }
     &.active {
+      transition: all ease-in 0.3;
       &::before {
         background-color: #1a1a1a;
       }
       .btn {
+        transition: all ease-in 0.3;
         color: #1a1a1a;
         font-weight: 800;
       }
     }
     .btn {
-      transition: all 0.3s ease-in-out;
+      transition: all 0.3s ease-out;
       padding: 0;
       font-style: normal;
       font-weight: 600;

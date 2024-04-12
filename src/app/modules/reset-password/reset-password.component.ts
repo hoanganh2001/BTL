@@ -81,18 +81,16 @@ export class ResetPasswordComponent implements OnInit {
       email: model.email,
       otp: model.otp,
     };
-    console.log(this.otpSubmitForm);
-
-    // this._resetPasswordService.verifyOTP(body).subscribe({
-    //   next: (res) => {
-    //     this.isConfirmOTP = true;
-    //     this.userId = res.id;
-    //     this._notiService.showSuccess(res.message);
-    //   },
-    //   error(err) {
-    //     this._notiService.showError(err.error.message);
-    //   },
-    // });
+    this._resetPasswordService.verifyOTP(body).subscribe({
+      next: (res) => {
+        this.isConfirmOTP = true;
+        this.userId = res.id;
+        this._notiService.showSuccess(res.message);
+      },
+      error(err) {
+        this._notiService.showError(err.error.message);
+      },
+    });
   }
 
   resetPassword() {

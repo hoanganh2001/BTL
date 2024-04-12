@@ -7,7 +7,7 @@ import {
 import { productResponseData } from 'app/modules/home/home.types';
 import { ProductService } from 'app/modules/products/products.service';
 import { paginatorData } from 'app/shared/component/paginator/paginator.types';
-import { Constant } from 'app/shared/constant';
+import { Constant, getImgUrl } from 'app/shared/constant';
 import { map } from 'rxjs';
 
 @Component({
@@ -43,17 +43,20 @@ export class LovedComponent implements OnInit {
       .getFavoriteProduct(body)
       .pipe(
         map((value: any) => {
-          value.data = value.data.map((res: productResponseData) => ({
-            id: res.id,
-            price: res.price,
-            create_date: res.create_date,
-            discount: res.discount,
-            image: res.thumbnail_url,
-            name: res.name,
-            view: res.view_number,
-            gift: res.gift_id,
-            isFavorite: res.favorite,
-          }));
+          value.data = value.data.map((res: productResponseData) => {
+            return {
+              id: res.id,
+              price: res.price,
+              create_date: res.create_date,
+              discount: res.discount,
+              image: res.thumbnail_url,
+              name: res.name,
+              view: res.view_number,
+              gift: res.gift_id,
+              isFavorite: res.favorite,
+            };
+          });
+
           return value;
         }),
       )

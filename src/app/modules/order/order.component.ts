@@ -194,6 +194,8 @@ export class OrderComponent implements OnInit {
         this._notiService.showSuccess(res.message);
         if (res?.isSuccess) {
           if (model.payment !== 'COD') {
+            console.log(model.payment);
+
             const dialogConfig = new MatDialogConfig();
             dialogConfig.data = {
               id: res.orderId,
@@ -210,13 +212,14 @@ export class OrderComponent implements OnInit {
             );
             this.paymentDialogRef.afterClosed().subscribe((id) => {
               this.remove(null, 'checkout');
-              if (res?.isLogIn) {
-                this._router.navigateByUrl(RouterConfig.HISTORY);
-              } else {
-                this._router.navigateByUrl(RouterConfig.HOME);
-              }
+              // if (res?.isLogIn) {
+              //   this._router.navigateByUrl(RouterConfig.HISTORY);
+              // } else {
+              //   this._router.navigateByUrl(RouterConfig.HOME);
+              // }
             });
           } else {
+            this.remove(null, 'checkout');
             if (res?.isLogIn) {
               this._router.navigateByUrl(RouterConfig.HISTORY);
             } else {

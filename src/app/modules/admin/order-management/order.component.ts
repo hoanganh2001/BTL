@@ -65,11 +65,11 @@ export class OrderManagementComponent implements OnInit {
           this.orderSearchBody = {
             ...this.orderSearchBody,
             offset: 0,
-            name: value,
+            id: value,
           };
           this.getOrderList(this.orderSearchBody);
         } else if (value === '' && !this.searchControl.pristine) {
-          delete this.orderSearchBody['name'];
+          delete this.orderSearchBody['id'];
           this.getOrderList(this.orderSearchBody);
         }
       });
@@ -271,17 +271,19 @@ export class OrderManagementComponent implements OnInit {
     });
     this.dialogRef.afterClosed().subscribe((data) => {
       if (data) {
-        this._orderManagementService.cancelOrder(data.id, data.message).subscribe({
-          next: (res) => {
-            if (res.message) {
-              this._notiService.showSuccess(res.message);
-              this.getOrderList(this.orderSearchBody);
-            }
-          },
-          error(err) {
-            this._notiService?.showError(err.error.message);
-          },
-        });
+        this._orderManagementService
+          .cancelOrder(data.id, data.message)
+          .subscribe({
+            next: (res) => {
+              if (res.message) {
+                this._notiService.showSuccess(res.message);
+                this.getOrderList(this.orderSearchBody);
+              }
+            },
+            error(err) {
+              this._notiService?.showError(err.error.message);
+            },
+          });
       }
     });
   }
