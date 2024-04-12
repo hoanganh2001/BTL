@@ -88,13 +88,19 @@ export class OrderManagementComponent implements OnInit {
             email: res.email,
             phone_number: res.phone_number,
             note: res.note,
-            coupon: res.coupon,
             payment: res.payment,
             create_date: res.create_date,
             update_date: res.update_date,
+            coupon: res.coupon_value
+              ? Constant.COUPON_TYPE[res.coupon_unit.toUpperCase()]
+                ? res.coupon_value +
+                  Constant.COUPON_TYPE[res.coupon_unit.toUpperCase()]
+                : res.coupon_value
+              : null,
             status: res.status,
             status_name: res.status_name,
             invoice: res.invoice,
+            amount: res.amount,
             product: res.product.map((t) => {
               t.image = Constant.IMG_DIR.SHOP + t.image;
               return t;

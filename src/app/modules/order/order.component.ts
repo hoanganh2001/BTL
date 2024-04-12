@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from './order.service';
-import { cartData } from './order.types';
+import { cartData, coupon } from './order.types';
 import { map } from 'rxjs';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import {
+  Constant,
   getErrorText,
   getImgUrl,
   validateFormControls,
@@ -25,8 +31,11 @@ import { PaymentComponent } from './payment/payment.component';
   styleUrls: ['./order.component.scss'],
 })
 export class OrderComponent implements OnInit {
+  couponControl = new FormControl('', []);
+
   paymentDialogRef: MatDialogRef<PaymentComponent>;
 
+  couponData?: coupon = {};
   allComplete: boolean = false;
   orderForm?: FormGroup;
   isClicked: boolean = false;
@@ -54,6 +63,7 @@ export class OrderComponent implements OnInit {
   ];
   cartList: cartData[];
   totalPrice: number = 0;
+  amount: number = 0;
 
   constructor(
     private _orderService: OrderService,
@@ -117,6 +127,29 @@ export class OrderComponent implements OnInit {
       });
   }
 
+  getCoupon() {
+    const body = { name: this.couponControl.value };
+    this._orderService.getCoupon(body).subscribe({
+      next: (res) => {
+        if (res) {
+          const char = Constant.COUPON_TYPE[res.data.unit?.toUpperCase()];
+          this.couponData.id = res.data.id;
+          this.couponData.value = res.data.value;
+          this.couponData.unit = res.data.unit;
+          if (char) {
+            this.couponData.label = '-' + res.data.value + char;
+          }
+
+          this.amount = this.totalPrice * (1 - res.data.value / 100);
+        }
+      },
+      error: (err) => {
+        this.couponData = {};
+        this._notiService?.showError(err.error.message);
+      },
+    });
+  }
+
   getDiscountPrice(cost: number, discount: number): number {
     return cost * (1 - discount / 100);
   }
@@ -130,6 +163,7 @@ export class OrderComponent implements OnInit {
 
       this.totalPrice += price * item.quantity;
     });
+    this.amount = this.totalPrice;
   }
 
   updateQuantity(quantity: number, id: number, remainQuantity: number) {
@@ -178,8 +212,9 @@ export class OrderComponent implements OnInit {
       phone_number: model.phone,
       note: model.note || null,
       payment: model.payment,
-      coupon: model.coupon || null,
+      coupon: this.couponData.id || null,
       create_date: dayjs().toJSON(),
+      amount: this.amount,
       proudct: this.cartList.map((item) => ({
         id: item.id,
         quantity: item.quantity,
@@ -194,13 +229,11 @@ export class OrderComponent implements OnInit {
         this._notiService.showSuccess(res.message);
         if (res?.isSuccess) {
           if (model.payment !== 'COD') {
-            console.log(model.payment);
-
             const dialogConfig = new MatDialogConfig();
             dialogConfig.data = {
               id: res.orderId,
               payment: model.payment,
-              total: this.totalPrice,
+              total: this.amount,
             };
             dialogConfig.width = '600px';
             dialogConfig.height = 'fit-content';
@@ -228,7 +261,7 @@ export class OrderComponent implements OnInit {
           }
         }
       },
-      error(err) {
+      error: (err) => {
         this.isClicked = false;
         this._notiService?.showError(err.error.message);
       },

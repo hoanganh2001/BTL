@@ -36,7 +36,12 @@ export class OrderComponent implements OnInit {
 
   getOrderList() {
     this._orderService.getOrderList().subscribe((res) => {
-      this.orderList = res.data;
+      this.orderList = res.data.map((t) => {
+        t.char = t.coupon_unit
+          ? Constant.COUPON_TYPE[t.coupon_unit?.toUpperCase()]
+          : null;
+        return t;
+      });
     });
   }
   getDiscountPrice(cost: number, discount: number): number {

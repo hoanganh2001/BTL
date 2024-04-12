@@ -16,6 +16,7 @@ export class SignInComponent implements OnInit {
   SignUpForm?: FormGroup;
   isSignIn: boolean = false;
   previousURL: string;
+
   constructor(
     private _formBuilder: FormBuilder,
     private _authService: AuthService,

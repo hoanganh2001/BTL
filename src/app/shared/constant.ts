@@ -50,6 +50,10 @@ export class Constant {
     BANK: 'TCB',
     ACCOUNT: '629666688888',
   };
+
+  public static COUPON_TYPE = {
+    PERCENT: '%',
+  };
 }
 export const ICON = {
   headphone: 'bi-headphones',

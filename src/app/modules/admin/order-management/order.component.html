@@ -30,6 +30,7 @@
                     </th>
                     <th>Coupon</th>
                     <th mat-sort-header="payment">Payment</th>
+                    <th mat-sort-header="payment">Amount</th>
                     <th mat-sort-header="status">Status</th>
                     <th mat-sort-header="create_date">Created Date</th>
                     <th mat-sort-header="update_date">Updated Date</th>
@@ -45,8 +46,9 @@
                       <td>{{ item.name }}</td>
                       <td>{{ item.address }}</td>
                       <td>{{ item.phone_number }}</td>
-                      <td>{{ item.coupon }} abc</td>
+                      <td>-{{ (+item.coupon ? (item.coupon | currencyFormat) : item.coupon) || '---' }}</td>
                       <td>{{ item.payment }}</td>
+                      <td>{{ item.amount | currencyFormat }}</td>
                       <td><mat-chip class="chips"
                           [ngStyle]="{'background': Constant.STATUS_COLOR_LIST[item.status_name?.toUpperCase()]}">{{
                           item.status_name }}</mat-chip></td>

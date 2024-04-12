@@ -129,9 +129,13 @@
             <p>Vận chuyển:</p>
             <p>Miễn phí</p>
           </div>
+          <div class="order-card-item d-flex justify-content-between" *ngIf="couponData.id">
+            <p>Giảm giá:</p>
+            <p>{{ couponData.label }}</p>
+          </div>
           <div class="order-card-total d-flex justify-content-between">
             <p>Thành tiền:</p>
-            <p class="price">{{ totalPrice | currencyFormat }}</p>
+            <p class="price">{{ amount | currencyFormat }}</p>
           </div>
         </div>
         <div class="order-card order-card-coupon">
@@ -140,9 +144,9 @@
           </span>
           <div class="order-card-coupon-input">
             <mat-form-field class="input-field">
-              <input matInput placeholder="Nhập ở đây" />
+              <input matInput [formControl]="couponControl" placeholder="Nhập ở đây" />
             </mat-form-field>
-            <button class="btn btn-apply btn--animation-hover-out">
+            <button class="btn btn-apply btn--animation-hover-out" (click)="couponControl.value !== '' && getCoupon()">
               Áp dụng
             </button>
           </div>

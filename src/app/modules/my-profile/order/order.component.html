@@ -1,8 +1,8 @@
-<div class="col d-flex flex-column align-items-center" *ngIf="orderList">
+<div class="col d-flex flex-column align-items-center" *ngIf="!orderList">
   <img src="./assets/images/no-order.png" alt="" class="no-order-img mb-2" />
   <h2>No order yet. Buy more!</h2>
 </div>
-<ng-container *ngIf="!orderList">
+<ng-container *ngIf="orderList">
   <div class="p-4 d-flex">
     <div class="flex-fill row me-3 header-text">
       <span class="text-center col-1">Id</span>
@@ -70,9 +70,18 @@
               </div>
             </div>
           </div>
-
+          <ng-container *ngIf="item.coupon_value">
+            <div class="d-flex justify-content-end">
+              <span class="header-text-discount">Tạm tính: {{getTotal(item.product)}}</span>
+            </div>
+            <div class="d-flex justify-content-end" *ngIf="item.coupon_value">
+              <span class="header-text-discount">Giảm giá: -{{ item.coupon_unit !== 'percent'?( item.coupon_value |
+                currencyFormat
+                ): item.coupon_value + item.char}}</span>
+            </div>
+          </ng-container>
           <div class="d-flex justify-content-end">
-            <span class="header-text">Tổng: {{ getTotal(item.product) | currencyFormat }}</span>
+            <span class="header-text">Tổng: {{ (item.amount ||getTotal(item.product) )| currencyFormat }}</span>
           </div>
         </div>
         <div class="note" *ngIf="item.status === 'decline'">Note: {{item.note}}</div>

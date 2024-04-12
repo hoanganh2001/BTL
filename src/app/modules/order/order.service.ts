@@ -86,4 +86,10 @@ export class OrderService {
   getInvoice(id): Observable<any> {
     return this._httpClient.get(`${environment.endpoint}/order/invoice/` + id);
   }
+
+  getCoupon(body): Observable<any> {
+    return this._httpClient.get(`${environment.endpoint}/order/coupon`, {
+      params: body,
+    });
+  }
 }

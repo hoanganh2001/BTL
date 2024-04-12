@@ -25,6 +25,8 @@ export interface orderList {
   note?: string;
   payment: string;
   coupon?: string;
+  coupon_value?: number;
+  coupon_unit?: string;
   create_date: string;
   status: number;
   status_name: string;
@@ -32,6 +34,7 @@ export interface orderList {
   product: productDetail[];
   isExpand: boolean;
   invoice: number;
+  amount: number;
 }
 
 export interface productDetail {

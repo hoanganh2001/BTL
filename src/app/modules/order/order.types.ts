@@ -6,3 +6,10 @@ export interface cartData {
   discount?: number;
   quantity: number;
 }
+
+export interface coupon {
+  id?: number;
+  value?: number;
+  unit?: string;
+  label?: string;
+}
