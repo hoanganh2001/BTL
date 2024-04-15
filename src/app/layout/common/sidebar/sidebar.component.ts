@@ -28,12 +28,23 @@ export const ROUTES: RouteInfo[] = [
     class: '',
   },
   {
+    path: RouterConfig.ADMIN_BRAND,
+    title: 'Brand Management',
+    icon: 'category',
+    class: '',
+  },
+  {
+    path: RouterConfig.ADMIN_COUPON,
+    title: 'Coupon Management',
+    icon: 'category',
+    class: '',
+  },
+  {
     path: RouterConfig.ADMIN_NEWS,
     title: 'New Management',
     icon: 'newspaper',
     class: '',
   },
-
   {
     path: RouterConfig.ADMIN_USER,
     title: 'User Management',

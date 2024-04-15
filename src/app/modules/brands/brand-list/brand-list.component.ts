@@ -3,6 +3,7 @@ import RouterConfig from 'app/core/config/router.config';
 import { BrandService } from '../brand.service';
 import { brandList, brandResponseData } from '../brand.types';
 import { map } from 'rxjs';
+import { Constant } from 'app/shared/constant';
 
 @Component({
   selector: 'app-brand-list',
@@ -28,15 +29,23 @@ export class BrandListComponent implements OnInit {
       .getBrands(null)
       .pipe(
         map((res: any) => {
+          console.log(res);
+
           return res.data.map((item: brandResponseData) => ({
             id: item.id,
-            img: item.image,
+            img: item.thumbnail_url?.includes('https')
+              ? item.thumbnail_url
+              : (item.thumbnail_url?.includes('/')
+                  ? Constant.IMG_DIR.SHOP
+                  : Constant.IMG_DIR.GOOGLE_DRIVE) + item.thumbnail_url,
             name: item.name,
           }));
         }),
       )
       .subscribe((res) => {
         if (res) {
+          console.log(res);
+
           this.brandList.data = res;
         }
       });

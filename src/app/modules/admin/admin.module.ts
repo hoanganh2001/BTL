@@ -5,7 +5,7 @@ import { SharedModule } from 'app/shared/shared.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatRippleModule } from '@angular/material/core';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -22,7 +22,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { CategoryManagementComponent } from './category-management/category.component';
 import { NewsManagementComponent } from './news-management/news.component';
 import { OrderManagementComponent } from './order-management/order.component';
-import { SpecificationTemplateManagementComponent } from './specification-template/specification-template.component';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
@@ -32,6 +31,11 @@ import { CreateNewComponent } from './news-management/create/create.component';
 import { CreateUserComponent } from './user-management/create/create.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ChangePasswordModule } from 'app/shared/component/change-password/change-password.module';
+import { BrandManagementComponent } from './brand-management/brand-management.component';
+import { CouponManagementComponent } from './coupon-management/coupon-management.component';
+import { CreateBrandComponent } from './brand-management/create/create.component';
+import { CreateCouponComponent } from './coupon-management/create/create.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
   imports: [
@@ -58,6 +62,8 @@ import { ChangePasswordModule } from 'app/shared/component/change-password/chang
     MatExpansionModule,
     MatSlideToggleModule,
     ChangePasswordModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   declarations: [
     DashboardComponent,
@@ -67,9 +73,12 @@ import { ChangePasswordModule } from 'app/shared/component/change-password/chang
     CategoryManagementComponent,
     NewsManagementComponent,
     UserManagementComponent,
-    SpecificationTemplateManagementComponent,
+    BrandManagementComponent,
+    CouponManagementComponent,
     CreateNewComponent,
     CreateUserComponent,
+    CreateBrandComponent,
+    CreateCouponComponent,
   ],
 })
 export class AdminModule {}

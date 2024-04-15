@@ -1,6 +1,6 @@
 export interface brandResponseData {
   id: number;
-  image: string;
+  thumbnail_url?: string;
   name: string;
 }
 

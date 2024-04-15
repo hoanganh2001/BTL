@@ -84,7 +84,7 @@ export class CreateUserComponent implements OnInit {
     if (this.isClicked) {
       return;
     }
-    // this.isClicked = true;
+    this.isClicked = true;
 
     let formValidate = {
       isValidated: true,

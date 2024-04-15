@@ -7,7 +7,7 @@ import { BrandService } from 'app/modules/brands/brand.service';
 import { SubmenuData } from '../common/sub-menu/sub-menu.type';
 import { ProductService } from 'app/modules/products/products.service';
 import { brandResponseData } from 'app/modules/brands/brand.types';
-import { getIcon } from 'app/shared/constant';
+import { Constant, getIcon } from 'app/shared/constant';
 
 @Component({
   selector: 'classic-layout',
@@ -58,7 +58,11 @@ export class ClassicComponent implements OnInit, OnDestroy {
         map((res: any) => {
           return res.data.map((item: brandResponseData) => ({
             id: item.id,
-            img: item.image,
+            img: item.thumbnail_url?.includes('https:')
+              ? item.thumbnail_url
+              : (item.thumbnail_url?.includes('/')
+                  ? Constant.IMG_DIR.SHOP
+                  : Constant.IMG_DIR.GOOGLE_DRIVE) + item.thumbnail_url,
             name: item.name,
           }));
         }),

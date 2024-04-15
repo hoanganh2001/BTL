@@ -8,25 +8,29 @@ import {
   validateFormControls,
 } from 'app/shared/constant';
 import * as dayjs from 'dayjs';
-import { NewsList, imageDetailList, popUpData, typeData } from '../news.type';
 import { NotificationService } from 'app/core/service/notification';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { NewManagementSerivce } from '../news.service';
+import { BrandManagementSerivce } from '../brand-management.service';
+import {
+  imageDetailList,
+  BrandList,
+  popUpData,
+} from '../brand-management.type';
 
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss'],
 })
-export class CreateNewComponent implements OnInit {
+export class CreateBrandComponent implements OnInit {
   public Editor = customBuild;
   settings = {
     counter: false,
     plugins: [lgZoom],
   };
 
-  NewsForm?: FormGroup;
+  BrandsForm?: FormGroup;
   isChangeThumbnail: boolean = false;
   fileAction: string = '';
   isClicked: boolean = false;
@@ -35,13 +39,13 @@ export class CreateNewComponent implements OnInit {
   fileUploaded?: imageDetailList[] = [];
   isEdit: boolean = false;
   isDetail: boolean = false;
-  newItem?: NewsList;
+  newItem?: BrandList;
   type: string;
 
   constructor(
-    public dialogRef: MatDialogRef<CreateNewComponent>,
+    public dialogRef: MatDialogRef<CreateBrandComponent>,
     @Inject(MAT_DIALOG_DATA) data: popUpData,
-    private _newManagementService: NewManagementSerivce,
+    private _brandManagementService: BrandManagementSerivce,
     private _formBuilder: FormBuilder,
     private _notiService: NotificationService,
     private _sanitizer: DomSanitizer,
@@ -55,13 +59,8 @@ export class CreateNewComponent implements OnInit {
       this.newItem = data.item;
     }
     // Validators.required
-    this.NewsForm = this._formBuilder.group({
+    this.BrandsForm = this._formBuilder.group({
       name: ['', [Validators.required]],
-      author: ['', [Validators.required]],
-      view: ['', []],
-      create_date: ['', []],
-      update_date: ['', []],
-      content: ['', []],
     });
   }
 
@@ -77,20 +76,12 @@ export class CreateNewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.disableField();
     if (this.isEdit) {
       this.getNewDetail(this.newItem);
     } else if (this.isDetail) {
-      this.NewsForm.disable();
+      this.BrandsForm.disable();
       this.getNewDetail(this.newItem);
     }
-  }
-
-  disableField() {
-    this.authorField.disable();
-    this.createDateField.disable();
-    this.updateDateField.disable();
-    this.viewField.disable();
   }
 
   previewImage(input) {
@@ -117,16 +108,10 @@ export class CreateNewComponent implements OnInit {
     });
   }
 
-  getNewDetail(item: NewsList) {
+  getNewDetail(item: BrandList) {
     this.nameField?.setValue(item?.name);
-    this.authorField?.setValue(item?.author);
-    this.viewField?.setValue(item?.view_number || 0);
-    this.createDateField?.setValue(item?.create_date || null);
-    this.updateDateField?.setValue(item?.update_date);
-    item.content = formatCKContent(item.content);
-    this.contentField?.setValue(item.content || '');
     this.imageInfos = {
-      id: item?.thumbnail_id,
+      id: item?.image,
       name: item?.name,
       url: item.thumbnail_url,
     };
@@ -143,34 +128,28 @@ export class CreateNewComponent implements OnInit {
       errors: [],
     };
 
-    this.NewsForm.markAllAsTouched();
+    this.BrandsForm.markAllAsTouched();
     if (this.selectedFiles.length < 1 && !this.imageInfos) {
       this._notiService.showError('Must have at least 1 image!');
       this.isClicked = false;
       return;
     }
 
-    const validateResult = validateFormControls(this.NewsForm, formValidate);
+    const validateResult = validateFormControls(this.BrandsForm, formValidate);
     if (!validateResult.isValidated) {
       this._notiService.showError(getErrorText(validateResult.errors[0]));
       this.isClicked = false;
       return;
     }
 
-    const model = this.NewsForm.getRawValue();
+    const model = this.BrandsForm.getRawValue();
     const createProductBody = {
       name: model.name,
-      author_id: 3,
-      content: model.content,
-      create_date: dayjs().toJSON(),
-      update_date: dayjs().toJSON(),
     };
 
     if (this.isEdit) {
-      delete createProductBody['create_date'];
-      delete createProductBody['author_id'];
-      this._newManagementService
-        .editNew(createProductBody, this.newItem.id)
+      this._brandManagementService
+        .editBrand(createProductBody, this.newItem.id)
         .subscribe((res) => {
           this.isClicked = false;
           if (this.selectedFiles.length && this.isChangeThumbnail) {
@@ -178,7 +157,7 @@ export class CreateNewComponent implements OnInit {
             this.selectedFiles.forEach((file, i) => {
               formData.append('ufile', file);
             });
-            this._newManagementService
+            this._brandManagementService
               .uploadFile(res.new_id, formData)
               .subscribe((res) => {
                 this.dialogRef.close(true);
@@ -190,8 +169,8 @@ export class CreateNewComponent implements OnInit {
           }
         });
     } else {
-      this._newManagementService
-        .createNew(createProductBody)
+      this._brandManagementService
+        .createBrand(createProductBody)
         .subscribe((res) => {
           this.isClicked = false;
           if (this.selectedFiles.length) {
@@ -199,9 +178,10 @@ export class CreateNewComponent implements OnInit {
             this.selectedFiles.forEach((file, i) => {
               formData.append('ufile', file);
             });
-            this._newManagementService
-              .uploadFile(res.new_id, formData)
+            this._brandManagementService
+              .uploadFile(res.brand_id, formData)
               .subscribe((res) => {
+                this.dialogRef.close(true);
                 this._notiService.showSuccess(res.message);
               });
           }
@@ -210,27 +190,7 @@ export class CreateNewComponent implements OnInit {
   }
 
   get nameField() {
-    return this.NewsForm?.get('name');
-  }
-
-  get authorField() {
-    return this.NewsForm?.get('author');
-  }
-
-  get viewField() {
-    return this.NewsForm?.get('view');
-  }
-
-  get createDateField() {
-    return this.NewsForm?.get('create_date');
-  }
-
-  get updateDateField() {
-    return this.NewsForm?.get('update_date');
-  }
-
-  get contentField() {
-    return this.NewsForm?.get('content');
+    return this.BrandsForm?.get('name');
   }
 
   getSafeHTML(content: string): SafeHtml {

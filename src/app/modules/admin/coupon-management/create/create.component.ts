@@ -8,25 +8,26 @@ import {
   validateFormControls,
 } from 'app/shared/constant';
 import * as dayjs from 'dayjs';
-import { NewsList, imageDetailList, popUpData, typeData } from '../news.type';
 import { NotificationService } from 'app/core/service/notification';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { NewManagementSerivce } from '../news.service';
+
+import { CouponManagementSerivce } from '../coupon-management.service';
+import { Coupon, imageDetailList, popUpData } from '../coupon-management.type';
 
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss'],
 })
-export class CreateNewComponent implements OnInit {
+export class CreateCouponComponent implements OnInit {
   public Editor = customBuild;
   settings = {
     counter: false,
     plugins: [lgZoom],
   };
 
-  NewsForm?: FormGroup;
+  BrandsForm?: FormGroup;
   isChangeThumbnail: boolean = false;
   fileAction: string = '';
   isClicked: boolean = false;
@@ -35,13 +36,13 @@ export class CreateNewComponent implements OnInit {
   fileUploaded?: imageDetailList[] = [];
   isEdit: boolean = false;
   isDetail: boolean = false;
-  newItem?: NewsList;
+  newItem?: Coupon;
   type: string;
 
   constructor(
-    public dialogRef: MatDialogRef<CreateNewComponent>,
+    public dialogRef: MatDialogRef<CreateCouponComponent>,
     @Inject(MAT_DIALOG_DATA) data: popUpData,
-    private _newManagementService: NewManagementSerivce,
+    private _couponManagementService: CouponManagementSerivce,
     private _formBuilder: FormBuilder,
     private _notiService: NotificationService,
     private _sanitizer: DomSanitizer,
@@ -55,13 +56,13 @@ export class CreateNewComponent implements OnInit {
       this.newItem = data.item;
     }
     // Validators.required
-    this.NewsForm = this._formBuilder.group({
+    this.BrandsForm = this._formBuilder.group({
       name: ['', [Validators.required]],
-      author: ['', [Validators.required]],
-      view: ['', []],
-      create_date: ['', []],
-      update_date: ['', []],
-      content: ['', []],
+      value: ['', [Validators.required]],
+      unit: ['', [Validators.required]],
+      quantity: ['', [Validators.required]],
+      start_date: ['', [Validators.required]],
+      end_date: ['', [Validators.required]],
     });
   }
 
@@ -77,20 +78,12 @@ export class CreateNewComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.disableField();
     if (this.isEdit) {
       this.getNewDetail(this.newItem);
     } else if (this.isDetail) {
-      this.NewsForm.disable();
+      this.BrandsForm.disable();
       this.getNewDetail(this.newItem);
     }
-  }
-
-  disableField() {
-    this.authorField.disable();
-    this.createDateField.disable();
-    this.updateDateField.disable();
-    this.viewField.disable();
   }
 
   previewImage(input) {
@@ -117,19 +110,11 @@ export class CreateNewComponent implements OnInit {
     });
   }
 
-  getNewDetail(item: NewsList) {
+  getNewDetail(item: Coupon) {
     this.nameField?.setValue(item?.name);
-    this.authorField?.setValue(item?.author);
-    this.viewField?.setValue(item?.view_number || 0);
-    this.createDateField?.setValue(item?.create_date || null);
-    this.updateDateField?.setValue(item?.update_date);
-    item.content = formatCKContent(item.content);
-    this.contentField?.setValue(item.content || '');
-    this.imageInfos = {
-      id: item?.thumbnail_id,
-      name: item?.name,
-      url: item.thumbnail_url,
-    };
+    this.valueField?.setValue(item?.value);
+    this.unitField?.setValue(item?.unit);
+    this.quantityField?.setValue(item?.quantity);
   }
 
   async createProduct() {
@@ -137,100 +122,59 @@ export class CreateNewComponent implements OnInit {
       return;
     }
     this.isClicked = true;
-
     let formValidate = {
       isValidated: true,
       errors: [],
     };
 
-    this.NewsForm.markAllAsTouched();
-    if (this.selectedFiles.length < 1 && !this.imageInfos) {
-      this._notiService.showError('Must have at least 1 image!');
-      this.isClicked = false;
-      return;
-    }
-
-    const validateResult = validateFormControls(this.NewsForm, formValidate);
+    this.BrandsForm.markAllAsTouched();
+    const validateResult = validateFormControls(this.BrandsForm, formValidate);
     if (!validateResult.isValidated) {
       this._notiService.showError(getErrorText(validateResult.errors[0]));
       this.isClicked = false;
       return;
     }
 
-    const model = this.NewsForm.getRawValue();
+    const model = this.BrandsForm.getRawValue();
     const createProductBody = {
       name: model.name,
-      author_id: 3,
-      content: model.content,
-      create_date: dayjs().toJSON(),
-      update_date: dayjs().toJSON(),
+      value: model.value,
+      unit: model.unit,
+      quantity: model.quantity,
+      start_date: dayjs(model.start_date).toISOString(),
+      end_date: dayjs(model.end_date).toISOString(),
     };
-
     if (this.isEdit) {
-      delete createProductBody['create_date'];
-      delete createProductBody['author_id'];
-      this._newManagementService
-        .editNew(createProductBody, this.newItem.id)
+      this._couponManagementService
+        .editCoupon(createProductBody, this.newItem.id)
         .subscribe((res) => {
-          this.isClicked = false;
-          if (this.selectedFiles.length && this.isChangeThumbnail) {
-            const formData = new FormData();
-            this.selectedFiles.forEach((file, i) => {
-              formData.append('ufile', file);
-            });
-            this._newManagementService
-              .uploadFile(res.new_id, formData)
-              .subscribe((res) => {
-                this.dialogRef.close(true);
-                this._notiService.showSuccess(res.message);
-              });
-          } else {
-            this.dialogRef.close(true);
-            this._notiService.showSuccess(res.message);
-          }
+          this.dialogRef.close(true);
+          this._notiService.showSuccess(res.message);
         });
     } else {
-      this._newManagementService
-        .createNew(createProductBody)
+      this._couponManagementService
+        .createCoupon(createProductBody)
         .subscribe((res) => {
-          this.isClicked = false;
-          if (this.selectedFiles.length) {
-            const formData = new FormData();
-            this.selectedFiles.forEach((file, i) => {
-              formData.append('ufile', file);
-            });
-            this._newManagementService
-              .uploadFile(res.new_id, formData)
-              .subscribe((res) => {
-                this._notiService.showSuccess(res.message);
-              });
-          }
+          this.dialogRef.close(true);
+          this._notiService.showSuccess(res.message);
         });
     }
   }
 
   get nameField() {
-    return this.NewsForm?.get('name');
+    return this.BrandsForm?.get('name');
   }
 
-  get authorField() {
-    return this.NewsForm?.get('author');
+  get valueField() {
+    return this.BrandsForm?.get('value');
   }
 
-  get viewField() {
-    return this.NewsForm?.get('view');
+  get unitField() {
+    return this.BrandsForm?.get('unit');
   }
 
-  get createDateField() {
-    return this.NewsForm?.get('create_date');
-  }
-
-  get updateDateField() {
-    return this.NewsForm?.get('update_date');
-  }
-
-  get contentField() {
-    return this.NewsForm?.get('content');
+  get quantityField() {
+    return this.BrandsForm?.get('quantity');
   }
 
   getSafeHTML(content: string): SafeHtml {

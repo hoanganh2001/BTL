@@ -1,12 +1,12 @@
 import { Route } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProductManagementComponent } from './product-management/product.component';
-import { CreateProductComponent } from './product-management/create/create.component';
 import { OrderManagementComponent } from './order-management/order.component';
 import { CategoryManagementComponent } from './category-management/category.component';
 import { NewsManagementComponent } from './news-management/news.component';
 import { UserManagementComponent } from './user-management/user-management.component';
-import { SpecificationTemplateManagementComponent } from './specification-template/specification-template.component';
+import { BrandManagementComponent } from './brand-management/brand-management.component';
+import { CouponManagementComponent } from './coupon-management/coupon-management.component';
 
 export const AdminRoutes: Route[] = [
   {
@@ -23,47 +23,27 @@ export const AdminRoutes: Route[] = [
     component: ProductManagementComponent,
   },
   {
-    path: 'product',
-    children: [{ path: 'create', component: CreateProductComponent }],
-  },
-  {
     path: 'order',
     component: OrderManagementComponent,
-  },
-  {
-    path: 'order',
-    children: [{ path: 'create', component: CreateProductComponent }],
   },
   {
     path: 'category',
     component: CategoryManagementComponent,
   },
   {
-    path: 'category',
-    children: [{ path: 'create', component: CreateProductComponent }],
-  },
-  {
     path: 'news',
     component: NewsManagementComponent,
-  },
-  {
-    path: 'news',
-    children: [{ path: 'create', component: CreateProductComponent }],
   },
   {
     path: 'user',
     component: UserManagementComponent,
   },
   {
-    path: 'user',
-    children: [{ path: 'create', component: CreateProductComponent }],
+    path: 'brand',
+    component: BrandManagementComponent,
   },
   {
-    path: 'template',
-    component: SpecificationTemplateManagementComponent,
-  },
-  {
-    path: 'template',
-    children: [{ path: 'create', component: CreateProductComponent }],
+    path: 'coupon',
+    component: CouponManagementComponent,
   },
 ];

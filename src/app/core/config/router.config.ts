@@ -29,6 +29,8 @@ export default class RouterConfig {
   public static ADMIN_ORDER = this.ADMIN + '/order';
   public static ADMIN_CATEGORY = this.ADMIN + '/category';
   public static ADMIN_NEWS = this.ADMIN + '/news';
+  public static ADMIN_BRAND = this.ADMIN + '/brand';
+  public static ADMIN_COUPON = this.ADMIN + '/coupon';
   public static ADMIN_USER = this.ADMIN + '/user';
   public static ADMIN_PROFILE = this.ADMIN + '/my-profile';
 }

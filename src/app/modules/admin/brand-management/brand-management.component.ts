@@ -1,36 +1,36 @@
 import { Component, OnInit } from '@angular/core';
-import { paginatorData } from 'app/shared/component/paginator/paginator.types';
-import { debounceTime, map } from 'rxjs';
-import { SortHeader } from '../admin.types';
 import { FormControl } from '@angular/forms';
-import RouterConfig from 'app/core/config/router.config';
-import { Constant, getConfirmData } from 'app/shared/constant';
 import {
   MatDialogRef,
-  MatDialogConfig,
   MatDialog,
+  MatDialogConfig,
 } from '@angular/material/dialog';
-import { CreateNewComponent } from './create/create.component';
-import { NewsList } from './news.type';
+import RouterConfig from 'app/core/config/router.config';
 import { BaseResponse } from 'app/core/models/base-response.model';
-import { NewManagementSerivce } from './news.service';
-import { DialogConfirmComponent } from 'app/shared/component/dialog-confirm/dialog-confirm.component';
 import { NotificationService } from 'app/core/service/notification';
+import { DialogConfirmComponent } from 'app/shared/component/dialog-confirm/dialog-confirm.component';
+import { paginatorData } from 'app/shared/component/paginator/paginator.types';
+import { Constant, getConfirmData } from 'app/shared/constant';
+import { debounceTime, map } from 'rxjs';
+import { SortHeader } from '../admin.types';
+import { BrandManagementSerivce } from './brand-management.service';
+import { BrandList } from './brand-management.type';
+import { CreateBrandComponent } from './create/create.component';
 
 @Component({
-  selector: 'app-news',
-  templateUrl: './news.component.html',
-  styleUrls: ['./news.component.scss'],
+  selector: 'app-brand-management',
+  templateUrl: './brand-management.component.html',
+  styleUrls: ['./brand-management.component.scss'],
 })
-export class NewsManagementComponent implements OnInit {
+export class BrandManagementComponent implements OnInit {
   searchControl = new FormControl('');
-  confirmDialogRef: MatDialogRef<CreateNewComponent>;
+  confirmDialogRef: MatDialogRef<CreateBrandComponent>;
   dialogRef: MatDialogRef<DialogConfirmComponent>;
 
   readonly RouteConfig = RouterConfig;
 
   constructor(
-    private _newManagementService: NewManagementSerivce,
+    private _brandManagementService: BrandManagementSerivce,
     private _notiService: NotificationService,
     public _dialog: MatDialog,
   ) {}
@@ -74,30 +74,24 @@ export class NewsManagementComponent implements OnInit {
   }
 
   getNewList(body: any) {
-    this._newManagementService
-      .getNewsOnSearch(body)
+    this._brandManagementService
+      .getBrandsOnSearch(body)
       .pipe(
-        map((value: BaseResponse<NewsList>) => {
+        map((value: BaseResponse<BrandList>) => {
           value.data = value.data.map((res) => ({
             id: res.id,
             name: res.name,
-            content: res.content,
-            create_date: res.create_date,
-            update_date: res.update_date,
-            view_number: res.view_number,
-            thumbnail_id: res.thumbnail_id,
-            thumbnail_url:
-              (res.thumbnail_url.includes('/')
-                ? Constant.IMG_DIR.SHOP
-                : Constant.IMG_DIR.GOOGLE_DRIVE) + res.thumbnail_url,
-            author_id: res.author_id,
-            author: res.author,
+            thumbnail_url: res.thumbnail_url?.includes('https:')
+              ? res.thumbnail_url
+              : (res.thumbnail_url?.includes('/')
+                  ? Constant.IMG_DIR.SHOP
+                  : Constant.IMG_DIR.GOOGLE_DRIVE) + res.thumbnail_url,
           }));
           return value;
         }),
       )
       .subscribe({
-        next: (res: BaseResponse<NewsList>) => {
+        next: (res: BaseResponse<BrandList>) => {
           if (res) {
             this.productList = res.data;
             this.paginator.length = res.meta.length;
@@ -147,7 +141,7 @@ export class NewsManagementComponent implements OnInit {
     });
     this.dialogRef.afterClosed().subscribe((data) => {
       if (data) {
-        this._newManagementService.deleteNew(data.id).subscribe({
+        this._brandManagementService.deleteBrand(data.id).subscribe({
           next: (res) => {
             if (res.message) {
               this._notiService.showSuccess(res.message);
@@ -162,7 +156,7 @@ export class NewsManagementComponent implements OnInit {
     });
   }
 
-  openProductPopup(type: string, newItem?: NewsList, e?) {
+  openProductPopup(type: string, newItem?: BrandList, e?) {
     if (type === 'edit') e.stopPropagation();
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = {
@@ -172,7 +166,10 @@ export class NewsManagementComponent implements OnInit {
     dialogConfig.width = '100%';
     dialogConfig.height = '80vh';
 
-    this.confirmDialogRef = this._dialog.open(CreateNewComponent, dialogConfig);
+    this.confirmDialogRef = this._dialog.open(
+      CreateBrandComponent,
+      dialogConfig,
+    );
     this.confirmDialogRef.afterClosed().subscribe((isChange) => {
       if (isChange) this.getNewList(this.newSearchBody);
     });

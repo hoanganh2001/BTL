@@ -1,0 +1,81 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title" style="text-transform: capitalize">
+              {{ type }} Brands
+            </h4>
+            <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)="createProduct()"
+              *ngIf="type !== 'detail'">
+              Save
+            </button>
+          </div>
+          <div class="card-body" *ngIf="BrandsForm">
+            <form [formGroup]="BrandsForm">
+              <div class="row">
+                <div class="row col-md-3 mb-4 d-flex align-items-center">
+                  <h3 class="fw-bold col-12">
+                    {{ type === 'detail' ? 'Thumbnail' : 'Upload Thumbnail' }}
+                  </h3>
+
+                  <div class="col-2 col-12">
+                    <ng-container *ngIf="type !== 'detail'">
+                      <div class="upload-image">
+                        <div class="upload-container">
+                          <div class="border-container">
+                            <div class="icons fa-4x">
+                              <i class="bi" [ngClass]="
+                                  fileAction === 'dragenter'
+                                    ? 'bi-cloud-upload-fill icon__animation'
+                                    : 'bi-image'
+                                "></i>
+                            </div>
+                            <input type="file" id="file-upload" class="upload-input" accept="image/*"
+                              (change)="previewImage($event)" (dragenter)="dragFiles($event)"
+                              (dragleave)="dragFiles($event)" />
+                            <div class="animation_container">
+                              <div class="text_container" [ngClass]="
+                                  fileAction === 'dragenter'
+                                    ? 'drop_animation'
+                                    : fileAction === ''
+                                    ? ''
+                                    : 'drag_animation'
+                                ">
+                                <p>Drag photos here</p>
+                                <p>Drop here to upload</p>
+                              </div>
+                            </div>
+                          </div>
+                          <img class="preview-image" [alt]="imageInfos?.name" [src]="imageInfos?.url"
+                            *ngIf="imageInfos" />
+                        </div>
+                      </div>
+                    </ng-container>
+                    <ng-container *ngIf="type === 'detail'">
+                      <div class="detail-img">
+                        <img class="preview-image" [alt]="imageInfos?.name" [src]="imageInfos?.url"
+                          *ngIf="imageInfos" />
+                      </div>
+                    </ng-container>
+                  </div>
+                </div>
+                <div class="col-md-9">
+                  <div class="row">
+                    <mat-form-field class="col-12">
+                      <mat-label>Name</mat-label>
+                      <input matInput formControlName="name" type="text" />
+                      <mat-error *ngIf="BrandsForm.get('name').hasError('required')">required</mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
