@@ -53,6 +53,7 @@ export class Constant {
 
   public static COUPON_TYPE = {
     PERCENT: '%',
+    PRICE: '',
   };
 }
 export const ICON = {

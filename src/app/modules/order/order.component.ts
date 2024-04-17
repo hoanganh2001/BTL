@@ -139,8 +139,10 @@ export class OrderComponent implements OnInit {
           if (char) {
             this.couponData.label = '-' + res.data.value + char;
           }
-
-          this.amount = this.totalPrice * (1 - res.data.value / 100);
+          this.amount =
+            char !== ''
+              ? this.totalPrice * (1 - res.data.value / 100)
+              : this.totalPrice - res.data.value;
         }
       },
       error: (err) => {

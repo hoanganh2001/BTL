@@ -5,44 +5,50 @@
         <div class="card">
           <div class="card-header card-header-danger">
             <h4 class="card-title" style="text-transform: capitalize">
-              {{ type }} Brands
+              {{ type }} Coupon
             </h4>
             <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)="createProduct()"
               *ngIf="type !== 'detail'">
               Save
             </button>
           </div>
-          <div class="card-body" *ngIf="BrandsForm">
-            <form [formGroup]="BrandsForm">
+          <div class="card-body" *ngIf="CouponForm">
+            <form [formGroup]="CouponForm">
               <div class="row">
                 <div class="col-12">
                   <div class="row">
                     <mat-form-field class="col-12">
                       <mat-label>Name</mat-label>
                       <input matInput formControlName="name" type="text" />
-                      <mat-error *ngIf="BrandsForm.get('name').hasError('required')">required</mat-error>
+                      <mat-error *ngIf="CouponForm.get('name').hasError('required')">required</mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-4">
                       <mat-label>Value</mat-label>
-                      <input matInput formControlName="value" type="number" />
-                      <mat-error *ngIf="BrandsForm.get('value').hasError('required')">required</mat-error>
+                      <input matInput formControlName="value" type="number" min="0" [max]="maxLength" appMaxNumber />
+                      <mat-error *ngIf="CouponForm.get('value').hasError('required')">required</mat-error>
                     </mat-form-field><mat-form-field class="col-4">
                       <mat-label>Unit</mat-label>
-                      <input matInput formControlName="unit" type="text" />
-                      <mat-error *ngIf="BrandsForm.get('unit').hasError('required')">required</mat-error>
+                      <mat-select formControlName="unit" class="text-capitalize">
+                        <mat-option class="text-capitalize" *ngFor="let unit of unitList" [value]="unit">
+                          {{ unit }}
+                        </mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="CouponForm.get('unit').hasError('required')">required</mat-error>
                     </mat-form-field><mat-form-field class="col-4">
                       <mat-label>Quantity</mat-label>
-                      <input matInput formControlName="quantity" type="number" />
-                      <mat-error *ngIf="BrandsForm.get('quantity').hasError('required')">required</mat-error>
+                      <input matInput formControlName="quantity" type="number" min="0" />
+                      <mat-error *ngIf="CouponForm.get('quantity').hasError('required')">required</mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-6">
                       <mat-label>Enter a date range</mat-label>
-                      <mat-date-range-input [rangePicker]="picker">
+                      <mat-date-range-input [rangePicker]="picker" [min]="minDate">
                         <input matStartDate readonly formControlName="start_date" placeholder="Start date">
-                        <input matEndDate readonly formControlName="end_date" placeholder="End date">
+                        <input matEndDate readonly formControlName="expired_date" placeholder="End date">
                       </mat-date-range-input>
                       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-date-range-picker #picker></mat-date-range-picker>
+                      <mat-error *ngIf="CouponForm.get('start_date').hasError('required')">required</mat-error>
+                      <mat-error *ngIf="CouponForm.get('expired_date').hasError('required')">required</mat-error>
                     </mat-form-field>
                   </div>
                 </div>

@@ -11,7 +11,20 @@
     overflow: hidden;
   }
 }
+::ng-deep mat-option:last-child .mat-pseudo-checkbox {
+  display: none !important;
+}
 
+::ng-deep mat-option {
+  .mat-mdc-form-field-subscript-wrapper {
+    display: none;
+  }
+
+  .mdc-list-item__primary-text {
+    margin-right: 32px !important;
+    width: 100%;
+  }
+}
 .card {
   border: none;
 
@@ -22,6 +35,9 @@
     margin-left: 0;
     margin-right: 0;
     z-index: 3 !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .card-header-danger {

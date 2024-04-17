@@ -30,13 +30,13 @@ export const ROUTES: RouteInfo[] = [
   {
     path: RouterConfig.ADMIN_BRAND,
     title: 'Brand Management',
-    icon: 'category',
+    icon: 'store',
     class: '',
   },
   {
     path: RouterConfig.ADMIN_COUPON,
     title: 'Coupon Management',
-    icon: 'category',
+    icon: 'confirmation_number',
     class: '',
   },
   {

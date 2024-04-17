@@ -8,6 +8,7 @@ import { NotificationModule } from 'app/core/service/notification';
 import { ToastrModule } from 'ngx-toastr';
 import { DialogConfirmModule } from './component/dialog-confirm/dialog-confirm.module';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AppMaxNumberDirective } from './directives/app-max-number.directive';
 
 @NgModule({
   imports: [
@@ -34,7 +35,13 @@ import { MatDialogModule } from '@angular/material/dialog';
     DateFormatPipe,
     NotificationModule,
     ToastrModule,
+    AppMaxNumberDirective,
   ],
-  declarations: [CurrencyFormatPipe, DateToNowPipe, DateFormatPipe],
+  declarations: [
+    CurrencyFormatPipe,
+    DateToNowPipe,
+    DateFormatPipe,
+    AppMaxNumberDirective,
+  ],
 })
 export class SharedModule {}

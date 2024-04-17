@@ -25,7 +25,7 @@ export class DateToNowPipe implements PipeTransform {
   name: 'dateFormat',
 })
 export class DateFormatPipe implements PipeTransform {
-  transform(value: string, format: string = 'DD/M/YYYY HH:mm:ss'): any {
+  transform(value: string, format: string = 'DD/MM/YYYY HH:mm:ss'): any {
     return value ? dayjs(value).format(format) : null;
   }
 }

@@ -131,7 +131,7 @@
           </div>
           <div class="order-card-item d-flex justify-content-between" *ngIf="couponData.id">
             <p>Giảm giá:</p>
-            <p>{{ couponData.label }}</p>
+            <p>{{ this.couponData.unit === 'percent' ? couponData.label : '-'+(couponData.value| currencyFormat) }}</p>
           </div>
           <div class="order-card-total d-flex justify-content-between">
             <p>Thành tiền:</p>

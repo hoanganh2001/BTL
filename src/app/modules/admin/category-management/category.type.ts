@@ -29,18 +29,19 @@ export interface popUpData {
 }
 
 export interface FlatNode {
+  id: number;
   expandable: boolean;
   name: string;
   level: number;
 }
 
 export interface typeData {
-  id: number;
-  name: string;
+  id?: number;
+  name?: string;
   template?: string;
 }
 
 export interface popUpData {
   type: string;
-  product_id?: number;
+  category_id?: number;
 }

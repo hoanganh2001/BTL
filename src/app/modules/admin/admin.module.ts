@@ -36,6 +36,7 @@ import { CouponManagementComponent } from './coupon-management/coupon-management
 import { CreateBrandComponent } from './brand-management/create/create.component';
 import { CreateCouponComponent } from './coupon-management/create/create.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { CreateCategoryComponent } from './category-management/create/create.component';
 
 @NgModule({
   imports: [
@@ -79,6 +80,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     CreateUserComponent,
     CreateBrandComponent,
     CreateCouponComponent,
+    CreateCategoryComponent,
   ],
 })
 export class AdminModule {}

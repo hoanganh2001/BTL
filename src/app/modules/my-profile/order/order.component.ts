@@ -100,7 +100,7 @@ export class OrderComponent implements OnInit {
   getInvoice(id: number) {
     this._orderService.getInvoice(id).subscribe({
       next: (res) => {
-        window.open('/', '_blank').document.write(res.data);
+        window?.open('/', '_blank').document.write(res.data);
       },
       error(err) {
         this._notiService?.showError(err.error.message);

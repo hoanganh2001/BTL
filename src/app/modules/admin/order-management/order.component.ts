@@ -351,7 +351,7 @@ export class OrderManagementComponent implements OnInit {
     }
     this._orderService.getInvoice(invoiceId).subscribe({
       next: (res) => {
-        window.open('/', '_blank').document.write(res.data);
+        window?.open('/', '_blank').document.write(res.data);
       },
       error(err) {
         this._notiService?.showError(err.error.message);

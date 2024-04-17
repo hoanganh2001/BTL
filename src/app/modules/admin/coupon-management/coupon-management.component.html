@@ -15,8 +15,7 @@
       <div class="col-md-12">
         <div class="card card-plain">
           <div class="card-header card-header-danger">
-            <h4 class="card-title mt-0">Table on Plain Background</h4>
-            <p class="card-category">Here is a subtitle for this table</p>
+            <h4 class="card-title mt-0">Coupon List</h4>
           </div>
           <div class="card-body">
             <div class="table-container position-relative">
@@ -42,8 +41,8 @@
                       <td>{{ item?.value }}</td>
                       <td>{{ item?.unit }}</td>
                       <td>{{ item?.quantity }}</td>
-                      <td>{{ item?.start_date | dateFormat }}</td>
-                      <td>{{ item?.expired_date | dateFormat }}</td>
+                      <td>{{ item?.start_date | dateFormat : 'DD/MM/YYYY' }}</td>
+                      <td>{{ item?.expired_date | dateFormat : 'DD/MM/YYYY' }}</td>
                       <td>
                         <div class="d-flex justify-content-end">
                           <button class="btn" (click)="deleteNew($event, item.id)">

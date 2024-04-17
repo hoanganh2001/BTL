@@ -1,3 +1,14 @@
 ::ng-deep .toast-container {
   z-index: 999999999999999999999999999999999;
 }
+
+::ng-deep {
+  .mdc-text-field--filled.mdc-text-field--disabled .mdc-text-field__input,
+  .mat-mdc-select-disabled,
+  .mat-date-range-input-inner[disabled],
+  .mdc-text-field--filled.mdc-text-field--disabled .mdc-floating-label,
+  .mdc-text-field--filled.mdc-text-field--disabled
+    .mdc-floating-label--float-above {
+    color: black !important;
+  }
+}

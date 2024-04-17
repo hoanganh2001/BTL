@@ -1,82 +1,55 @@
-import { map } from 'rxjs';
-import { BrandService } from './../../../brands/brand.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { ProductService } from 'app/modules/products/products.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as customBuild from '../../../../shared/component/ck-editor/build/ckeditor';
-import lgZoom from 'lightgallery/plugins/zoom';
-import { ActivatedRoute } from '@angular/router';
 import { NotificationService } from 'app/core/service/notification';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CategoryManagementSerivce } from '../category.service';
 import { popUpData, typeData } from '../category.type';
-import { imageDetailList } from '../../product-management/products.type';
+import { validateFormControls, getErrorText } from 'app/shared/constant';
 
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss'],
 })
-export class CreateProductComponent implements OnInit {
+export class CreateCategoryComponent implements OnInit {
   public Editor = customBuild;
-  settings = {
-    counter: false,
-    plugins: [lgZoom],
-  };
-  createProductForm?: FormGroup;
+  createCategoryForm?: FormGroup;
 
-  brandList: typeData[];
-  categoryList: typeData[];
-  typeList?: typeData[];
-  featureList?: typeData[];
+  typeList?: typeData[] = [];
+  featureList?: typeData[] = [];
   fileAction: string = '';
   isClicked: boolean = false;
-  curIMG;
-  selectedFiles?: File[] = [];
-  imageInfos?: imageDetailList[] = [];
-  thumbnailImg?: imageDetailList;
-  fileUploaded?: imageDetailList[] = [];
   isEdit: boolean = false;
   isDetail: boolean = false;
-  productID?: number;
+  categoryID?: number;
   type: string;
 
   constructor(
-    public dialogRef: MatDialogRef<CreateProductComponent>,
+    public dialogRef: MatDialogRef<CreateCategoryComponent>,
     @Inject(MAT_DIALOG_DATA) data: popUpData,
-    private _brandService: BrandService,
     private _productService: ProductService,
-    private _productManagementService: CategoryManagementSerivce,
+    private _categoryManagementService: CategoryManagementSerivce,
     private _formBuilder: FormBuilder,
-    private _activeRoute: ActivatedRoute,
     private _notiService: NotificationService,
   ) {
     this.type = data.type;
     if (this.type === 'edit') {
       this.isEdit = true;
-      this.productID = data.product_id;
     } else if (this.type === 'detail') {
       this.isDetail = true;
-      this.productID = data.product_id;
     }
+    this.categoryID = data.category_id;
     // Validators.required
-    this.createProductForm = this._formBuilder.group({
-      name: ['abc', [Validators.required]],
-      price: ['', [Validators.pattern(/\d/)]],
-      discount: ['', []],
-      quantity: ['', []],
-      brand: ['', [Validators.required]],
-      category: ['', [Validators.required]],
+    this.createCategoryForm = this._formBuilder.group({
+      name: ['', [Validators.required]],
       type: ['', []],
       feature: ['', []],
       specification: ['', []],
-      description: ['', []],
     });
   }
 
-  dragFiles(e) {
-    this.fileAction = e.type;
-  }
   onReady(eventData) {
     eventData.plugins.get('FileRepository').createUploadAdapter = function (
       loader,
@@ -86,100 +59,13 @@ export class CreateProductComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.featureField.disable();
-    this.typeField.disable();
-    this.getListBrand();
-    this.getCategoryList();
-    this.categoryField.valueChanges.subscribe((value) => {
-      if (value) {
-        const template = this.categoryList.find((t) => (t.id = value)).template;
-        this.specificationField.setValue(template);
-        this.getTypeAndFeature(+value);
-      }
-    });
-  }
-
-  previewImage(input) {
-    let onlyDuplicateUpload = true;
-    Array.from(input.target.files).forEach((f: File) => {
-      if (!this.selectedFiles.some((sf) => sf.name === f.name)) {
-        this.selectedFiles.push(f);
-        onlyDuplicateUpload = false;
-      }
-    });
-    if (onlyDuplicateUpload) return;
-    this.selectedFiles.forEach((file) => {
-      const alreadyUploaded = this.imageInfos.some((t) => t.name === file.name);
-      if (file && !alreadyUploaded) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          this.curIMG = e.target.result;
-          this.imageInfos.push({
-            name: file.name,
-            url: e.target.result,
-            isThumbnail: false,
-            isNew: true,
-          });
-        };
-
-        reader.readAsDataURL(file);
-      }
-    });
-  }
-
-  removeFile(item) {
-    if (this.isEdit) {
-      if (item.isNew) {
-        this.imageInfos = this.imageInfos.filter((t) => t.name !== item.name);
-        this.selectedFiles = this.selectedFiles.filter(
-          (t) => t.name !== item.name,
-        );
-      } else {
-        this.imageInfos = this.imageInfos.filter((t) => t.id !== item.id);
-      }
-    } else {
-      this.imageInfos = this.imageInfos.filter((t) => t.name !== item.name);
-      this.selectedFiles = this.selectedFiles.filter(
-        (t) => t.name !== item.name,
-      );
+    if (this.isEdit || this.isDetail) {
+      this.getCategoryDetail(this.categoryID);
+      this.getTypeAndFeature(this.categoryID);
     }
-  }
-
-  addThumbnailFile(item) {
-    this.imageInfos = this.imageInfos.map((t) => {
-      t.isThumbnail = JSON.stringify(t) === JSON.stringify(item);
-      return t;
-    });
-  }
-
-  getListBrand() {
-    this._brandService
-      .getBrands()
-      .pipe(
-        map((res) => {
-          return res.data.map((item) => ({ id: item.id, name: item.name }));
-        }),
-      )
-      .subscribe((data) => {
-        this.brandList = data;
-      });
-  }
-
-  getCategoryList() {
-    this._productService
-      .getCategoriesList()
-      .pipe(
-        map((res) => {
-          return res.data.map((item) => ({
-            id: item.id,
-            name: item.name,
-            template: item.specification_template,
-          }));
-        }),
-      )
-      .subscribe((data) => {
-        this.categoryList = data;
-      });
+    if (this.isDetail) {
+      this.createCategoryForm.disable();
+    }
   }
 
   getTypeAndFeature(id: number) {
@@ -189,51 +75,130 @@ export class CreateProductComponent implements OnInit {
     this._productService.getTypeAndFeature(body).subscribe((res) => {
       this.typeList = res.data['type'];
       this.featureList = res.data['feature'];
-      if (!this.isDetail) {
-        this.typeField.enable();
-        this.featureField.enable();
-      }
+      this.typeField.setValue(this.typeList.map((t) => t.id));
+      this.featureField.setValue(this.featureList.map((t) => t.id));
     });
   }
 
+  getCategoryDetail(id: number) {
+    this._categoryManagementService.getCategoryById(id).subscribe({
+      next: (res) => {
+        if (res?.data) {
+          this.nameField.setValue(res.data.name);
+          this.specificationField.setValue(res.data.specification || '');
+        }
+      },
+      error: (err) => {
+        this._notiService.showError(err.error.message);
+      },
+    });
+  }
+
+  addOption(e, type: string) {
+    e.stopPropagation();
+    e.preventDefault();
+    if (type === 'type') {
+      this.typeList.push({ name: '', id: null });
+    } else {
+      this.featureList.push({ name: '', id: null });
+    }
+  }
+
+  onInputClick(e) {
+    e.stopPropagation();
+  }
+
+  saveType(type: string, index: number) {
+    if (type === 'type') {
+      this.typeList[index].id = 0;
+    } else {
+      this.featureList[index].id = 0;
+    }
+  }
+
+  saveCategory() {
+    if (this.isClicked) {
+      return;
+    }
+    this.isClicked = true;
+
+    let formValidate = {
+      isValidated: true,
+      errors: [],
+    };
+
+    this.createCategoryForm.markAllAsTouched();
+
+    const validateResult = validateFormControls(
+      this.createCategoryForm,
+      formValidate,
+    );
+    if (!validateResult.isValidated) {
+      this._notiService.showError(getErrorText(validateResult.errors[0]));
+      this.isClicked = false;
+      return;
+    }
+
+    const model = this.createCategoryForm.getRawValue();
+    const createProductBody = {
+      name: model.name,
+      type:
+        model.type && model.type.length > 0
+          ? model.type?.filter((t) => t)
+          : null,
+      feature:
+        model.feature && model.feature.length > 0
+          ? model.feature?.filter((t) => t)
+          : null,
+      specification: model.specification || null,
+    };
+    if (this.isEdit) {
+      this._categoryManagementService
+        .updateCategory(createProductBody, this.categoryID)
+        .subscribe({
+          next: (res) => {
+            if (res) {
+              this.dialogRef.close(true);
+              this._notiService.showSuccess(res.message);
+            }
+          },
+          error: (err) => {
+            this.dialogRef.close(true);
+            this._notiService.showError(err.error.message);
+          },
+        });
+    } else {
+      this._categoryManagementService
+        .createCategory(createProductBody)
+        .subscribe({
+          next: (res) => {
+            if (res) {
+              this.dialogRef.close(true);
+              this._notiService.showSuccess(res.message);
+            }
+          },
+          error: (err) => {
+            this.dialogRef.close(true);
+            this._notiService.showError(err.error.message);
+          },
+        });
+    }
+  }
+
   get nameField() {
-    return this.createProductForm?.get('name');
-  }
-
-  get priceField() {
-    return this.createProductForm?.get('price');
-  }
-
-  get quantityField() {
-    return this.createProductForm?.get('ququantityantity');
-  }
-
-  get discountField() {
-    return this.createProductForm?.get('discount');
-  }
-
-  get brandField() {
-    return this.createProductForm?.get('brand');
-  }
-
-  get categoryField() {
-    return this.createProductForm?.get('category');
+    return this.createCategoryForm?.get('name');
   }
 
   get typeField() {
-    return this.createProductForm?.get('type');
+    return this.createCategoryForm?.get('type');
   }
 
   get featureField() {
-    return this.createProductForm?.get('feature');
+    return this.createCategoryForm?.get('feature');
   }
 
   get specificationField() {
-    return this.createProductForm?.get('specification');
-  }
-
-  get descriptionField() {
-    return this.createProductForm?.get('description');
+    return this.createCategoryForm?.get('specification');
   }
 }
 
