@@ -45,6 +45,9 @@ export class SignInComponent implements OnInit {
   }
 
   signIn() {
+    this.SignInForm.markAllAsTouched();
+    if (this.SignInForm.invalid) return;
+
     const model = this.SignInForm.getRawValue();
     const body = {
       username: model.username,
@@ -69,6 +72,9 @@ export class SignInComponent implements OnInit {
   }
 
   signUp() {
+    this.SignUpForm.markAllAsTouched();
+    if (this.SignUpForm.invalid) return;
+
     const model = this.SignUpForm.getRawValue();
     const body = {
       name: model.name,

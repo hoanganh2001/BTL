@@ -16,7 +16,7 @@
           Required
         </mat-error>
         <mat-error *ngIf="SignUpForm.get('email').hasError('email')">
-          Sai format email.
+          Địa chỉ email không hợp lệ.
         </mat-error>
       </mat-form-field>
       <mat-form-field class="w-full">
@@ -46,10 +46,16 @@
     <form [formGroup]="SignInForm">
       <h1 class="mb-5">Sign in</h1>
       <mat-form-field class="mb-3 w-100" appearance="fill">
-        <input matInput type="email" formControlName="username" placeholder="Username" />
+        <input matInput type="text" formControlName="username" placeholder="Username" />
+        <mat-error *ngIf="SignInForm.get('username').hasError('required')">
+          Required
+        </mat-error>
       </mat-form-field>
       <mat-form-field class="mb-3 w-100" appearance="fill">
         <input matInput type="password" formControlName="password" placeholder="Password" />
+        <mat-error *ngIf="SignInForm.get('password').hasError('required')">
+          Required
+        </mat-error>
       </mat-form-field>
 
       <a routerLink="/reset-password">Forgot your password?</a>
