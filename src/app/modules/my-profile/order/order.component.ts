@@ -110,7 +110,7 @@ export class OrderComponent implements OnInit {
 
   getImgUrl(id: string): string {
     return (
-      (id?.includes('/')
+      (id && id?.includes('/')
         ? Constant.IMG_DIR.SHOP
         : Constant.IMG_DIR.GOOGLE_DRIVE) + id
     );
