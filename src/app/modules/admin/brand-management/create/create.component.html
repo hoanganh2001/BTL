@@ -5,11 +5,11 @@
         <div class="card">
           <div class="card-header card-header-danger">
             <h4 class="card-title" style="text-transform: capitalize">
-              {{ type }} Brands
+              {{ type }} thương hiệu
             </h4>
             <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)="createProduct()"
               *ngIf="type !== 'detail'">
-              Save
+              Lưu
             </button>
           </div>
           <div class="card-body" *ngIf="BrandsForm">
@@ -43,8 +43,8 @@
                                     ? ''
                                     : 'drag_animation'
                                 ">
-                                <p>Drag photos here</p>
-                                <p>Drop here to upload</p>
+                                <p>Kéo ảnh vào đây</p>
+                                <p>Thả ảnh để tải lên</p>
                               </div>
                             </div>
                           </div>
@@ -64,7 +64,7 @@
                 <div class="col-md-9">
                   <div class="row">
                     <mat-form-field class="col-12">
-                      <mat-label>Name</mat-label>
+                      <mat-label>Tên</mat-label>
                       <input matInput formControlName="name" type="text" />
                       <mat-error *ngIf="BrandsForm.get('name').hasError('required')">required</mat-error>
                     </mat-form-field>

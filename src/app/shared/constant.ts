@@ -142,25 +142,25 @@ export const confirmData = {
   DELETE: {
     icon: 'mat_solid:send',
     title: 'Hủy Đơn',
-    message: 'Are you sure to delete?',
+    message: 'Bạn có chắc chắn muốn xóa đơn?',
     color: '#659CF5',
   },
   SUCCESS: {
     icon: 'mat_solid:send',
     title: 'Hủy Đơn',
-    message: 'Is this order be delivered?',
+    message: 'Đơn hàng đã được chuyển thành công?',
     color: '#659CF5',
   },
   SHIPPING: {
     icon: 'mat_solid:send',
     title: 'Hủy Đơn',
-    message: 'Is this order on the way?',
+    message: 'Đơn hàng đã được đưa vận chuyển chưa?',
     color: '#659CF5',
   },
   CONFIRM: {
     icon: 'mat_solid:send',
     title: 'Hủy Đơn',
-    message: 'Is this order confirmed by client?',
+    message: 'Đơn hàng đã được xác nhận chưa?',
     color: '#659CF5',
   },
 };

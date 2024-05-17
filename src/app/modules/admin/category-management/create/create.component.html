@@ -5,24 +5,24 @@
         <div class="card">
           <div class="card-header card-header-danger">
             <h4 class="card-title" style="text-transform: capitalize">
-              {{ type }} Category
+              {{ type }} danh mục
             </h4>
             <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)="saveCategory()"
               *ngIf="type !== 'detail'">
-              Save
+              Lưu
             </button>
           </div>
           <div class="card-body">
             <form [formGroup]="createCategoryForm" *ngIf="createCategoryForm">
               <div class="row">
                 <mat-form-field class="col-md-6 col-sm-12">
-                  <mat-label>Name</mat-label>
+                  <mat-label>Tên</mat-label>
                   <input matInput placeholder="Name" formControlName="name" type="text" />
                   <mat-error *ngIf="createCategoryForm.get('name').hasError('required')">required</mat-error>
                 </mat-form-field>
                 <div class="col-md-6"></div>
                 <mat-form-field class="col-md-6 col-sm-12">
-                  <mat-label>Type</mat-label>
+                  <mat-label>Kiểu</mat-label>
                   <mat-select formControlName="type" class="text-capitalize" multiple>
                     <mat-option class="text-capitalize" *ngFor="let sort of typeList; index as i"
                       [value]="sort.id || sort.name">
@@ -42,7 +42,7 @@
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field class="col-md-6 col-sm-12">
-                  <mat-label>Feature</mat-label>
+                  <mat-label>Đặc trưng</mat-label>
                   <mat-select formControlName="feature" class="text-capitalize" multiple>
                     <mat-option class="text-capitalize" *ngFor="let sort of featureList; index as i"
                       [value]="sort.id || sort.name">
@@ -65,7 +65,7 @@
               </div>
               <div class="row">
                 <mat-tab-group mat-align-tabs="start" mat-stretch-tabs="false" animationDuration="500ms" #tabGroup>
-                  <mat-tab label="SPECIFICATION">
+                  <mat-tab label="Thông số">
                     <div class="my-4">
                       <ckeditor id="ckeditor" formControlName="specification" [editor]="Editor"
                         (ready)="onReady($event)" debounce="5000"></ckeditor>

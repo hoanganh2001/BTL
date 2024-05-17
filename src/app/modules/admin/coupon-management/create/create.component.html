@@ -5,11 +5,11 @@
         <div class="card">
           <div class="card-header card-header-danger">
             <h4 class="card-title" style="text-transform: capitalize">
-              {{ type }} Coupon
+              {{ type }} mã giảm giá
             </h4>
             <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)="createProduct()"
               *ngIf="type !== 'detail'">
-              Save
+              Lưu
             </button>
           </div>
           <div class="card-body" *ngIf="CouponForm">
@@ -18,16 +18,16 @@
                 <div class="col-12">
                   <div class="row">
                     <mat-form-field class="col-12">
-                      <mat-label>Name</mat-label>
+                      <mat-label>Tên</mat-label>
                       <input matInput formControlName="name" type="text" />
                       <mat-error *ngIf="CouponForm.get('name').hasError('required')">required</mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-4">
-                      <mat-label>Value</mat-label>
+                      <mat-label>Giá trị</mat-label>
                       <input matInput formControlName="value" type="number" min="0" [max]="maxLength" appMaxNumber />
                       <mat-error *ngIf="CouponForm.get('value').hasError('required')">required</mat-error>
                     </mat-form-field><mat-form-field class="col-4">
-                      <mat-label>Unit</mat-label>
+                      <mat-label>Loại</mat-label>
                       <mat-select formControlName="unit" class="text-capitalize">
                         <mat-option class="text-capitalize" *ngFor="let unit of unitList" [value]="unit">
                           {{ unit }}
@@ -35,12 +35,12 @@
                       </mat-select>
                       <mat-error *ngIf="CouponForm.get('unit').hasError('required')">required</mat-error>
                     </mat-form-field><mat-form-field class="col-4">
-                      <mat-label>Quantity</mat-label>
+                      <mat-label>Số lượng</mat-label>
                       <input matInput formControlName="quantity" type="number" min="0" />
                       <mat-error *ngIf="CouponForm.get('quantity').hasError('required')">required</mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-6">
-                      <mat-label>Enter a date range</mat-label>
+                      <mat-label>Tạo thời gian hiệu lực</mat-label>
                       <mat-date-range-input [rangePicker]="picker" [min]="minDate">
                         <input matStartDate readonly formControlName="start_date" placeholder="Start date">
                         <input matEndDate readonly formControlName="expired_date" placeholder="End date">

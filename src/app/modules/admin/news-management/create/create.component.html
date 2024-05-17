@@ -5,11 +5,11 @@
         <div class="card">
           <div class="card-header card-header-danger">
             <h4 class="card-title" style="text-transform: capitalize">
-              {{ type }} News
+              {{ type }} tin tức
             </h4>
             <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)="createProduct()"
               *ngIf="type !== 'detail'">
-              Save
+              Lưu
             </button>
           </div>
           <div class="card-body" *ngIf="NewsForm">
@@ -43,8 +43,8 @@
                                     ? ''
                                     : 'drag_animation'
                                 ">
-                                <p>Drag photos here</p>
-                                <p>Drop here to upload</p>
+                                <p>Kéo ảnh vào đây</p>
+                                <p>Thả ảnh để tải lên</p>
                               </div>
                             </div>
                           </div>
@@ -64,26 +64,26 @@
                 <div class="col-md-9">
                   <div class="row">
                     <mat-form-field class="col-12">
-                      <mat-label>Name</mat-label>
+                      <mat-label>Tên</mat-label>
                       <input matInput formControlName="name" type="text" />
                       <mat-error *ngIf="NewsForm.get('name').hasError('required')">required</mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-6 has-icon">
-                      <mat-label>Author</mat-label>
+                      <mat-label>Tác giả</mat-label>
                       <input matInput formControlName="author" type="text" />
                       <mat-error *ngIf="NewsForm.get('author').hasError('required')">required</mat-error>
                     </mat-form-field>
                     <ng-container *ngIf="type==='detail'">
                       <mat-form-field class="col-6">
-                        <mat-label>View Number</mat-label>
+                        <mat-label>Lượt xem</mat-label>
                         <input matInput formControlName="view" type="text" />
                       </mat-form-field>
                       <mat-form-field class="col-6 has-icon">
-                        <mat-label>Created Date</mat-label>
+                        <mat-label>Ngày tạo</mat-label>
                         <input matInput formControlName="create_date" type="text" />
                       </mat-form-field>
                       <mat-form-field class="col-6">
-                        <mat-label>Last Updated</mat-label>
+                        <mat-label>Ngày cập nhật</mat-label>
                         <input matInput formControlName="update_date" type="text" />
                       </mat-form-field>
                     </ng-container>
@@ -101,7 +101,7 @@
                 </mat-tab-group>
               </div>
               <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)="createProduct()">
-                Save
+                Lưu
               </button>
               <div class="clearfix"></div>
             </form>

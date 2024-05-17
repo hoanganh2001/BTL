@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import * as Chartist from 'chartist';
+import { DashboardSerivce } from './dashboard.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
+  styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  constructor() {}
+  constructor(private _dashboardService: DashboardSerivce) {}
   startAnimationForLineChart(chart) {
     let seq: any, delays: any, durations: any;
     seq = 0;
@@ -68,71 +69,59 @@ export class DashboardComponent implements OnInit {
 
     seq2 = 0;
   }
+
+  orderList = {
+    labels: [],
+    series: [[]],
+  };
+  revenueList = {
+    labels: [],
+    series: [[]],
+  };
+  currentOrders = 0;
+  currentRevenue = 0;
+
   ngOnInit() {
-    /* ----------==========     Daily Sales Chart initialization For Documentation    ==========---------- */
+    this.getData();
+  }
 
-    const dataDailySalesChart: any = {
-      labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
-      series: [[12, 17, 7, 17, 23, 18, 38]],
-    };
+  getData() {
+    this._dashboardService.getStatistical().subscribe({
+      next: (res) => {
+        if (res?.data) {
+          res.data.forEach((i) => {
+            this.orderList.labels.push(i.month);
+            this.orderList.series[0].push(i.total);
+            this.revenueList.labels.push(i.month);
+            this.revenueList.series[0].push(i.amount / 1000000);
+          });
+          this.orderChartInitialization(this.orderList);
+          this.revenueChartInitialization(this.revenueList);
+        }
+      },
+    });
 
-    const optionsDailySalesChart: any = {
-      lineSmooth: Chartist.Interpolation.cardinal({
-        tension: 0,
-      }),
-      low: 0,
-      high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-      chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
-    };
+    this._dashboardService.getCurrentStatistical().subscribe({
+      next: (res) => {
+        if (res?.data) {
+          this.currentOrders = res.data[0].total;
+          this.currentRevenue = res.data[0].amount;
+        }
+      },
+    });
+  }
 
-    var dailySalesChart = new Chartist.LineChart(
-      '#dailySalesChart',
-      dataDailySalesChart,
-      optionsDailySalesChart,
-    );
-
-    this.startAnimationForLineChart(dailySalesChart);
-
-    /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
-
-    const dataCompletedTasksChart: any = {
-      labels: ['12p', '3p', '6p', '9p', '12p', '3a', '6a', '9a'],
-      series: [[230, 750, 450, 300, 280, 240, 200, 190]],
-    };
-
-    const optionsCompletedTasksChart: any = {
-      lineSmooth: Chartist.Interpolation.cardinal({
-        tension: 0,
-      }),
-      low: 0,
-      high: 1000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
-      chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
-    };
-
-    var completedTasksChart = new Chartist.LineChart(
-      '#completedTasksChart',
-      dataCompletedTasksChart,
-      optionsCompletedTasksChart,
-    );
-
-    // start animation for the Completed Tasks Chart - Line Chart
-    this.startAnimationForLineChart(completedTasksChart);
-
-    /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
-
-    var datawebsiteViewsChart = {
-      labels: ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'],
-      series: [[542, 443, 320, 780, 553, 453, 326, 434, 568, 610, 756, 895]],
-    };
-    var optionswebsiteViewsChart = {
+  orderChartInitialization(list) {
+    const optionsDailySalesChart = {
       axisX: {
         showGrid: false,
       },
       low: 0,
-      high: 1000,
+      high: 50,
       chartPadding: { top: 0, right: 5, bottom: 0, left: 0 },
     };
-    var responsiveOptions: any[] = [
+
+    const responsiveOptions: any[] = [
       [
         'screen and (max-width: 640px)',
         {
@@ -145,14 +134,33 @@ export class DashboardComponent implements OnInit {
         },
       ],
     ];
-    var websiteViewsChart = new Chartist.BarChart(
+    const websiteViewsChart = new Chartist.BarChart(
       '#websiteViewsChart',
-      datawebsiteViewsChart,
-      optionswebsiteViewsChart,
+      list,
+      optionsDailySalesChart,
       responsiveOptions,
     );
 
-    //start animation for the Emails Subscription Chart
     this.startAnimationForBarChart(websiteViewsChart);
+  }
+
+  revenueChartInitialization(list) {
+    const optionsDailySalesChart: any = {
+      lineSmooth: Chartist.Interpolation.cardinal({
+        tension: 0,
+      }),
+      low: 0,
+      high: 200, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+      chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
+    };
+
+    const dailySalesChart = new Chartist.LineChart(
+      '#dailySalesChart',
+      list,
+      optionsDailySalesChart,
+    );
+
+    //start animation for the Emails Subscription Chart
+    this.startAnimationForLineChart(dailySalesChart);
   }
 }
