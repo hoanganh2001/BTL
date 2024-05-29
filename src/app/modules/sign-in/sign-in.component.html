@@ -1,26 +1,26 @@
 <div class="container my-5" id="container" [ngClass]="{ 'right-panel-active': isSignIn }">
   <div class="form-container sign-up-container">
     <form [formGroup]="SignUpForm">
-      <h1 class="mb-4">Create Account</h1>
+      <h1 class="mb-4">Đăng ký</h1>
       <mat-form-field class="w-full">
-        <mat-label>Name</mat-label>
+        <mat-label>Tên</mat-label>
         <input matInput type="text" formControlName="name" placeholder="Name" />
         <mat-error *ngIf="SignUpForm.get('name').hasError('required')">
-          Required
+          Bắt buộc
         </mat-error>
       </mat-form-field>
       <mat-form-field class="w-full">
         <mat-label>Email</mat-label>
         <input matInput type="email" formControlName="email" placeholder="Email" />
         <mat-error *ngIf="SignUpForm.get('email').hasError('required')">
-          Required
+          Bắt buộc
         </mat-error>
         <mat-error *ngIf="SignUpForm.get('email').hasError('email')">
           Địa chỉ email không hợp lệ.
         </mat-error>
       </mat-form-field>
       <mat-form-field class="w-full">
-        <mat-label>Password</mat-label>
+        <mat-label>Mật khẩu</mat-label>
         <input id="newPassword" matInput type="password" [formControlName]="'new_password'" #newPassword />
         <button class="btn btn-show-pass" mat-icon-button type="button" (click)="
               newPassword.type === 'password'
@@ -31,57 +31,57 @@
           <i class="bi bi-eye-slash" *ngIf="newPassword.type === 'text'"></i>
         </button>
         <mat-error *ngIf="SignUpForm.get('new_password').hasError('required')">
-          Required
+          Bắt buộc
         </mat-error>
         <mat-error *ngIf="SignUpForm.get('new_password').hasError('pattern')">
           Mật khẩu phải có ít nhất 6 kí tự
         </mat-error>
       </mat-form-field>
       <button class="btn--animation-hover-in" (click)="signUp()">
-        Sign Up
+        Đăng ký
       </button>
     </form>
   </div>
   <div class="form-container sign-in-container">
     <form [formGroup]="SignInForm">
-      <h1 class="mb-5">Sign in</h1>
+      <h1 class="mb-5">Đăng nhập</h1>
       <mat-form-field class="mb-3 w-100" appearance="fill">
-        <input matInput type="text" formControlName="username" placeholder="Username" />
+        <input matInput type="text" formControlName="username" placeholder="Tên tài khoản" />
         <mat-error *ngIf="SignInForm.get('username').hasError('required')">
-          Required
+          Bắt buộc
         </mat-error>
       </mat-form-field>
       <mat-form-field class="mb-3 w-100" appearance="fill">
-        <input matInput type="password" formControlName="password" placeholder="Password" />
+        <input matInput type="password" formControlName="password" placeholder="Mật khẩu" />
         <mat-error *ngIf="SignInForm.get('password').hasError('required')">
-          Required
+          Bắt buộc
         </mat-error>
       </mat-form-field>
 
       <a routerLink="/reset-password">Forgot your password?</a>
       <button class="btn--animation-hover-in" (click)="signIn()">
-        Sign In
+        Đăng nhập
       </button>
     </form>
   </div>
   <div class="overlay-container">
     <div class="overlay">
       <div class="overlay-panel overlay-left">
-        <h1>Welcome Back!</h1>
+        <h1>Chào mừng quay lại!</h1>
         <p class="my-3">
-          To keep connected with us please login with your personal info
+          Đăng nhập để tiếp cận dịch vụ tốt hơn
         </p>
         <button class="ghost btn--animation-hover-out" id="signIn" (click)="changeState(false)">
-          Sign In
+          Đăng nhập
         </button>
       </div>
       <div class="overlay-panel overlay-right">
-        <h1>Hello, Friend!</h1>
+        <h1>Chào, Bạn!</h1>
         <p class="my-3">
-          Enter your personal details and start journey with us
+          Tạo tài khoản để có dịch vụ tốt hơn
         </p>
         <button class="ghost btn--animation-hover-out" id="signUp" (click)="changeState(true)">
-          Sign Up
+          Đăng ký
         </button>
       </div>
     </div>
