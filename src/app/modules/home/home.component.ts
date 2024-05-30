@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Constant } from 'app/shared/constant';
 import { HomeService } from './home.service';
+import { ActivatedRoute } from '@angular/router';
+import { NotificationService } from 'app/core/service/notification';
 
 @Component({
   selector: 'app-home',
@@ -8,7 +10,11 @@ import { HomeService } from './home.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  constructor(private _homeService: HomeService) {}
+  constructor(
+    private _homeService: HomeService,
+    private _activeRoute: ActivatedRoute,
+    private _notiService: NotificationService,
+  ) {}
 
   banner = [
     'assets/images/banner/Ưu-dãi-Neumman-mới.jpg',
@@ -254,6 +260,13 @@ export class HomeComponent implements OnInit {
   bodyProductSearch: any;
 
   ngOnInit() {
+    this._activeRoute.queryParams.subscribe((params) => {
+      if(params['payment']?.toLowerCase() === 'true') {
+        this._notiService.showSuccess('Thanh toán thành công!');
+      } else if(params['payment']?.toLowerCase() === 'false') {
+        this._notiService.showError('Thanh toán thất bại! Hãy đợi nhân viên hoặc chủ động liên hệ để hoàn tất giao dịch!');
+      }
+    });
     this.getNewProduct();
     this.getfeatureProduct();
     this.getAnalogProduct();

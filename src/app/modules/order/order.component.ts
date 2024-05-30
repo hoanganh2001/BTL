@@ -41,23 +41,15 @@ export class OrderComponent implements OnInit {
   isClicked: boolean = false;
   payments = [
     {
-      id: 'bank',
-      name: 'Chuyển khoản ngân hàng',
-      hint: `Vui lòng ghi chú tên sản phẩm trong phần nội dung chuyển khoản.
-    Đơn hàng sẽ đươc đóng gói và giao sau khi 3K Shop nhận được
-    khoản thanh toán.`,
-      value: false,
-    },
-    {
       id: 'COD',
       name: 'Trả tiền mặt khi nhận hàng',
       hint: `Trả tiền mặt khi giao hàng (Chỉ áp dụng cho khu vực Hà Nội và Hồ Chí Minh)`,
       value: false,
     },
     {
-      id: 'momo',
-      name: 'Thanh toán bằng Momo',
-      hint: `Bạn có thể thanh toán bằng ứng dụng momo`,
+      id: 'VNPay',
+      name: 'Thanh toán bằng VNPay',
+      hint: `Bạn có thể thanh toán bằng ứng dụng VNPay`,
       value: false,
     },
   ];
@@ -231,28 +223,22 @@ export class OrderComponent implements OnInit {
         this._notiService.showSuccess(res.message);
         if (res?.isSuccess) {
           if (model.payment !== 'COD') {
-            const dialogConfig = new MatDialogConfig();
-            dialogConfig.data = {
-              id: res.orderId,
-              payment: model.payment,
-              total: this.amount,
-            };
-            dialogConfig.width = '600px';
-            dialogConfig.height = 'fit-content';
-            dialogConfig.maxHeight = '800px';
-
-            this.paymentDialogRef = this._dialog.open(
-              PaymentComponent,
-              dialogConfig,
-            );
-            this.paymentDialogRef.afterClosed().subscribe((id) => {
-              this.remove(null, 'checkout');
-              // if (res?.isLogIn) {
-              //   this._router.navigateByUrl(RouterConfig.HISTORY);
-              // } else {
-              //   this._router.navigateByUrl(RouterConfig.HOME);
-              // }
-            });
+            const bodyVNP = {
+              amount: body.amount,
+              orderId: res.orderId,
+              bankCode: 'VNBANK',
+              language: 'vn'
+            }
+            this._orderService.checkOutVNP(bodyVNP).subscribe({
+              next: (res)=>{
+                this.remove(null, 'checkout');
+                window.location.href = res
+              },
+              error: (err) => {
+                this.remove(null, 'checkout');
+                this._notiService?.showError(err.error.message);
+              },
+            })
           } else {
             this.remove(null, 'checkout');
             if (res?.isLogIn) {

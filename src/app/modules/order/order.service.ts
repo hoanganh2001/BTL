@@ -92,4 +92,10 @@ export class OrderService {
       params: body,
     });
   }
+
+  checkOutVNP(body): Observable<any> {
+    return this._httpClient.post(`${environment.endpoint}/order/create_payment_url`, {
+      params: body,
+    });
+  }
 }
